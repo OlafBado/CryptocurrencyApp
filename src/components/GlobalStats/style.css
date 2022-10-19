@@ -1,0 +1,39 @@
+.global-stats__section {
+    padding: 1rem 0;
+}
+
+.global-stats__title {
+    margin-bottom: 1.5rem;
+}
+
+.best-coins__title,
+.newest-coins__title,
+.global-stats__title {
+    text-align: center;
+}
+
+
+.global-stats__article {
+    font-size: 0.75rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.global-stats__article__text {
+    margin: 1rem 0;
+}
+
+.marquee {
+    display: flex;
+    justify-content: space-evenly;
+    column-gap: 2rem;
+    margin: 1rem 0;
+}
+
+.coin {
+    width: 30px;
+    height: 30px;
+    animation: side2side 10s linear infinite;
+}
+
+

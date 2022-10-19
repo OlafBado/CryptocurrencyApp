@@ -1,0 +1,49 @@
+.container {
+    position: relative;
+}
+
+header {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--color-hamburger);
+}
+
+.logo {
+    width: 3.5rem;
+    height: 1.5rem;
+    aspect-ratio: 35 / 4;
+}
+
+.navbar__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    margin-top: 0.5rem;
+}
+
+.navbar__list__item {
+    text-align: center;
+    margin-bottom: 0.75rem;
+}
+
+.navbar__list__item a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.nav__toggle {
+    background: transparent;
+    position: absolute;
+    border: none;
+    right: 0;
+    top: 3px;
+    height: 1.5rem;
+    width: 2.5rem;
+    border-radius: 50%;
+}
+
+.hamburger {
+    display: block;
+    height: 3px;
+    background-color: var(--color-hamburger);
+    transform-origin: 43%;
+}

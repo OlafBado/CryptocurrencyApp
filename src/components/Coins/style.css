@@ -1,0 +1,52 @@
+main {
+    background-color: var(--color-bg);
+    padding: 2rem 0;
+}
+
+.coins__title {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.coins__title span {
+    color: var(--color-purple);
+}
+
+/* COIN */
+
+.coins__wrapper {
+    display: flex;
+    flex-direction: column;
+    row-gap: 2rem;
+}
+
+.coin__wrapper {
+    box-shadow: 0 0 10px var(--color-hamburger);
+    padding: 0.5rem;
+}
+
+.coin__logo {
+    width: 30px;
+    height: 30px;
+}
+
+.coin__description {
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.5rem;
+}
+
+.coin__upper-section {
+    border-bottom: var(--color-hamburger) 1px solid;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.coin__change__red {
+    color: red
+}
+
+.coin__change__green {
+    color: rgba(0, 255, 0, 0.753);
+}
+

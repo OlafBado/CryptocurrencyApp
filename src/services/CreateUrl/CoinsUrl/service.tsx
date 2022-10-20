@@ -8,7 +8,7 @@ const PARAM_DIRECTION = 'orderDirection='
 const PARAM_LIMIT = 'limit='
 const PARAM_OFFSET = 'offset='
 
-const getNewUrl = (
+const getNewCoinsUrl = (
     order: string,
     direction: string, 
     limit: string, 
@@ -16,4 +16,4 @@ const getNewUrl = (
     
     `${API_BASE}&${PARAM_ORDER_BY}${order}&${PARAM_DIRECTION}${direction}&${PARAM_LIMIT}${limit}&${PARAM_OFFSET}${offset}`
 
-export default getNewUrl
+export default getNewCoinsUrl

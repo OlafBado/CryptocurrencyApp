@@ -18,9 +18,23 @@ interface GlobalStats {
     totalMarkets: number
 }
 
-interface DataState {
-    status: string,
-    data: GlobalStats
+type EmptyObject = Record<any, never>
+
+interface GlobalStatsReducerState {
+    data: GlobalStats | EmptyObject,
+    isLoading: boolean,
+    isError: boolean
 }
 
-export { DataState, Coin }
+interface ActionSuccess {
+    type: 'STATS_FETCH_SUCCESS',
+    payload: GlobalStats
+}
+
+interface ActionFailure {
+    type: 'STATS_FETCH_FAILURE',
+}
+
+type Action = ActionSuccess | ActionFailure
+
+export { GlobalStatsReducerState, Coin, Action }

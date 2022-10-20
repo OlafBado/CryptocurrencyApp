@@ -23,7 +23,7 @@
     margin: 1rem 0;
 }
 
-.marquee {
+.global-stats-coins__wrapper {
     display: flex;
     justify-content: space-evenly;
     column-gap: 2rem;

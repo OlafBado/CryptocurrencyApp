@@ -1,8 +1,10 @@
+
 const formatter = (str: string) => {
-    const number = parseInt(str)
+    const number = parseFloat(str)
     const formatter = new Intl.NumberFormat('en-us', {
         style: 'currency',
-        currency: 'USD'
+        currency: 'USD',
+        maximumSignificantDigits: 5
     })
     
     return formatter.format(number)

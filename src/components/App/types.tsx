@@ -44,13 +44,23 @@ type CoinsAction = CoinsActionSuccess | CoinsActionFailure | CoinsActionInit
 interface SingleNewsData {
     datePublished: string,
     description: string,
+    image?: {
+        thumbnail: {
+            contentUrl: string
+        }
+    } | null,
+    name: string,
+    url: string,
+    provider: SingleNewsDataProvider[]
+}
+
+interface SingleNewsDataProvider {
+    name: string,
     image: {
         thumbnail: {
             contentUrl: string
         }
-    },
-    name: string,
-    url: string,
+    } | null
 }
 
 // type for news reducer

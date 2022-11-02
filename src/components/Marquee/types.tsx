@@ -1,7 +1,7 @@
-import { SingleNewsData } from '../App/types'
+import { ReactNode } from 'react'
 
 interface MarqueeProps {
-    news: SingleNewsData[]
+    children: ReactNode
 }
 
 export { MarqueeProps }

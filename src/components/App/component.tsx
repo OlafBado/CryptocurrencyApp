@@ -9,6 +9,8 @@ import Hero from '../Hero'
 import GlobalStats from '../GlobalStats'
 import Coins from '../Coins'
 import Marquee from '../Marquee'
+import NewsItem from '../NewsItem'
+import Footer from '../Footer'
 
 // API Coinranking
 // 1. Get general stats about crypto markets along with 3 best and newest coinst
@@ -98,6 +100,7 @@ const App = () => {
     const [coinUrl, setCoinsUrl] = useState<string>(getNewCoinsUrl('marketCap', 'desc', '10', '0'))
     const [news, dispatchNews] = useReducer(newsReducer, {data: [], isLoading: false, isError: false})
     const [newsUrl, setNewsUrl] = useState<string>(getNewNewsUrl('Cryptocurrency', '20', '0'))
+    console.log(news)
 
     // function for fetching coins
 
@@ -153,6 +156,8 @@ const App = () => {
         handleFetchNews()
     }, [handleFetchNews])
 
+    const x = [1,2,3,4,5]
+
     return (
         <>
             <Navbar />
@@ -161,9 +166,10 @@ const App = () => {
             <Coins
                 coins={coins.data}
             />
-            <Marquee
-                news={news.data}
-            />
+            <Marquee>
+                {news.data.map(item => <NewsItem news={item} />)}
+            </Marquee>
+            <Footer />
         </>
     )
 }

@@ -1,0 +1,39 @@
+footer {
+    background-color: var(--color-bg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-top: 1px solid var(--color-hamburger);
+    padding: 2.5rem;
+    color: var(--color-purple);
+}
+
+.footer__content__links span:hover,
+.footer__content__icons svg:hover {
+    color: var(--color-hamburger);
+    cursor: pointer;
+}
+
+.footer__content__icons,
+.footer__content__links {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.footer__content__links {
+    margin: 1rem 0;
+}
+
+.footer__content__icons a {
+    color: inherit
+}
+
+.footer__content__icons svg {
+    width: 2.5rem;
+    height: 2.5rem;
+}
+
+.footer__content__copyrights {
+    text-align: center;
+}

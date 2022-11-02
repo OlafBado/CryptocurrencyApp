@@ -1,6 +1,5 @@
-const dateFormatter = (number: number) => {
-    const date = new Date(number)
-    console.log(date.toUTCString())
+const dateFormatter = (data: number | string) => {
+    const date = new Date(data)
     return date.toUTCString()
 }
 

@@ -2,15 +2,20 @@ import React, { useCallback, useEffect, useReducer, useState } from 'react'
 import './style.css'
 import axios from 'axios'
 import { CoinsReducerState, CoinsAction, NewsReducerState, NewsAction } from './types'
+import { Route, Routes } from 'react-router-dom'
+import useDebounce from '../../hooks/useDebounce'
 import getNewCoinsUrl from '../../services/CreateUrl/CoinsUrl'
 import getNewNewsUrl from '../../services/CreateUrl/NewsUrl/service'
 import Navbar from '../Navbar'
 import Hero from '../Hero'
 import GlobalStats from '../GlobalStats'
-import Coins from '../Coins'
 import Marquee from '../Marquee'
 import NewsItem from '../NewsItem'
 import Footer from '../Footer'
+import NewsItemMarquee from '../NewsItemMarquee'
+import Top10Coins from '../Top10Coins'
+import Cryptocurrencies from '../Cryptocurrencies'
+import Spinner from '../Spinner'
 
 // API Coinranking
 // 1. Get general stats about crypto markets along with 3 best and newest coinst
@@ -96,13 +101,15 @@ const newsReducer = (state: NewsReducerState, action: NewsAction) => {
 
 const App = () => {
 
+    const width = window.innerWidth
+    const [inputResult, setInputResult] = useState<string>('')
     const [coins, dispatchCoins] = useReducer(coinsReducer, {data: [], isLoading: false, isError: false})
-    const [coinUrl, setCoinsUrl] = useState<string>(getNewCoinsUrl('marketCap', 'desc', '10', '0'))
+    const [coinUrl, setCoinsUrl] = useState<string>(getNewCoinsUrl('marketCap', 'desc', '10', '0', ''))
     const [news, dispatchNews] = useReducer(newsReducer, {data: [], isLoading: false, isError: false})
     const [newsUrl, setNewsUrl] = useState<string>(getNewNewsUrl('Cryptocurrency', '20', '0'))
-    console.log(news)
+    const debouncedValue = useDebounce(inputResult, 300)
 
-    // function for fetching coins
+    // function for fetching coins, redefined by debounced input result value
 
     const handleFetchCoins = useCallback(async () => {
 
@@ -118,7 +125,7 @@ const App = () => {
             })
         }
 
-    }, [coinUrl])
+    }, [debouncedValue])
 
     // function for fetching news, redefines when url for coins changes
 
@@ -156,19 +163,56 @@ const App = () => {
         handleFetchNews()
     }, [handleFetchNews])
 
-    const x = [1,2,3,4,5]
+    const handleSearch = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        setInputResult(e.target.value)
+        setCoinsUrl(getNewCoinsUrl('marketCap', 'desc', '10', '0', e.target.value))
+    }, [inputResult])
+    console.log(coins)
 
     return (
         <>
             <Navbar />
-            <Hero />
-            <GlobalStats />
-            <Coins
-                coins={coins.data}
-            />
-            <Marquee>
-                {news.data.map(item => <NewsItem news={item} />)}
-            </Marquee>
+            <Routes>
+                <Route path='/' element={
+                    <>
+                        <Hero />
+                        <GlobalStats />
+                        {
+                            coins.isLoading ?
+                            <Spinner/>
+                            :
+                            <Top10Coins
+                                coins={coins.data}
+                            />
+                        }
+                        <Marquee>
+                            {news.data.map(item => 
+                                width > 600 
+                                ? <NewsItem 
+                                key={item.url}
+                                    news={item} 
+                                />
+                                : <NewsItemMarquee
+                                    key={item.url}
+                                    time={item.datePublished} 
+                                    title={item.name} 
+                                    img={item.image} 
+                                    url={item.url}
+                                />
+                            )}
+                        </Marquee>
+                    </>
+                }
+                />
+                <Route path='/cryptocurrencies' element={
+                    <Cryptocurrencies 
+                        coins={coins.data}
+                        handleSearch={handleSearch}
+                        inputResult={inputResult}
+                        isLoading={coins.isLoading}
+                    />
+                }/>
+            </Routes>
             <Footer />
         </>
     )

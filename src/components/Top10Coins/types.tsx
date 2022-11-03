@@ -1,7 +1,7 @@
 import { SingleCoinData } from '../App/types'
 
-interface CoinsProps {
+interface Top10coinsProps {
     coins: SingleCoinData[]
 }
 
-export { CoinsProps, SingleCoinData }
+export { Top10coinsProps, SingleCoinData }

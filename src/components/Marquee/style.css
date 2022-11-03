@@ -1,5 +1,5 @@
 .marquee {
-    height: 40vh;
+    min-height: 40vh;
     margin: 0 auto;
     padding: 1rem 0;
     display: flex;
@@ -28,7 +28,7 @@
     padding: 0;
     display: flex;
     width: 60%;
-    animation: scrolling 30s linear infinite;
+    animation: scrolling 80s linear infinite;
     column-gap: 0.5rem;
 }
 

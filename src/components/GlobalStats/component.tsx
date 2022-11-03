@@ -3,6 +3,8 @@ import './style.css'
 import { GlobalStatsReducerState, Action, Coin } from './types'
 import axios from 'axios'
 import formatter from '../../services/Format/Price/service'
+import Spinner from '../Spinner'
+import { stat } from 'fs'
 
 const options = {
     method: 'GET',
@@ -65,77 +67,84 @@ const GlobalStats = () => {
     }, [])
 
     return (
-        <section className='global-stats__section'>
-            <div className="container">
-                <h2 className='global-stats__title'>Global Crypto stats</h2>
-                {
-                    stats.isLoading
-                    ?  <div>Loading...</div>
-                    : stats.isError
-                    ? <div>Error</div>
-                    : <>
-                        <h3 className='best-coins__title'>Best performing coins</h3>
-                        <div className='global-stats-coins__wrapper'>
-                            {
-                                stats.data.bestCoins.map((coin: Coin) => {
-                                    return(
-                                        <a 
-                                            href={coin.coinrankingUrl}
-                                            key={coin.uuid}
-                                        >
-                                            <img 
-                                                src={coin.iconUrl} 
-                                                alt={coin.name} 
-                                                className='best coin'
-                                            />
-                                        </a>
-                                    )
-                                
-                                })
-                            }
-                        </div>
-                        <article className='global-stats__article'>
-                                <div>
-                                    <h3 className='global-stats__article__title'>Total Market Cap</h3>
-                                    <p className='global-stats__article__text'>{formatter(stats.data.totalMarketCap)}</p>
-                                    <h3 className='global-stats__article__title'>Total 24h Volume</h3>
-                                    <p className='global-stats__article__text'>{formatter(stats.data.total24hVolume)}</p>
-                                    <h3 className='global-stats__article__title'>BTC dominance</h3>
-                                    <p className='global-stats__article__text'>{stats.data.btcDominance.toFixed(2)}%</p>
-                                </div>
-                                <div>
-                                    <h3 className='global-stats__article__title'>Total Coins</h3>
-                                    <p className='global-stats__article__text'>{stats.data.totalCoins}</p>
-                                    <h3 className='global-stats__article__title'>Total Exchanges</h3>
-                                    <p className='global-stats__article__text'>{stats.data.totalExchanges}</p>
-                                    <h3 className='global-stats__article__title'>Total Markets</h3>
-                                    <p className='global-stats__article__text'>{stats.data.totalMarkets}</p>
-                                </div>
-                            </article>
-                            <h3 className='newest-coins__title'>Newest coins</h3>
+        <>
+        {
+            !stats.isLoading ?
+        
+            <section className='global-stats__section'>
+                <div className="container">
+                    <h2 className='global-stats__title'>Global Crypto stats</h2>
+                    {
+                        stats.isLoading
+                        ?  <div>Loading...</div>
+                        : stats.isError
+                        ? <div>Error</div>
+                        : <>
+                            <h3 className='best-coins__title'>Best performing coins</h3>
                             <div className='global-stats-coins__wrapper'>
-                            {
-                                stats.data.newestCoins.map((coin: Coin) => {
-                                    return(
-                                        <a 
-                                            href={coin.coinrankingUrl}
-                                            key={coin.uuid}
-                                        >
-                                            <img 
-                                                src={coin.iconUrl} 
-                                                alt={coin.name} 
-                                                className='best coin'
-                                            />
-                                        </a>
-                                    )
-                                
-                                })
-                            }
-                        </div>
-                    </>
-                }
-            </div>
-        </section>
+                                {
+                                    stats.data.bestCoins.map((coin: Coin) => {
+                                        return(
+                                            <a 
+                                                href={coin.coinrankingUrl}
+                                                key={coin.uuid}
+                                            >
+                                                <img 
+                                                    src={coin.iconUrl} 
+                                                    alt={coin.name} 
+                                                    className='best coin'
+                                                />
+                                            </a>
+                                        )
+                                    
+                                    })
+                                }
+                            </div>
+                            <article className='global-stats__article'>
+                                    <div>
+                                        <h3 className='global-stats__article__title'>Total Market Cap</h3>
+                                        <p className='global-stats__article__text'>{formatter(stats.data.totalMarketCap)}</p>
+                                        <h3 className='global-stats__article__title'>Total 24h Volume</h3>
+                                        <p className='global-stats__article__text'>{formatter(stats.data.total24hVolume)}</p>
+                                        <h3 className='global-stats__article__title'>BTC dominance</h3>
+                                        <p className='global-stats__article__text'>{stats.data.btcDominance.toFixed(2)}%</p>
+                                    </div>
+                                    <div>
+                                        <h3 className='global-stats__article__title'>Total Coins</h3>
+                                        <p className='global-stats__article__text'>{stats.data.totalCoins}</p>
+                                        <h3 className='global-stats__article__title'>Total Exchanges</h3>
+                                        <p className='global-stats__article__text'>{stats.data.totalExchanges}</p>
+                                        <h3 className='global-stats__article__title'>Total Markets</h3>
+                                        <p className='global-stats__article__text'>{stats.data.totalMarkets}</p>
+                                    </div>
+                                </article>
+                                <h3 className='newest-coins__title'>Newest coins</h3>
+                                <div className='global-stats-coins__wrapper'>
+                                {
+                                    stats.data.newestCoins.map((coin: Coin) => {
+                                        return(
+                                            <a 
+                                                href={coin.coinrankingUrl}
+                                                key={coin.uuid}
+                                            >
+                                                <img 
+                                                    src={coin.iconUrl} 
+                                                    alt={coin.name} 
+                                                    className='best coin'
+                                                />
+                                            </a>
+                                        )
+                                    
+                                    })
+                                }
+                            </div>
+                        </>
+                    }
+                </div>
+            </section>
+        : <Spinner/>
+        }
+    </>
     )
 }
 

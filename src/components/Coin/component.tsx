@@ -6,7 +6,6 @@ import formatter from '../../services/Format/Price'
 const Coins: React.FC<CoinsProps> = React.memo(({coin}) => {
 
     const change = parseFloat(coin.change)
-    console.log('single coin')
 
     return (
         <>
@@ -36,7 +35,7 @@ const Coins: React.FC<CoinsProps> = React.memo(({coin}) => {
                     </div>
                     <div className="row">
                         <h4>Market cap</h4>
-                        <p>{formatter(coin.marketCap)}</p>
+                        <p>{coin.marketCap ? formatter(coin.marketCap) : '---'}</p>
                     </div>
                 </div>
             </article>

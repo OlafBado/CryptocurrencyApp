@@ -1,6 +1,7 @@
 interface SearchFormProps {
     handleSearch: (e: React.ChangeEvent<HTMLInputElement>) => void,
-    inputResult: string
+    inputResult: string,
+    coinUrl: string[]
 }
 
 export { SearchFormProps }

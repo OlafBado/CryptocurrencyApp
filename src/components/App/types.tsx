@@ -19,14 +19,19 @@ interface SingleCoinData extends Coin {
 interface CoinsReducerState {
     data: SingleCoinData[],
     isLoading: boolean,
-    isError: boolean
+    isError: boolean,
+    offset: number,
+    total: number
 }
 
 // types for different action cases related to coin reducer
 
 interface CoinsActionSuccess {
     type: 'COINS_FETCH_SUCCESS',
-    payload: SingleCoinData[]
+    payload: {
+        data: SingleCoinData[],
+        total: number
+    }
 }
 
 interface CoinsActionFailure {
@@ -37,7 +42,19 @@ interface CoinsActionInit {
     type: 'COINS_FETCH_INIT'
 }
 
-type CoinsAction = CoinsActionSuccess | CoinsActionFailure | CoinsActionInit
+interface CoinsActionFetchMore {
+    type: 'COINS_FETCH_MORE'
+}
+interface CoinsActionResetOffset {
+    type: 'COINS_RESET_OFFSET'
+}
+
+type CoinsAction = 
+    CoinsActionSuccess 
+    | CoinsActionFailure 
+    | CoinsActionInit 
+    | CoinsActionFetchMore 
+    | CoinsActionResetOffset
 
 // type for single news
 

@@ -1,0 +1,14 @@
+.btn {
+    background-color: var(--color-purple);
+    border: none;
+    border-radius: 2rem;
+    color: var(--color-bg);
+}
+
+.coins__load-more {
+    padding: 0.5rem 2rem;
+    font-size: 1.15rem;
+    align-self: center;
+    width: 80%;
+    max-width: 250px;
+}

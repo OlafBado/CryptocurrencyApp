@@ -29,3 +29,9 @@
     outline: none;
     box-shadow: 0 0 5px 1px var(--color-purple);
 }
+
+.search-form__dropdowns-wrapper {
+    margin: 1rem 0;
+    display: flex;
+    flex-direction: column;
+}

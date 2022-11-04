@@ -6,6 +6,7 @@ import { Route, Routes } from 'react-router-dom'
 import useDebounce from '../../hooks/useDebounce'
 import getNewCoinsUrl from '../../services/CreateUrl/CoinsUrl'
 import getNewNewsUrl from '../../services/CreateUrl/NewsUrl/service'
+import getSubstring from '../../services/FormatString/GetSubstring/service'
 import Navbar from '../Navbar'
 import Hero from '../Hero'
 import GlobalStats from '../GlobalStats'
@@ -47,7 +48,6 @@ const newsOptions = {
 // reducer function to handle coins data
 
 const coinsReducer = (state: CoinsReducerState, action: CoinsAction) => {
-
     switch(action.type) {
         case 'COINS_FETCH_INIT':
             return {
@@ -60,12 +60,26 @@ const coinsReducer = (state: CoinsReducerState, action: CoinsAction) => {
                 ...state,
                 isLoading: false,
                 isError: false,
-                data: action.payload
+                data: 
+                    state.offset === 0 
+                    ? action.payload.data
+                    : state.data.concat(action.payload.data),
+                total: action.payload.total
             }
         case 'COINS_FETCH_FAILURE':
             return {
                 ...state,
                 isError: true
+            }
+        case 'COINS_FETCH_MORE':
+            return {
+                ...state,
+                offset: state.offset + 10
+            }
+        case 'COINS_RESET_OFFSET':
+            return {
+                ...state,
+                offset: 0
             }
         default:
             throw new Error()
@@ -103,21 +117,23 @@ const App = () => {
 
     const width = window.innerWidth
     const [inputResult, setInputResult] = useState<string>('')
-    const [coins, dispatchCoins] = useReducer(coinsReducer, {data: [], isLoading: false, isError: false})
-    const [coinUrl, setCoinsUrl] = useState<string>(getNewCoinsUrl('marketCap', 'desc', '10', '0', ''))
+    const [coins, dispatchCoins] = useReducer(coinsReducer, {data: [], offset:0, total:0, isLoading: false, isError: false})
+    const [coinUrl, setCoinsUrl] = useState<string[]>([getNewCoinsUrl('marketCap', 'desc', 10, 0, '')])
     const [news, dispatchNews] = useReducer(newsReducer, {data: [], isLoading: false, isError: false})
     const [newsUrl, setNewsUrl] = useState<string>(getNewNewsUrl('Cryptocurrency', '20', '0'))
-    const debouncedValue = useDebounce(inputResult, 300)
-
+    const debouncedValue = useDebounce(coinUrl[0], 300)
     // function for fetching coins, redefined by debounced input result value
 
     const handleFetchCoins = useCallback(async () => {
 
         try {
-            const result = await axios.get(coinUrl, coinsOptions)
+            const result = await axios.get(coinUrl[0], coinsOptions)
             dispatchCoins({
                 type: 'COINS_FETCH_SUCCESS',
-                payload: result.data.data.coins
+                payload: {
+                    data:result.data.data.coins,
+                    total: result.data.data.stats.total
+                }
             })
         } catch {
             dispatchCoins({
@@ -165,9 +181,23 @@ const App = () => {
 
     const handleSearch = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         setInputResult(e.target.value)
-        setCoinsUrl(getNewCoinsUrl('marketCap', 'desc', '10', '0', e.target.value))
+        dispatchCoins({
+            type: 'COINS_RESET_OFFSET'
+        })
+        setCoinsUrl([getNewCoinsUrl('marketCap', 'desc', 10, 0, e.target.value)])
     }, [inputResult])
-    console.log(coins)
+    
+    const handleFetchMore = () => {
+        const offset = parseInt(getSubstring(coinUrl[0], 'offset=', '&'))
+        setCoinsUrl([getNewCoinsUrl('marketCap', 'desc', 10, offset + 10, inputResult)])
+        dispatchCoins({
+            type: 'COINS_FETCH_MORE',
+        })
+    }
+
+    const handleOrderBy = (value: string) => {
+        
+    }
 
     return (
         <>
@@ -182,10 +212,10 @@ const App = () => {
                             <Spinner/>
                             :
                             <Top10Coins
-                                coins={coins.data}
+                                coins={coins.data.slice(0,10)}
                             />
                         }
-                        <Marquee>
+                        {/* <Marquee>
                             {news.data.map(item => 
                                 width > 600 
                                 ? <NewsItem 
@@ -200,7 +230,7 @@ const App = () => {
                                     url={item.url}
                                 />
                             )}
-                        </Marquee>
+                        </Marquee> */}
                     </>
                 }
                 />
@@ -210,6 +240,9 @@ const App = () => {
                         handleSearch={handleSearch}
                         inputResult={inputResult}
                         isLoading={coins.isLoading}
+                        handleFetchMore={handleFetchMore}
+                        total={coins.total}
+                        coinUrl={coinUrl}
                     />
                 }/>
             </Routes>

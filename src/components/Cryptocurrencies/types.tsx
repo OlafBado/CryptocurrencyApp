@@ -4,7 +4,10 @@ interface CryptocurrenciesProps {
     coins: SingleCoinData[],
     handleSearch: (e: React.ChangeEvent<HTMLInputElement>)=> void,
     inputResult: string,
-    isLoading: boolean
+    isLoading: boolean,
+    handleFetchMore: () => void,
+    total: number,
+    coinUrl: string[]
 }
 
 export { CryptocurrenciesProps }

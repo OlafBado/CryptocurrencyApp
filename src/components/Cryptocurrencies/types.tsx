@@ -7,7 +7,11 @@ interface CryptocurrenciesProps {
     isLoading: boolean,
     handleFetchMore: () => void,
     total: number,
-    coinUrl: string[]
+    coinUrl: string[],
+    sortBy: string,
+    direction: string,
+    handleSortBy: (value: string) => void
+
 }
 
 export { CryptocurrenciesProps }

@@ -1,6 +1,9 @@
 interface DropdownProps {
     label: string,
-    options: DropdownPropsOptions[]
+    options: DropdownPropsOptions[],
+    sortBy: string,
+    direction: string,
+    handleSortBy: (value: string) => void
 }
 
 interface DropdownPropsOptions {

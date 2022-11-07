@@ -1,4 +1,56 @@
-import { Coin } from '../GlobalStats/types'
+import { Coin, EmptyObject } from '../GlobalStats/types'
+
+// type for coin details
+
+interface PriceHistory {
+    price: string,
+    timestamp: number
+}
+
+interface ChartData {
+    change: string,
+    history: PriceHistory[]
+}
+
+interface SingleCoinDetailsDataLinks {
+    name: string,
+    url: string
+}
+
+interface SingleCoinDetailsData extends SingleCoinData {
+    links: SingleCoinDetailsDataLinks[]
+}
+
+interface CoinDetailsReducerState {
+    data: SingleCoinDetailsData | EmptyObject,
+    chartData: ChartData,
+    isLoading: boolean,
+    isError: boolean
+}
+
+// types for coinDetailsReducer actions
+
+interface CoinDetailsActionSuccess {
+    type: 'COIN_DETAILS_FETCH_SUCCESS',
+    payload: {
+        data: SingleCoinDetailsData,
+        change: string,
+        priceHistory: PriceHistory[]
+    }
+    
+}
+
+interface CoinDetailsActionInit {
+    type: 'COIN_DETAILS_FETCH_INIT'
+}
+
+interface CoinDetailsActionFailure {
+    type: 'COIN_DETAILS_FETCH_FAILURE'
+}
+
+type CoinDetailsActions = CoinDetailsActionSuccess
+    | CoinDetailsActionInit
+    | CoinDetailsActionFailure
 
 // type for single coin
 
@@ -9,7 +61,7 @@ interface SingleCoinData extends Coin {
         color: string,
         listedAt: number,
         marketCap: string,
-        price: string,
+        price: number, //changed
         rank: number,
         tier: number,
 }
@@ -21,7 +73,9 @@ interface CoinsReducerState {
     isLoading: boolean,
     isError: boolean,
     offset: number,
-    total: number
+    total: number,
+    sortBy: string,
+    direction: string
 }
 
 // types for different action cases related to coin reducer
@@ -45,16 +99,37 @@ interface CoinsActionInit {
 interface CoinsActionFetchMore {
     type: 'COINS_FETCH_MORE'
 }
+
 interface CoinsActionResetOffset {
     type: 'COINS_RESET_OFFSET'
 }
 
-type CoinsAction = 
-    CoinsActionSuccess 
+interface CoinsActionDefaultState {
+    type: 'COINS_DEFAULT_STATE'
+}
+
+interface CoinsActionChangeSortBy {
+    type: 'COINS_CHANGE_SORT_BY',
+    payload: {
+        sortBy: string
+    }
+}
+
+interface CoinsActionChangeDirection {
+    type: 'COINS_CHANGE_DIRECTION',
+    payload: {
+        direction: string
+    }
+}
+
+type CoinsAction = CoinsActionSuccess 
     | CoinsActionFailure 
     | CoinsActionInit 
     | CoinsActionFetchMore 
     | CoinsActionResetOffset
+    | CoinsActionChangeDirection
+    | CoinsActionChangeSortBy
+    | CoinsActionDefaultState
 
 // type for single news
 
@@ -108,4 +183,8 @@ type NewsAction = NewsActionSuccess | NewsActionFailure | NewsActionInit
 export { CoinsReducerState, 
     CoinsAction, SingleCoinData, 
     Coin, NewsReducerState, 
-    SingleNewsData, NewsAction }
+    SingleNewsData, NewsAction,
+    CoinDetailsReducerState,
+    CoinDetailsActions,
+    PriceHistory, SingleCoinDetailsData,
+    ChartData }

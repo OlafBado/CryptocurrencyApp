@@ -37,4 +37,4 @@ interface ActionFailure {
 
 type Action = ActionSuccess | ActionFailure
 
-export { GlobalStatsReducerState, Coin, Action }
+export { GlobalStatsReducerState, Coin, Action, EmptyObject }

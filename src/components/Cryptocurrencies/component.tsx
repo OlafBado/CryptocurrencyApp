@@ -5,12 +5,12 @@ import SearchForm from '../SearchForm'
 import Coin from '../Coin'
 import Spinner from '../Spinner'
 
-const Cryptocurrencies: React.FC<CryptocurrenciesProps> = ({coinUrl, total, handleFetchMore, isLoading, coins, handleSearch, inputResult}) => {
+const Cryptocurrencies: React.FC<CryptocurrenciesProps> = ({handleSortBy, sortBy, direction, coinUrl, total, handleFetchMore, isLoading, coins, handleSearch, inputResult}) => {
     return (
         <main>
         <div className="container">
             <h2 className='coins__title'>Find you <span>crypto</span>currency</h2>
-            <SearchForm coinUrl={coinUrl} inputResult={inputResult} handleSearch={handleSearch}/>
+            <SearchForm handleSortBy={handleSortBy} sortBy={sortBy} direction={direction} coinUrl={coinUrl} inputResult={inputResult} handleSearch={handleSearch}/>
             <div className='coins__wrapper'>
                 {   
                     coins.length === 0 && !isLoading 

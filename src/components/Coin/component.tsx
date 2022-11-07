@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import './style.css'
 import { CoinsProps, SingleCoinData } from './types'
 import formatter from '../../services/Format/Price'
+import { Link } from 'react-router-dom'
 
 const Coins: React.FC<CoinsProps> = React.memo(({coin}) => {
 
@@ -9,6 +10,7 @@ const Coins: React.FC<CoinsProps> = React.memo(({coin}) => {
 
     return (
         <>
+        <Link to={`/cryptocurrencies/${coin.uuid}`}>
             <article key={coin.uuid} className='coin__wrapper'>
                 <div className='coin__upper-section row'>
                     <h3 className='coin__name'>{coin.rank}.{coin.name}</h3>
@@ -39,6 +41,7 @@ const Coins: React.FC<CoinsProps> = React.memo(({coin}) => {
                     </div>
                 </div>
             </article>
+        </Link>
         </>
     )
 })

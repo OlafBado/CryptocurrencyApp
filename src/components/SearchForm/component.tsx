@@ -38,14 +38,14 @@ const options2 = [
     },
 ]
 
-const SearchForm: React.FC<SearchFormProps> = ({coinUrl, handleSearch, inputResult}) => {
+const SearchForm: React.FC<SearchFormProps> = ({handleSortBy, sortBy, direction, coinUrl, handleSearch, inputResult}) => {
     return (
         <form onSubmit={e => e.preventDefault()} className='search-form'>
             <fieldset className='search-form__fieldset'>
                 <input autoFocus placeholder='Search by name or symbol...' className='search-form__input' value={inputResult} type="text" onChange={e => handleSearch(e)} id='crypto-input'/>
                 <div className='search-form__dropdowns-wrapper'>
-                    <Dropdown label='Direction' options={options1}/>
-                    <Dropdown label='Order by' options={options2}/>
+                    <Dropdown handleSortBy={handleSortBy} direction={direction} sortBy={sortBy} label='Sort by' options={options1}/>
+                    <Dropdown handleSortBy={handleSortBy} direction={direction} sortBy={sortBy} label='Direction' options={options2}/>
                 </div>
             </fieldset>
         </form>

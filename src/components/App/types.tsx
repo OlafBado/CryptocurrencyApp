@@ -9,16 +9,31 @@ interface PriceHistory {
 
 interface ChartData {
     change: string,
-    history: PriceHistory[]
+    history: PriceHistory[],
+    timePeriod: string
+}
+
+interface CoinSupply {
+    circulating: string,
+    confirmed: boolean,
+    max: string,
+    supplyAt: number,
+    total: string
 }
 
 interface SingleCoinDetailsDataLinks {
     name: string,
-    url: string
+    url: string,
 }
 
 interface SingleCoinDetailsData extends SingleCoinData {
-    links: SingleCoinDetailsDataLinks[]
+    links: SingleCoinDetailsDataLinks[],
+    allTimeHigh: {
+        price: string,
+        timestamp: number
+    },
+    supply: CoinSupply,
+    description: string
 }
 
 interface CoinDetailsReducerState {
@@ -37,7 +52,14 @@ interface CoinDetailsActionSuccess {
         change: string,
         priceHistory: PriceHistory[]
     }
-    
+}
+
+interface CoinDetailsActionUpdateHistory {
+    type: 'COIN_DETAILS_UPDATE_HISTORY',
+    payload: {
+        change: string,
+        priceHistory: PriceHistory[]
+    }
 }
 
 interface CoinDetailsActionInit {
@@ -47,15 +69,21 @@ interface CoinDetailsActionInit {
 interface CoinDetailsActionFailure {
     type: 'COIN_DETAILS_FETCH_FAILURE'
 }
+interface CoinDetailsActionChangeTimePeriod {
+    type: 'COIN_DETAILS_CHANGE_TIME_PERIOD',
+    payload: string
+}
 
 type CoinDetailsActions = CoinDetailsActionSuccess
     | CoinDetailsActionInit
     | CoinDetailsActionFailure
+    | CoinDetailsActionChangeTimePeriod
+    | CoinDetailsActionUpdateHistory
 
 // type for single coin
 
 interface SingleCoinData extends Coin {
-        $24hVolume: string,
+        '24hVolume': string,
         btcPrice: string,
         change: string,
         color: string,

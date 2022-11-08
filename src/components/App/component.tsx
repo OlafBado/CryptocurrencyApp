@@ -59,7 +59,7 @@ const newsOptions = {
         'X-BingApis-SDK': 'true',
         'X-RapidAPI-Key': '2081c14c4dmshd151c93e0f27c2cp140d7bjsn9c3017090a59',
         'X-RapidAPI-Host': 'bing-news-search1.p.rapidapi.com'
-    }
+      }
 };
 
 // reducer function to handle coins data
@@ -140,6 +140,7 @@ const newsReducer = (state: NewsReducerState, action: NewsAction) => {
         case 'NEWS_FETCH_FAILURE':
             return {
                 ...state,
+                isLoading: false,
                 isError: true
             }
         default:
@@ -168,6 +169,24 @@ const coinDetailsReducer = (state: CoinDetailsReducerState, action: CoinDetailsA
                 isError: false,
                 data: action.payload.data,
                 chartData: {
+                    ...state.chartData,
+                    change: action.payload.change,
+                    history: action.payload.priceHistory
+                }
+            }
+        case 'COIN_DETAILS_CHANGE_TIME_PERIOD':
+            return {
+                ...state,
+                chartData: {
+                    ...state.chartData,
+                    timePeriod: action.payload
+                }
+            }
+        case 'COIN_DETAILS_UPDATE_HISTORY':
+            return {
+                ...state,
+                chartData: {
+                    ...state.chartData,
                     change: action.payload.change,
                     history: action.payload.priceHistory
                 }
@@ -179,16 +198,20 @@ const App = () => {
 
     const width = window.innerWidth
     const [inputResult, setInputResult] = useState<string>('')
-    const [coinDetails, dispatchCoinDetails] = useReducer(coinDetailsReducer, {data:{},chartData:{change:'0', history:[]}, isLoading: false, isError: false})
+    
+    const [coinDetails, dispatchCoinDetails] = useReducer(coinDetailsReducer, {data:{},chartData:{change:'0', history:[], timePeriod: '3y'}, isLoading: false, isError: false})
+    const [coinDetailsUrl, setCoinDetailsUrl] = useState<string>('')
+    const [coinDetailsHistoryUrl, setCoinDetailsHistoryUrl] = useState<string>('')
+    
     const [coins, dispatchCoins] = useReducer(coinsReducer, {data: [], sortBy: 'marketCap', direction: 'desc', offset:0, total:0, isLoading: false, isError: false})
-    const [coinDetailsUrl, setCoinDetailsUrl] = useState<string>(getCoinDetailsUrl(''))
-    const [coinDetailsHistoryUrl, setCoinDetailsHistoryUrl] = useState<string>(getCoinDetailsHistoryUrl('Qwsogvtv82FCd','7d'))
-    const [coinUrl, setCoinsUrl] = useState<string[]>([getNewCoinsUrl('marketCap', 'desc', 10, coins.offset, '')])
+    const [coinsUrl, setCoinsUrl] = useState<string[]>([getNewCoinsUrl('marketCap', 'desc', 10, coins.offset, '')])
+    
     const [news, dispatchNews] = useReducer(newsReducer, {data: [], isLoading: false, isError: false})
     const [newsUrl, setNewsUrl] = useState<string>(getNewNewsUrl('Cryptocurrency', '20', '0'))
-    const debouncedValue = useDebounce(coinUrl[0], 300)
+    
+    const debouncedValue = useDebounce(coinsUrl[0], 300)
+    console.log(news)
     // function for fetching coins, redefined by debounced input result value
-
     const handleFetchCoinDetails = useCallback(async () => {
         try {
             const coinDetails = await axios.get(coinDetailsUrl, coinDetailsOptions)
@@ -210,6 +233,29 @@ const App = () => {
         }
     }, [coinDetailsUrl])
 
+    const handleFetchCoinDetailsHistory = useCallback(async () => {
+        try {
+            const response = await axios.get(coinDetailsHistoryUrl, coinDetailsHistoryOptions)
+
+            dispatchCoinDetails({
+                type: 'COIN_DETAILS_UPDATE_HISTORY',
+                payload: {
+                    change: response.data.data.change,
+                    priceHistory: response.data.data.history
+                }
+            })
+
+        } catch {
+            dispatchCoinDetails({
+                type: 'COIN_DETAILS_FETCH_FAILURE'
+            })
+        }
+    }, [coinDetailsHistoryUrl])
+
+    useEffect(() => {
+        handleFetchCoinDetailsHistory()
+    }, [handleFetchCoinDetailsHistory])
+
     useEffect(() => {
         dispatchCoinDetails({
             type: 'COIN_DETAILS_FETCH_INIT'
@@ -220,7 +266,7 @@ const App = () => {
     const handleFetchCoins = useCallback(async () => {
 
         try {
-            const result = await axios.get(coinUrl[0], coinsOptions)
+            const result = await axios.get(coinsUrl[0], coinsOptions)
             // console.log(result)
             dispatchCoins({
                 type: 'COINS_FETCH_SUCCESS',
@@ -273,6 +319,7 @@ const App = () => {
         handleFetchNews()
     }, [handleFetchNews])
 
+
     const handleSearch = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         setInputResult(e.target.value)
         dispatchCoins({
@@ -282,7 +329,7 @@ const App = () => {
     }, [inputResult])
     
     const handleFetchMore = () => {
-        const offset = parseInt(getSubstring(coinUrl[0], 'offset=', '&'))
+        const offset = parseInt(getSubstring(coinsUrl[0], 'offset=', '&'))
         setCoinsUrl([getNewCoinsUrl(coins.sortBy, coins.direction, 10, offset + 10, inputResult)])
         dispatchCoins({
             type: 'COINS_FETCH_MORE',
@@ -298,7 +345,19 @@ const App = () => {
             10, 0, '')])
     }
 
-    const handleGetCoinDetails = (id: string) => setCoinDetailsUrl(getCoinDetailsUrl(id))
+    const handleGetCoinDetails = (id: string, name: string) => {
+        setCoinDetailsUrl(getCoinDetailsUrl(id))
+        setCoinDetailsHistoryUrl(getCoinDetailsHistoryUrl(id, coinDetails.chartData.timePeriod))
+        setNewsUrl(getNewNewsUrl(name, '10', '0'))
+    }
+
+    const handleGetCoinHistory = (id: string, period: string) => {
+        dispatchCoinDetails({
+            type: 'COIN_DETAILS_CHANGE_TIME_PERIOD',
+            payload: period
+        })
+        setCoinDetailsHistoryUrl(getCoinDetailsHistoryUrl(id, period))
+    }
 
     const handleSortBy = (value: string) => {
         switch(value) {
@@ -376,7 +435,7 @@ const App = () => {
                         isLoading={coins.isLoading}
                         handleFetchMore={handleFetchMore}
                         total={coins.total}
-                        coinUrl={coinUrl}
+                        coinUrl={coinsUrl}
                         sortBy={coins.sortBy}
                         direction={coins.direction}
                         handleSortBy={handleSortBy}
@@ -385,7 +444,13 @@ const App = () => {
                 <Route path='/cryptocurrencies/:id' element={
                     coinDetails.isLoading 
                     ? <Spinner />
-                    : <CoinDetails coinHistory={coinDetails.chartData} coinDetails={coinDetails.data} handleGetCoinDetails={handleGetCoinDetails}/>
+                    : <CoinDetails 
+                        coinHistory={coinDetails.chartData} 
+                        coinDetails={coinDetails.data} 
+                        handleGetCoinDetails={handleGetCoinDetails}
+                        handleGetCoinHistory={handleGetCoinHistory}
+                        timePeriod={coinDetails.chartData.timePeriod}
+                    />
                 }
 
                 />

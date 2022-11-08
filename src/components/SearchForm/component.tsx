@@ -3,6 +3,7 @@ import './style.css'
 import { SearchFormProps } from './types'
 import LastSearches from '../LastSearches'
 import Dropdown from '../Dropdown'
+import ChangeButtons from '../ChangeButtons'
 
 const options1 = [
     {
@@ -44,8 +45,10 @@ const SearchForm: React.FC<SearchFormProps> = ({handleSortBy, sortBy, direction,
             <fieldset className='search-form__fieldset'>
                 <input autoFocus placeholder='Search by name or symbol...' className='search-form__input' value={inputResult} type="text" onChange={e => handleSearch(e)} id='crypto-input'/>
                 <div className='search-form__dropdowns-wrapper'>
-                    <Dropdown handleSortBy={handleSortBy} direction={direction} sortBy={sortBy} label='Sort by' options={options1}/>
-                    <Dropdown handleSortBy={handleSortBy} direction={direction} sortBy={sortBy} label='Direction' options={options2}/>
+                    {/* <Dropdown handleSortBy={handleSortBy} direction={direction} sortBy={sortBy} label='Sort by' options={options1}/> */}
+                    {/* <Dropdown handleSortBy={handleSortBy} direction={direction} sortBy={sortBy} label='Direction' options={options2}/> */}
+                    <ChangeButtons handler={handleSortBy} state={sortBy} label='Sort By' options={options1}/>
+                    <ChangeButtons handler={handleSortBy} state={direction} label='Direction' options={options2}/>
                 </div>
             </fieldset>
         </form>

@@ -286,7 +286,7 @@ const App = () => {
     const handleFetchNews = useCallback(async () => {
         try {
             console.log('fetch news')
-            const result = await axios.get(newsUrl, newsOptions)
+            const result = await axios.get(newsUrl)
             dispatchNews({
                 type: 'NEWS_FETCH_SUCCESS',
                 payload: result.data.articles

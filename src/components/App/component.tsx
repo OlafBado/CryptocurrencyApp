@@ -12,14 +12,15 @@ import getSubstring from '../../services/FormatString/GetSubstring/service'
 import Navbar from '../Navbar'
 import Hero from '../Hero'
 import GlobalStats from '../GlobalStats'
-import Marquee from '../Marquee'
-import NewsItem from '../NewsItem'
 import Footer from '../Footer'
-import NewsItemMarquee from '../NewsItemMarquee'
 import Top10Coins from '../Top10Coins'
 import Cryptocurrencies from '../Cryptocurrencies'
 import Spinner from '../Spinner'
 import CoinDetails from '../CoinDetails'
+import Marquee from "react-fast-marquee";
+import NewsItem from '../NewsItem'
+// import * as dotenv from 'dotenv'
+// dotenv.config()
 
 // API Coinranking
 // 1. Get general stats about crypto markets along with 3 best and newest coinst
@@ -56,10 +57,8 @@ const coinsOptions = {
 
 const newsOptions = {
     headers: {
-        'X-BingApis-SDK': 'true',
-        'X-RapidAPI-Key': '2081c14c4dmshd151c93e0f27c2cp140d7bjsn9c3017090a59',
-        'X-RapidAPI-Host': 'bing-news-search1.p.rapidapi.com'
-      }
+        'X-Api-Key': '6c4cecd8f42848339d8f5ec708760227',
+    }
 };
 
 // reducer function to handle coins data
@@ -207,17 +206,16 @@ const App = () => {
     const [coinsUrl, setCoinsUrl] = useState<string[]>([getNewCoinsUrl('marketCap', 'desc', 10, coins.offset, '')])
     
     const [news, dispatchNews] = useReducer(newsReducer, {data: [], isLoading: false, isError: false})
-    const [newsUrl, setNewsUrl] = useState<string>(getNewNewsUrl('Cryptocurrency', '20', '0'))
+    const [newsUrl, setNewsUrl] = useState<string>(getNewNewsUrl('Cryptocurrency'))
     
     const debouncedValue = useDebounce(coinsUrl[0], 300)
-    console.log(news)
+
     // function for fetching coins, redefined by debounced input result value
     const handleFetchCoinDetails = useCallback(async () => {
         try {
+            console.log('fetch details')
             const coinDetails = await axios.get(coinDetailsUrl, coinDetailsOptions)
             const priceHistory = await axios.get(coinDetailsHistoryUrl, coinDetailsHistoryOptions)
-            console.log(priceHistory)
-            console.log(coinDetails)
             dispatchCoinDetails({
                 type: 'COIN_DETAILS_FETCH_SUCCESS',
                 payload: {
@@ -235,6 +233,7 @@ const App = () => {
 
     const handleFetchCoinDetailsHistory = useCallback(async () => {
         try {
+            console.log('fetch details history')
             const response = await axios.get(coinDetailsHistoryUrl, coinDetailsHistoryOptions)
 
             dispatchCoinDetails({
@@ -264,10 +263,9 @@ const App = () => {
     }, [handleFetchCoinDetails])
 
     const handleFetchCoins = useCallback(async () => {
-
         try {
+            console.log('fetch coins')
             const result = await axios.get(coinsUrl[0], coinsOptions)
-            // console.log(result)
             dispatchCoins({
                 type: 'COINS_FETCH_SUCCESS',
                 payload: {
@@ -286,12 +284,12 @@ const App = () => {
     // function for fetching news, redefines when url for coins changes
 
     const handleFetchNews = useCallback(async () => {
-
         try {
+            console.log('fetch news')
             const result = await axios.get(newsUrl, newsOptions)
             dispatchNews({
                 type: 'NEWS_FETCH_SUCCESS',
-                payload: result.data.value
+                payload: result.data.articles
             })
         } catch {
             dispatchNews({
@@ -300,7 +298,7 @@ const App = () => {
         }
 
     }, [newsUrl])
-    
+
     // useEffect for fetching coins, fires when coins function redefines
 
     useEffect(() => {
@@ -320,7 +318,7 @@ const App = () => {
     }, [handleFetchNews])
 
 
-    const handleSearch = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleSearch = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         setInputResult(e.target.value)
         dispatchCoins({
             type: 'COINS_RESET_OFFSET'
@@ -341,14 +339,13 @@ const App = () => {
             type: 'COINS_DEFAULT_STATE'
         })
         setInputResult('')
-        setCoinsUrl([getNewCoinsUrl('marketCap', 'desc', 
-            10, 0, '')])
+        setCoinsUrl([getNewCoinsUrl('marketCap', 'desc', 10, 0, '')])
     }
 
     const handleGetCoinDetails = (id: string, name: string) => {
         setCoinDetailsUrl(getCoinDetailsUrl(id))
         setCoinDetailsHistoryUrl(getCoinDetailsHistoryUrl(id, coinDetails.chartData.timePeriod))
-        setNewsUrl(getNewNewsUrl(name, '10', '0'))
+        setNewsUrl(getNewNewsUrl(name))
     }
 
     const handleGetCoinHistory = (id: string, period: string) => {
@@ -390,7 +387,7 @@ const App = () => {
                 break
         }
     }
-    
+    console.log(news)
 
     return (
         <>
@@ -408,22 +405,17 @@ const App = () => {
                                 coins={coins.data.slice(0,10)}
                             />
                         }
-                        {/* <Marquee>
-                            {news.data.map(item => 
-                                width > 600 
-                                ? <NewsItem 
-                                key={item.url}
-                                    news={item} 
-                                />
-                                : <NewsItemMarquee
-                                    key={item.url}
-                                    time={item.datePublished} 
-                                    title={item.name} 
-                                    img={item.image} 
-                                    url={item.url}
-                                />
-                            )}
-                        </Marquee> */}
+                        <Marquee
+                            style={{height:'auto', display: 'grid', overflow: 'hidden', alignItems: 'none', margin: '0.25rem 0'}}
+                            speed={5}
+                            loop={0}
+                            className='marquee-main-news'
+                            gradientWidth={50}
+                        >
+                            {
+                                news?.data?.map(n => <NewsItem news={n}/>)
+                            }
+                        </Marquee>
                     </>
                 }
                 />
@@ -450,6 +442,7 @@ const App = () => {
                         handleGetCoinDetails={handleGetCoinDetails}
                         handleGetCoinHistory={handleGetCoinHistory}
                         timePeriod={coinDetails.chartData.timePeriod}
+                        news={news.data}
                     />
                 }
 

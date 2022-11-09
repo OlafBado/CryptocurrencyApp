@@ -1,4 +1,4 @@
-import { SingleCoinDetailsData, ChartData } from '../App/types'
+import { SingleCoinDetailsData, ChartData, SingleNewsData } from '../App/types'
 import { EmptyObject } from '../GlobalStats/types'
 
 interface CoinDetailsProps {
@@ -6,7 +6,8 @@ interface CoinDetailsProps {
     coinDetails: SingleCoinDetailsData | EmptyObject,
     coinHistory: ChartData,
     handleGetCoinHistory: (id: string, period: string) => void,
-    timePeriod: string
+    timePeriod: string,
+    news: SingleNewsData[]
 }
 
 export { CoinDetailsProps }

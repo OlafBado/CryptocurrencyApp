@@ -33,7 +33,8 @@
 .coin {
     width: 30px;
     height: 30px;
-    animation: side2side 10s linear infinite;
+    animation: side2side var(--side2side-time) linear infinite;
+    border-radius: 0.5rem;
 }
 
 

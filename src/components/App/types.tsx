@@ -24,6 +24,7 @@ interface CoinSupply {
 interface SingleCoinDetailsDataLinks {
     name: string,
     url: string,
+    type: string
 }
 
 interface SingleCoinDetailsData extends SingleCoinData {
@@ -162,25 +163,19 @@ type CoinsAction = CoinsActionSuccess
 // type for single news
 
 interface SingleNewsData {
-    datePublished: string,
+    author?: string,
+    content: string,
     description: string,
-    image?: {
-        thumbnail: {
-            contentUrl: string
-        }
-    } | null,
-    name: string,
+    publishedAt: string,
+    title: string,
     url: string,
-    provider: SingleNewsDataProvider[]
+    urlToImage: string,
+    source?: SingleNewsDataSource;
 }
 
-interface SingleNewsDataProvider {
+interface SingleNewsDataSource {
     name: string,
-    image: {
-        thumbnail: {
-            contentUrl: string
-        }
-    } | null
+    id: string
 }
 
 // type for news reducer

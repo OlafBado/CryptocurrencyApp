@@ -1,0 +1,72 @@
+.coin-details-stats__wrapper {
+    border-radius: 0.5rem;
+    margin: 2rem 0;
+}
+
+.coin-details__title {
+    font-size: 2.5rem;
+}
+
+.coin-details__title span {
+    display: block;
+}
+
+.coin-details__title,
+.coin-details__value-stats__title,
+.coin-details__supply-stats__title,
+.coin-details__what-is__title,
+.coin-details__news__title,
+.coin-details__links__title {
+    color: var(--color-purple);
+    margin: 1rem 0;
+}
+
+.coin-details__supply-stats {
+    margin-top: 2rem;
+}
+
+.coin-details__value-stats__title,
+.coin-details__supply-stats__title {
+    margin: 0.5rem 0;
+}
+
+.coin-details__description,
+.coin-details__title {
+    text-align: center;
+}
+
+.coin-details__description,
+.coin-details__value-stats__description,
+.coin-details__supply-stats__description {
+    font-size: 1rem;
+    margin: 1rem 0;
+}
+
+.coin-details__what-is > p {
+    margin: 1rem 0;
+}
+
+.coin-details__news__list {
+    padding: 0;
+    list-style: none;
+}
+
+.coin-details__value-stats,
+.coin-details__supply-stats,
+.coin-details__links {
+    background-color: var(--color-bg);
+    display: flex;
+    flex-direction: column;
+    row-gap: 1.25rem;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+}
+
+.coin-details__links {
+    margin-bottom: 1rem;
+}
+
+.coin-details__links__sub-description {
+    color: var(--color-purple);
+    text-decoration: underline;
+}

@@ -6,9 +6,15 @@
 }
 
 .coins__load-more {
+    display: block;
     padding: 0.5rem 2rem;
     font-size: 1.15rem;
     align-self: center;
     width: 80%;
     max-width: 250px;
+    margin: 0 auto;
+}
+
+.coins__load-more__wrapper {
+    margin-top: 2rem;
 }

@@ -17,6 +17,8 @@ const Cryptocurrencies: React.FC<CryptocurrenciesProps> = ({handleSortBy, sortBy
                     ? <h3 style={{textAlign: 'center'}}>This coin does not exist...</h3>
                     : coins.map(coin => <Coin key={coin.uuid} coin={coin}/>)
                 }
+            </div>
+            <div className='coins__load-more__wrapper'>
                 {
                     isLoading
                     ? <Spinner />

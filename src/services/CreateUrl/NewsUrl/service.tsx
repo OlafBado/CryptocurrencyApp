@@ -1,13 +1,12 @@
-const API_BASE = 'https://bing-news-search1.p.rapidapi.com/news/search?sortBy=Date&freshness=Day&textFormat=Raw&safeSearch=Off&setLang=EN&'
+const API_BASE = 'https://newsapi.org/v2/everything?pageSize=10&sortBy=publishedAt&language=en&'
 const PARAM_Q = 'q='
-const PARAM_COUNT = 'count='
-const PARAM_OFFSET = 'offset='
+// const PARAM_COUNT = 'count='
+// const PARAM_OFFSET = 'offset='
 
 const getNewNewsUrl = (
     query: string,
-    count: string, 
-    offset: string) => 
+    ) => 
     
-    `${API_BASE}${PARAM_Q}${query}&${PARAM_COUNT}${count}&${PARAM_OFFSET}${offset}`
+    `${API_BASE}${PARAM_Q}${query}`
 
 export default getNewNewsUrl

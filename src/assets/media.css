@@ -1,0 +1,51 @@
+@media (min-width: 700px) {
+    :root {
+        --side2side-left: 200%;
+        --side2side-right: -200%;
+        --side2side-time: 20s;
+    }
+
+    .coins__wrapper,
+    .coin-details-upper-section__wrapper,
+    .coin-details-middle-section__wrapper,
+    .coin-details__news__list {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+    }
+
+    .global-stats__title {
+        font-size: 2.5rem;
+    }
+
+    .best-coins__title,
+    .newest-coins__title {
+        font-size: 1.5rem;
+    }
+
+    .coins__title {
+        font-size: 2.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .global-stats__article__title {
+        font-size: 1.25rem;
+    }
+
+    .global-stats__article__text {
+        font-size: 1rem;
+    }
+
+    .coin {
+        width: 50px;
+        height: 50px;
+    }
+
+    .coin-details__title span {
+        display: inline-block;
+    }
+    
+    .coin-details__supply-stats {
+        margin: 0;
+    }
+}

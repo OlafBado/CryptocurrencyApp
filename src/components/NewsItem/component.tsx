@@ -6,31 +6,24 @@ import dateMoment from '../../services/Format/DateMoment/service'
 const defaultImg = 'https://cdn-icons-png.flaticon.com/512/1213/1213797.png'
 
 const NewsItem:React.FC<NewsItemProps> = ({news}) => {
-    const {datePublished, description, name, provider, url, image} = news
+    const {publishedAt, description, author, content, url, urlToImage, title, source} = news
 
     
 
     return (
-        <li>
         <a href={url} target='__blank'>
-            <article className='newsItem__wrapper'>
-                <div className='newsItem__upper-section'>
-                    <h4 className='newsItem__upper-section__title'>{name}</h4>
-                    <img className='newsItem__upper-section__img' src={image?.thumbnail?.contentUrl || defaultImg} alt="news image" />
+            <article className='news-item__wrapper'>
+                <div className='news-item__upper-section'>
+                    <h3 className='news-item__upper-section__title'>{title}</h3>
+                    <img className='news-item__upper-section__img' src={urlToImage? urlToImage : defaultImg} alt="Photo relating to the news" />
                 </div>
-                <div className='newsItem__middle-section'>
-                    <p className='newsItem__middle-section__description'>{description}</p>
-                </div>
-                <div className='newsItem__lower-section'>
-                    <div className='newsItem__lower-section__author'>
-                        <img className='newsItem__lower-section__author__img' src={provider[0]?.image?.thumbnail?.contentUrl || defaultImg} alt="news author image" />
-                        <h5 className='newsItem__lower-section__author__name'>{provider[0].name}</h5>
-                    </div>
-                    <p className='newsItem__lower-section__date'>{dateMoment(datePublished)}</p>
+                <p className='news-item__middle-section__description'>{description}</p>
+                <div className='news-item__lower-section'>
+                    <h4 className='news-item__lower-section__source'>{source?.name}</h4>
+                    <p className='news-item__lower-section__date'>{dateMoment(publishedAt)}</p>
                 </div>
             </article>
         </a>
-        </li>
     )
 }
 

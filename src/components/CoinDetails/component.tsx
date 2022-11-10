@@ -129,7 +129,7 @@ const CoinDetails: React.FC<CoinDetailsProps> = ({news, timePeriod, handleGetCoi
                         <h2 className='coin-details__links__title'>{coinDetails.name} useful links</h2>
                             {
                                 coinDetails?.links?.map(link => 
-                                    <div className="row">
+                                    <div className="row" key={link.url}>
                                         <h4 className='coin-details__links__sub-title'>{link.type}</h4>
                                         <a href={link.url} target='__blank'>
                                             <p className='coin-details__links__sub-description'>{link.name}</p>
@@ -147,10 +147,9 @@ const CoinDetails: React.FC<CoinDetailsProps> = ({news, timePeriod, handleGetCoi
                         <ul className='coin-details__news__list'>
                         {
                             news?.map(n => 
-                            <li className='coin-details__news__list-item'>
+                            <li className='coin-details__news__list-item' key={n.url}>
                                 <NewsItem 
                                     news={n} 
-                                    key={n.url} 
                                 />
                             </li>)
                         }

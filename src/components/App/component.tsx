@@ -398,7 +398,7 @@ const App = () => {
                             gradientWidth={50}
                         >
                             {
-                                news?.data?.map(n => <NewsItem news={n}/>)
+                                news?.data?.map(n => <NewsItem key={n.url} news={n}/>)
                             }
                         </Marquee>
                     </>

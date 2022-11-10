@@ -111,3 +111,7 @@ img {
     text-overflow: ellipsis;
     max-width: 100px;
 }
+
+canvas {
+    max-height: 300px;
+}

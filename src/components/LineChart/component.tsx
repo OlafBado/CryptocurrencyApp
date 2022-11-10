@@ -48,14 +48,14 @@ const LineChart: React.FC<LineChartProps> = ({coinHistory, coinName, currentPric
                 borderWidth: 1,
                 fill: false,
                 backgroundColor: '#6c63ff',
-                borderColor: '#6c63ff'
-                
+                borderColor: '#6c63ff',
             }
         ]
     }
 
     const options: any = {
             responsive: true,
+            maintainAspectRatio: false,
             scales: {
                 y: 
                     {

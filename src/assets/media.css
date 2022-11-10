@@ -29,11 +29,11 @@
     }
 
     .global-stats__article__title {
-        font-size: 1.25rem;
+        font-size: 1.75rem;
     }
 
     .global-stats__article__text {
-        font-size: 1rem;
+        font-size: 1.25rem;
     }
 
     .coin {
@@ -47,5 +47,73 @@
     
     .coin-details__supply-stats {
         margin: 0;
+    }
+
+    .hero__section {
+        min-height: 60vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .hero__section__wrapper {
+        display: flex;
+    }
+
+    .hero__section__banner {
+        width: 60%;
+    }
+
+    .hero__section__title {
+        align-self: center;
+    }
+
+    canvas {
+        max-height: 500px;
+    }
+
+    .navbar__wrapper {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .nav__toggle {
+        display: none;
+    }
+
+    .navbar__list {
+        display: flex;
+        margin: 0;
+        column-gap: 3.5rem;
+    }
+
+    .navbar__list__item {
+        margin: 0;
+        padding: 0.5rem 0;
+        transition: 200ms;
+    }
+
+    .navbar__list__item a {
+        padding: 0.5rem;
+        border-radius: 1rem;
+    }
+    
+    .navbar__list__item--active {
+        color: white;
+        background-color: var(--color-purple);
+        transition: 200ms;
+    }
+
+    .coin__wrapper:hover {
+        transition: 200ms;
+        scale: 1.1;
+    }
+
+}
+
+@media (min-width: 1000px) {
+    .coins__wrapper {
+        grid-template-columns: 1fr 1fr 1fr;
     }
 }

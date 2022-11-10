@@ -47,7 +47,6 @@ const options = [
 const CoinDetails: React.FC<CoinDetailsProps> = ({news, timePeriod, handleGetCoinHistory, coinDetails, coinHistory, handleGetCoinDetails}) => {
     
     const coinId = useParams()
-    console.log(coinDetails)
     useEffect(() => {
         handleGetCoinDetails(coinId.id!, coinDetails.name)
     }, [])
@@ -62,12 +61,12 @@ const CoinDetails: React.FC<CoinDetailsProps> = ({news, timePeriod, handleGetCoi
                 <h1 className='coin-details__title'>{coinDetails.name}<span>({coinDetails.symbol})</span></h1>
                 <p className='coin-details__description'>{coinDetails.name} live price in US dollars. View historical price, staticstics and supply.</p>
                 <ChangeButtons handler={handleChangeHistoryPeriod} options={options} state={timePeriod} label='Select time period'/>
-            </div>
             <LineChart 
                 coinHistory={coinHistory.history} 
                 currentPrice={millify(coinDetails.price)} 
                 coinName={coinDetails.name}
-            />
+                />
+                </div>
             <div className="container">
                 <div className="coin-details-upper-section__wrapper">
                     <section className="coin-details__value-stats">
@@ -139,21 +138,28 @@ const CoinDetails: React.FC<CoinDetailsProps> = ({news, timePeriod, handleGetCoi
                                 )
                             }
                     </section>
-                            </div>
-                <section className='coin-details__news'>
-                    <h2 className='coin-details__news__title'>The most important news regarding {coinDetails.name}</h2>
-                    <ul className='coin-details__news__list'>
-                    {
-                        news?.map(n => 
-                        <li className='coin-details__news__list-item'>
-                            <NewsItem 
-                                news={n} 
-                                key={n.url} 
-                            />
-                        </li>)
-                    }
-                    </ul>
-                </section>
+                </div>
+                {
+                    news.length > 0 
+                    ? (
+                    <section className='coin-details__news'>
+                        <h2 className='coin-details__news__title'>The most important news regarding {coinDetails.name}</h2>
+                        <ul className='coin-details__news__list'>
+                        {
+                            news?.map(n => 
+                            <li className='coin-details__news__list-item'>
+                                <NewsItem 
+                                    news={n} 
+                                    key={n.url} 
+                                />
+                            </li>)
+                        }
+                        </ul>
+                    </section>
+                        
+                    )
+                    : null
+                }
                 
             </div>
         </>

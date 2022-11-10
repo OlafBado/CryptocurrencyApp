@@ -36,6 +36,8 @@
 
 .news-item__upper-section__img {
     border-radius: 0.5rem;
+    display: block;
+    margin: 1rem auto;
 }
 
 

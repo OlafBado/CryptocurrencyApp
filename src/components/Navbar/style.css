@@ -27,7 +27,6 @@ header {
 
 .navbar__list__item a {
     text-decoration: none;
-    color: inherit;
 }
 
 .nav__toggle {
@@ -46,4 +45,9 @@ header {
     height: 3px;
     background-color: var(--color-hamburger);
     transform-origin: 43%;
+    transition: 300ms;
+}
+
+.navbar__list__item--active {
+    color: var(--color-purple);
 }

@@ -17,6 +17,8 @@
     font-size: 0.75rem;
     display: flex;
     justify-content: space-between;
+    max-width: 900px;
+    margin: 0 auto;
 }
 
 .global-stats__article__text {

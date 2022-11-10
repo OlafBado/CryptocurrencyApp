@@ -19,20 +19,7 @@ import Spinner from '../Spinner'
 import CoinDetails from '../CoinDetails'
 import Marquee from "react-fast-marquee";
 import NewsItem from '../NewsItem'
-// import * as dotenv from 'dotenv'
-// dotenv.config()
-
-// API Coinranking
-// 1. Get general stats about crypto markets along with 3 best and newest coinst
-// 2. Get list of coins and their general stats that can be paginated.
-// 3. Get coin details - a lot of info about the coin
-// 4. Get coin price history - create a chart from that
-// 5. Get coin supply - another info for coin
-// 6. Search endpoint - returns coins, markets and exchanges matching the query
-
-// API Bing News Search
-// 1. Get list of news from crypto world
-// 2. Get list of news for specific crypto
+import { WidthContextProvider } from '../../services/Context/WidthContex'
 
 const coinDetailsHistoryOptions = {
 	headers: {
@@ -213,7 +200,6 @@ const App = () => {
     // function for fetching coins, redefined by debounced input result value
     const handleFetchCoinDetails = useCallback(async () => {
         try {
-            console.log('fetch details')
             const coinDetails = await axios.get(coinDetailsUrl, coinDetailsOptions)
             const priceHistory = await axios.get(coinDetailsHistoryUrl, coinDetailsHistoryOptions)
             dispatchCoinDetails({
@@ -233,7 +219,6 @@ const App = () => {
 
     const handleFetchCoinDetailsHistory = useCallback(async () => {
         try {
-            console.log('fetch details history')
             const response = await axios.get(coinDetailsHistoryUrl, coinDetailsHistoryOptions)
 
             dispatchCoinDetails({
@@ -264,7 +249,6 @@ const App = () => {
 
     const handleFetchCoins = useCallback(async () => {
         try {
-            console.log('fetch coins')
             const result = await axios.get(coinsUrl[0], coinsOptions)
             dispatchCoins({
                 type: 'COINS_FETCH_SUCCESS',
@@ -285,7 +269,6 @@ const App = () => {
 
     const handleFetchNews = useCallback(async () => {
         try {
-            console.log('fetch news')
             const result = await axios.get(newsUrl)
             dispatchNews({
                 type: 'NEWS_FETCH_SUCCESS',
@@ -387,11 +370,12 @@ const App = () => {
                 break
         }
     }
-    console.log(news)
 
     return (
         <>
-            <Navbar handleDefaultCoinsState={handleDefaultCoinsState}/>
+            <WidthContextProvider>
+                <Navbar handleDefaultCoinsState={handleDefaultCoinsState}/>
+            </WidthContextProvider>
             <Routes>
                 <Route path='/' element={
                     <>
@@ -408,6 +392,7 @@ const App = () => {
                         <Marquee
                             style={{height:'auto', display: 'grid', overflow: 'hidden', alignItems: 'none', margin: '0.25rem 0'}}
                             speed={5}
+                            pauseOnHover={true}
                             loop={0}
                             className='marquee-main-news'
                             gradientWidth={50}

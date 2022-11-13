@@ -1,8 +1,9 @@
 {
-  "httpMethod": "POST",
-  "path": "/item",
+  "httpMethod": "GET",
+  "path": "/crypto/getNews",
   "queryStringParameters": {
-    "limit": "10"
+    "limit": "10",
+    "coin": "Cryptocurrency"
   },
   "headers": {
     "Content-Type": "application/json"

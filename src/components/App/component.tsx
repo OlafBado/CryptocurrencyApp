@@ -20,6 +20,8 @@ import CoinDetails from '../CoinDetails'
 import Marquee from "react-fast-marquee";
 import NewsItem from '../NewsItem'
 import { WidthContextProvider } from '../../services/Context/WidthContex'
+// @ts-ignore
+import {API} from 'aws-amplify'
 
 const coinDetailsHistoryOptions = {
 	headers: {
@@ -197,19 +199,6 @@ const App = () => {
     
     const debouncedValue = useDebounce(coinsUrl[0], 300)
 
-    const getDatra = async () => {
-        try {
-            const response = await axios.get('http://localhost:5000/getNews')
-            console.log(response.data)
-        } catch {
-            
-        }
-    }
-
-    useEffect(() => {
-        getDatra()
-    }, [])
-
     // function for fetching coins, redefined by debounced input result value
     const handleFetchCoinDetails = useCallback(async () => {
         try {
@@ -384,11 +373,23 @@ const App = () => {
         }
     }
 
+    const apiHandler = async() => {
+        const params = {
+            'queryStringParameters':
+                {
+                    coin: 'Cryptocurrency'
+                }
+          }
+        const res = await API.get('cryptoApi', '/crypto/getNews', params)
+        console.log(res)
+    }
+
     return (
         <>
             <WidthContextProvider>
                 <Navbar handleDefaultCoinsState={handleDefaultCoinsState}/>
             </WidthContextProvider>
+            <button onClick={apiHandler}>clicik</button>
             <Routes>
                 <Route path='/' element={
                     <>

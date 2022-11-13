@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "paths": {
+    "/crypto": {
+      "name": "/crypto",
+      "lambdaFunction": "cryptoApiLambda",
+      "permissions": {
+        "setting": "open"
+      }
+    }
+  }
+}

@@ -197,6 +197,19 @@ const App = () => {
     
     const debouncedValue = useDebounce(coinsUrl[0], 300)
 
+    const getDatra = async () => {
+        try {
+            const response = await axios.get('http://localhost:5000/getNews')
+            console.log(response.data)
+        } catch {
+            
+        }
+    }
+
+    useEffect(() => {
+        getDatra()
+    }, [])
+
     // function for fetching coins, redefined by debounced input result value
     const handleFetchCoinDetails = useCallback(async () => {
         try {

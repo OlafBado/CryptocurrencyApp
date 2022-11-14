@@ -269,12 +269,34 @@ const App = () => {
 
     // function for fetching news, redefines when url for coins changes
 
+    // const handleFetchNews = useCallback(async () => {
+    //     try {
+    //         const result = await axios.get(newsUrl)
+    //         dispatchNews({
+    //             type: 'NEWS_FETCH_SUCCESS',
+    //             payload: result.data.articles
+    //         })
+    //     } catch {
+    //         dispatchNews({
+    //             type: 'NEWS_FETCH_FAILURE'
+    //         })
+    //     }
+
+    // }, [newsUrl])
     const handleFetchNews = useCallback(async () => {
+        console.log('news')
+        const params = {
+            'queryStringParameters':
+                {
+                    coin: 'Cryptocurrency'
+                }
+        }
         try {
-            const result = await axios.get(newsUrl)
+            const result = await API.get('cryptoApi', '/crypto/getNews', params)
+            console.log(result)
             dispatchNews({
                 type: 'NEWS_FETCH_SUCCESS',
-                payload: result.data.articles
+                payload: result.articles
             })
         } catch {
             dispatchNews({
@@ -379,7 +401,7 @@ const App = () => {
                 {
                     coin: 'Cryptocurrency'
                 }
-          }
+        }
         const res = await API.get('cryptoApi', '/crypto/getNews', params)
         console.log(res)
     }

@@ -8,7 +8,7 @@ header {
 }
 
 .logo {
-    width: 3.5rem;
+    width: 4.5rem;
     height: 1.5rem;
     aspect-ratio: 35 / 4;
 }
@@ -23,10 +23,6 @@ header {
 .navbar__list__item {
     text-align: center;
     margin-bottom: 0.75rem;
-}
-
-.navbar__list__item a {
-    text-decoration: none;
 }
 
 .nav__toggle {
@@ -48,6 +44,6 @@ header {
     transition: 300ms;
 }
 
-.navbar__list__item--active {
+.navbar__list__link--active {
     color: var(--color-purple);
 }

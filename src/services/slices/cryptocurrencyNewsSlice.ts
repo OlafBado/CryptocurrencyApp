@@ -12,6 +12,7 @@ export const fetchCryptocurrencyNews = createAsyncThunk(
         }
         try {
             const result = await API.get('cryptoApi', '/crypto/getNews', params)
+            console.log(result)
             return result.articles
         } catch (err) {
             return err

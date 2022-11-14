@@ -4,7 +4,9 @@ const awsServerlessExpressMiddleware = require('aws-serverless-express/middlewar
 const AWS = require('aws-sdk')
 const secretsManager = new AWS.SecretsManager()
 const axios = require('axios')
+const multer = require('multer')
 
+const s3 = new AWS.S3()
 const app = express()
 app.use(bodyParser.json())
 app.use(awsServerlessExpressMiddleware.eventContext())
@@ -30,6 +32,25 @@ app.get('/crypto/getNews', function(req, res) {
     }
     getData()
 });
+
+app.get('/example', (req, res) => {
+  // (async () => {
+  //   await s3.putObject({
+  //     Body: 'hello world',
+  //     Bucket: 'niebiel-news',
+  //     Key: 'Example.txt'
+  //   }).promise()
+  // })()
+  const getData = async () => {
+    try {
+      const res = await axios.get('https://jsonplaceholder.typicode.com/posts?limit=10')
+      res.json(res)
+    } catch {
+
+    }
+  }
+  getData()
+})
 
 app.listen(3000, function() {
     console.log("App started")

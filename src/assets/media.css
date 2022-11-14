@@ -5,6 +5,12 @@
         --side2side-time: 20s;
     }
 
+    .logo {
+        width: 5.5rem;
+        height: 2rem;
+        aspect-ratio: 35 / 4;
+    }
+
     .coins__wrapper,
     .coin-details-upper-section__wrapper,
     .coin-details-middle-section__wrapper,
@@ -61,7 +67,8 @@
     }
 
     .hero__section__banner {
-        width: 60%;
+        max-width: 650px;
+        width: 70%;
     }
 
     .hero__section__title {
@@ -90,16 +97,17 @@
 
     .navbar__list__item {
         margin: 0;
-        padding: 0.5rem 0;
         transition: 200ms;
     }
-
-    .navbar__list__item a {
-        padding: 0.5rem;
+    
+    .navbar__list__link {
+        padding: 0.5rem 0.5rem;
         border-radius: 1rem;
     }
     
-    .navbar__list__item--active {
+    .navbar__list__link--active {
+        padding: 0.5rem 0.5rem;
+        border-radius: 1rem;
         color: white;
         background-color: var(--color-purple);
         transition: 200ms;

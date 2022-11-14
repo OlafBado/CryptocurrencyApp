@@ -20,6 +20,7 @@ import Spinner from '../Spinner'
 import CoinDetails from '../CoinDetails'
 import Marquee from "react-fast-marquee";
 import NewsItem from '../NewsItem'
+import { API } from 'aws-amplify'
 
 const coinDetailsHistoryOptions = {
 	headers: {
@@ -171,8 +172,15 @@ const App = () => {
     // function for fetching coins, redefined by debounced input result value
 
     useEffect(() => {
+        console.log('fetch news app')
         dispatch(fetchCryptocurrencyNews())
+        x()
     }, [])
+    
+    const x = async() => {
+        let res = await API.get('cryptoApi', '/example')
+        console.log (res)
+    }
 
     const handleFetchCoinDetails = useCallback(async () => {
         try {
@@ -316,7 +324,7 @@ const App = () => {
                 break
         }
     }
-
+    console.log(news)
     return (
         <>
             <Navbar handleDefaultCoinsState={handleDefaultCoinsState}/>

@@ -1,6 +1,6 @@
 {
   "httpMethod": "GET",
-  "path": "/crypto/getNews",
+  "path": "/example",
   "queryStringParameters": {
     "limit": "10",
     "coin": "Cryptocurrency"

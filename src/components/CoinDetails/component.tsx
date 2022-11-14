@@ -1,12 +1,14 @@
 import React, { useEffect } from 'react'
 import './style.css'
 import { CoinDetailsProps } from './types'
+import { useAppDispatch, useAppSelector } from '../../app/hooks'
 import { useParams } from 'react-router-dom'
 import LineChart from '../LineChart'
 import millify from 'millify'
 import HTMLparser from 'html-react-parser'
 import ChangeButtons from '../ChangeButtons'
 import NewsItem from '../NewsItem'
+import { fetchCoinNews } from '../../services/slices/coinNewsSlice'
 
 const options = [
     {
@@ -44,13 +46,19 @@ const options = [
 
 ]
 
-const CoinDetails: React.FC<CoinDetailsProps> = ({news, timePeriod, handleGetCoinHistory, coinDetails, coinHistory, handleGetCoinDetails}) => {
+const CoinDetails: React.FC<CoinDetailsProps> = ({ timePeriod, handleGetCoinHistory, coinDetails, coinHistory, handleGetCoinDetails}) => {
+
     
+    const dispatch = useAppDispatch()
     const coinId = useParams()
+    
+    const { news } = useAppSelector(state => state.coinNews)
+    
     useEffect(() => {
         handleGetCoinDetails(coinId.id!, coinDetails.name)
+        dispatch(fetchCoinNews(coinDetails.name))
     }, [])
-
+    
     const handleChangeHistoryPeriod = (period: string) => {
         handleGetCoinHistory(coinId.id!, period)
     }
@@ -140,7 +148,7 @@ const CoinDetails: React.FC<CoinDetailsProps> = ({news, timePeriod, handleGetCoi
                     </section>
                 </div>
                 {
-                    news.length > 0 
+                    news?.length > 0  
                     ? (
                     <section className='coin-details__news'>
                         <h2 className='coin-details__news__title'>The most important news regarding {coinDetails.name}</h2>

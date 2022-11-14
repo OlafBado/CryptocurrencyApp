@@ -1,13 +1,14 @@
 import React, { useCallback, useEffect, useReducer, useState } from 'react'
 import './style.css'
+import { useAppSelector, useAppDispatch } from '../../app/hooks'
+import { fetchCryptocurrencyNews } from '../../services/slices/cryptocurrencyNewsSlice'
 import axios from 'axios'
-import { CoinsReducerState, CoinsAction, NewsReducerState, NewsAction, CoinDetailsReducerState, CoinDetailsActions } from './types'
+import { CoinsReducerState, CoinsAction, CoinDetailsReducerState, CoinDetailsActions } from './types'
 import { Route, Routes } from 'react-router-dom'
 import useDebounce from '../../hooks/useDebounce'
 import getNewCoinsUrl from '../../services/CreateUrl/CoinsUrl'
 import getCoinDetailsHistoryUrl from '../../services/CreateUrl/CoinDetailsHistoryUrl/service'
 import getCoinDetailsUrl from '../../services/CreateUrl/CoinDetailsUrl/service'
-import getNewNewsUrl from '../../services/CreateUrl/NewsUrl/service'
 import getSubstring from '../../services/FormatString/GetSubstring/service'
 import Navbar from '../Navbar'
 import Hero from '../Hero'
@@ -19,9 +20,6 @@ import Spinner from '../Spinner'
 import CoinDetails from '../CoinDetails'
 import Marquee from "react-fast-marquee";
 import NewsItem from '../NewsItem'
-import { WidthContextProvider } from '../../services/Context/WidthContex'
-// @ts-ignore
-import {API} from 'aws-amplify'
 
 const coinDetailsHistoryOptions = {
 	headers: {
@@ -108,34 +106,6 @@ const coinsReducer = (state: CoinsReducerState, action: CoinsAction) => {
     }
 }
 
-// reducer function to handle news data
-
-const newsReducer = (state: NewsReducerState, action: NewsAction) => {
-    switch(action.type) {
-        case 'NEWS_FETCH_INIT':
-            return {
-                ...state,
-                isLoading: true,
-                isError: false
-            }
-        case 'NEWS_FETCH_SUCCESS':
-            return {
-                ...state,
-                isLoading: false,
-                isError: false,
-                data: action.payload
-            }
-        case 'NEWS_FETCH_FAILURE':
-            return {
-                ...state,
-                isLoading: false,
-                isError: true
-            }
-        default:
-            throw new Error()
-    }
-}
-
 const coinDetailsReducer = (state: CoinDetailsReducerState, action: CoinDetailsActions) => {
     switch(action.type) {
         case 'COIN_DETAILS_FETCH_INIT':
@@ -184,22 +154,26 @@ const coinDetailsReducer = (state: CoinDetailsReducerState, action: CoinDetailsA
 
 const App = () => {
 
-    const width = window.innerWidth
+    const dispatch = useAppDispatch()
+    const { news } = useAppSelector((state) => state.cryptoNews)
+
     const [inputResult, setInputResult] = useState<string>('')
     
     const [coinDetails, dispatchCoinDetails] = useReducer(coinDetailsReducer, {data:{},chartData:{change:'0', history:[], timePeriod: '3y'}, isLoading: false, isError: false})
     const [coinDetailsUrl, setCoinDetailsUrl] = useState<string>('')
     const [coinDetailsHistoryUrl, setCoinDetailsHistoryUrl] = useState<string>('')
-    
+
     const [coins, dispatchCoins] = useReducer(coinsReducer, {data: [], sortBy: 'marketCap', direction: 'desc', offset:0, total:0, isLoading: false, isError: false})
     const [coinsUrl, setCoinsUrl] = useState<string[]>([getNewCoinsUrl('marketCap', 'desc', 10, coins.offset, '')])
-    
-    const [news, dispatchNews] = useReducer(newsReducer, {data: [], isLoading: false, isError: false})
-    const [newsUrl, setNewsUrl] = useState<string>(getNewNewsUrl('Cryptocurrency'))
     
     const debouncedValue = useDebounce(coinsUrl[0], 300)
 
     // function for fetching coins, redefined by debounced input result value
+
+    useEffect(() => {
+        dispatch(fetchCryptocurrencyNews())
+    }, [])
+
     const handleFetchCoinDetails = useCallback(async () => {
         try {
             const coinDetails = await axios.get(coinDetailsUrl, coinDetailsOptions)
@@ -267,63 +241,12 @@ const App = () => {
 
     }, [debouncedValue])
 
-    // function for fetching news, redefines when url for coins changes
-
-    // const handleFetchNews = useCallback(async () => {
-    //     try {
-    //         const result = await axios.get(newsUrl)
-    //         dispatchNews({
-    //             type: 'NEWS_FETCH_SUCCESS',
-    //             payload: result.data.articles
-    //         })
-    //     } catch {
-    //         dispatchNews({
-    //             type: 'NEWS_FETCH_FAILURE'
-    //         })
-    //     }
-
-    // }, [newsUrl])
-    const handleFetchNews = useCallback(async () => {
-        console.log('news')
-        const params = {
-            'queryStringParameters':
-                {
-                    coin: 'Cryptocurrency'
-                }
-        }
-        try {
-            const result = await API.get('cryptoApi', '/crypto/getNews', params)
-            console.log(result)
-            dispatchNews({
-                type: 'NEWS_FETCH_SUCCESS',
-                payload: result.articles
-            })
-        } catch {
-            dispatchNews({
-                type: 'NEWS_FETCH_FAILURE'
-            })
-        }
-
-    }, [newsUrl])
-
-    // useEffect for fetching coins, fires when coins function redefines
-
     useEffect(() => {
         dispatchCoins({
             type: 'COINS_FETCH_INIT'
         })
         handleFetchCoins()
     }, [handleFetchCoins])
-
-    // useEffect for fetching news, fires when news function redefines
-
-    useEffect(() => {
-        dispatchNews({
-            type: 'NEWS_FETCH_INIT'
-        })
-        handleFetchNews()
-    }, [handleFetchNews])
-
 
     const handleSearch = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         setInputResult(e.target.value)
@@ -352,7 +275,6 @@ const App = () => {
     const handleGetCoinDetails = (id: string, name: string) => {
         setCoinDetailsUrl(getCoinDetailsUrl(id))
         setCoinDetailsHistoryUrl(getCoinDetailsHistoryUrl(id, coinDetails.chartData.timePeriod))
-        setNewsUrl(getNewNewsUrl(name))
     }
 
     const handleGetCoinHistory = (id: string, period: string) => {
@@ -395,23 +317,9 @@ const App = () => {
         }
     }
 
-    const apiHandler = async() => {
-        const params = {
-            'queryStringParameters':
-                {
-                    coin: 'Cryptocurrency'
-                }
-        }
-        const res = await API.get('cryptoApi', '/crypto/getNews', params)
-        console.log(res)
-    }
-
     return (
         <>
-            <WidthContextProvider>
-                <Navbar handleDefaultCoinsState={handleDefaultCoinsState}/>
-            </WidthContextProvider>
-            <button onClick={apiHandler}>clicik</button>
+            <Navbar handleDefaultCoinsState={handleDefaultCoinsState}/>
             <Routes>
                 <Route path='/' element={
                     <>
@@ -434,7 +342,7 @@ const App = () => {
                             gradientWidth={50}
                         >
                             {
-                                news?.data?.map(n => <NewsItem key={n.url} news={n}/>)
+                                news?.map(n => <NewsItem key={n.url} news={n}/>)
                             }
                         </Marquee>
                     </>
@@ -463,7 +371,6 @@ const App = () => {
                         handleGetCoinDetails={handleGetCoinDetails}
                         handleGetCoinHistory={handleGetCoinHistory}
                         timePeriod={coinDetails.chartData.timePeriod}
-                        news={news.data}
                     />
                 }
 

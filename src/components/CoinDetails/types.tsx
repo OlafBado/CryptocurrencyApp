@@ -7,7 +7,6 @@ interface CoinDetailsProps {
     coinHistory: ChartData,
     handleGetCoinHistory: (id: string, period: string) => void,
     timePeriod: string,
-    news: SingleNewsData[]
 }
 
 export { CoinDetailsProps }

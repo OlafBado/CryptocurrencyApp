@@ -4,8 +4,9 @@ import { createRoot } from 'react-dom/client'
 import App from './components/App'
 import { BrowserRouter } from 'react-router-dom'
 import './assets/media.css'
-import store from './app/store'
+import { store } from './app/store'
 import { Provider } from 'react-redux'
+import { WidthContextProvider } from './services/Context/WidthContex'
 import { Amplify } from 'aws-amplify';
 import awsExports from './aws-exports';
 Amplify.configure(awsExports);
@@ -16,9 +17,11 @@ if (root) {
     createRoot(root).render(
         <React.StrictMode>
             <BrowserRouter>
-            <Provider store={store}>
-                <App/>
-            </Provider>
+                <Provider store={store}>
+                    <WidthContextProvider>
+                        <App/>
+                    </WidthContextProvider>
+                </Provider>
             </BrowserRouter>
         </React.StrictMode>
     )

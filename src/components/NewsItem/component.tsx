@@ -6,9 +6,7 @@ import dateMoment from '../../services/Format/DateMoment/service'
 const defaultImg = 'https://cdn-icons-png.flaticon.com/512/1213/1213797.png'
 
 const NewsItem:React.FC<NewsItemProps> = ({news}) => {
-    const {publishedAt, description, author, content, url, urlToImage, title, source} = news
-
-    
+    const {publishedAt, description, url, urlToImage, title, source} = news
 
     return (
         <a href={url} target='__blank'>

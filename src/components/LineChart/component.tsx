@@ -2,8 +2,6 @@ import React from 'react'
 import './style.css'
 import { Line } from 'react-chartjs-2'
 import LineChartProps from './types'
-import dateFormatter from '../../services/Format/Date/service'
-import moment from 'moment'
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -15,7 +13,6 @@ import {
     Legend,
     Filler,
 } from 'chart.js'
-import { triggerAsyncId } from 'async_hooks'
 ChartJS.register(
     CategoryScale,
     LinearScale,

@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import './style.css'
 import logo from '../../assets/logo2.png'
-import { NavLink } from 'react-router-dom'
+import { NavLink, Link } from 'react-router-dom'
 import { NavbarProps } from './types'
 import { WidthContext } from '../../services/Context/WidthContex'
 
@@ -26,12 +26,13 @@ const Navbar: React.FC<NavbarProps> = ({handleDefaultCoinsState}) => {
     return (
         <header>
             <div className="container navbar__wrapper">
-                <img src={logo} alt="navigation logo" className='logo'/>
+                <Link to='/'>
+                    <img src={logo} alt="navigation logo" className='logo'/>
+                </Link>
                 <nav className='navbar' style={{display: isNavOpen ? 'block' : 'none'}}>
                     <ul className='navbar__list'>
                         <li onClick={handleNavbar} className='navbar__list__item'><NavLink to="/" className={({isActive}) => (isActive ? 'navbar__list__item--active' : '')}>Home</NavLink></li>
                         <li onClick={handleNavbar} className='navbar__list__item'><NavLink to="/cryptocurrencies" className={({isActive}) => (isActive ? 'navbar__list__item--active' : '')}>Cryptocurrencies</NavLink></li>
-                        <li className='navbar__list__item'><a href="#">News</a></li>
                     </ul>
                 </nav>
                 <button 

@@ -1,7 +1,7 @@
 import React from 'react'
 import './style.css'
 import Coin from '../Coin'
-import { Top10coinsProps, SingleCoinData } from './types'
+import { Top10coinsProps } from './types'
 
 const Top10Coins: React.FC<Top10coinsProps> = ({coins}) => {
     return (

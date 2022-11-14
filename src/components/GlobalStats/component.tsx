@@ -4,7 +4,6 @@ import { GlobalStatsReducerState, Action, Coin } from './types'
 import axios from 'axios'
 import formatter from '../../services/Format/Price/service'
 import Spinner from '../Spinner'
-import { stat } from 'fs'
 
 const options = {
     method: 'GET',

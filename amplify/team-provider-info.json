@@ -15,7 +15,7 @@
       "function": {
         "cryptoApiLambda": {
           "deploymentBucketName": "amplify-cryptoproject-dev-143922-deployment",
-          "s3Key": "amplify-builds/cryptoApiLambda-44544d424c6857375650-build.zip"
+          "s3Key": "amplify-builds/cryptoApiLambda-704d5367457455467630-build.zip"
         }
       },
       "api": {

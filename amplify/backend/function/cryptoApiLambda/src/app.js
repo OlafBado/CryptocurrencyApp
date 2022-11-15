@@ -35,7 +35,6 @@ app.get('/crypto/getGlobalStats', async (req, res) => {
 
   const secret = await secretsManager.getSecretValue({ SecretId: 'COINS_API_KEY' }).promise()
   const key = JSON.parse(secret.SecretString)
-
   const options = {
     headers: {
       'X-RapidAPI-Key': key['COINS_API_KEY'],
@@ -63,7 +62,7 @@ app.get('/example', async (req, res) => {
   //   }
   //   await s3.upload(param).promise()
   // }
-  
+
   const getData = async () => {
     try {
       const result = await axios.get('https://jsonplaceholder.typicode.com/posts')
@@ -74,7 +73,7 @@ app.get('/example', async (req, res) => {
   }
   
   const result = await getData()
-  await bucket(result)
+  // await bucket(result)
   res.json(result)
 })
 

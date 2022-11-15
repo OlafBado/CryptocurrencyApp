@@ -173,8 +173,8 @@ const App = () => {
 
     const getJson = async() => {
         try {
-            const result = await API.get('cryptoApi', '/crypto/getGlobalStats', {})
-            console.log(result.data)
+            const result = await API.get('cryptoApi', '/crypto/getGlobalStats')
+            console.log(result.json())
         } catch(e) {
             console.log(e)
 

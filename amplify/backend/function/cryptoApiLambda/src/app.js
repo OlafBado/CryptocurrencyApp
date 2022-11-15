@@ -74,7 +74,17 @@ app.get('/example', async (req, res) => {
   
   const result = await getData()
   // await bucket(result)
+  res.statusCode = 200;
+  res.setHeader('content-type', 'application/json');
+  res.setHeader('Access-Control-Allow-Origin', '*');
   res.json(result)
+})
+
+app.get('/example2', (req, res) => {
+  res.statusCode = 200;
+  res.setHeader('content-type', 'application/json');
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.json({answer : 'hello'})
 })
 
 app.listen(3000, function() {

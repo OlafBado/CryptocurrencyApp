@@ -21,13 +21,13 @@ export const fetchCryptocurrencyNews = createAsyncThunk(
 )
 
 interface InitialState {
-    status: string,
+    cryptoNewsStatus: string,
     error: string,
     news: SingleNewsData[],
 }
 
 const initialState: InitialState = {
-    status: '',
+    cryptoNewsStatus: '',
     error: '',
     news: [],
 }
@@ -43,14 +43,14 @@ export const cryptocurrencyNewsSlice = createSlice({
     extraReducers(builder) {
         builder
             .addCase(fetchCryptocurrencyNews.pending, (state) => {
-                state.status = 'loading'
+                state.cryptoNewsStatus = 'loading'
             })
             .addCase(fetchCryptocurrencyNews.fulfilled, (state, action) => {
-                state.status = 'succeeded'
+                state.cryptoNewsStatus = 'succeeded'
                 state.news = action.payload
             })
             .addCase(fetchCryptocurrencyNews.rejected, (state, action) => {
-                state.status = 'failed'
+                state.cryptoNewsStatus = 'failed'
                 state.error = action.error.message!
             })
     }

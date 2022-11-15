@@ -4,15 +4,15 @@
     }
 
     50% {
-        transform: translate(0, 0)
+        transform: translate(0, 0);
     }
 
     75% {
-        transform: translate(var(--side2side-right), 0)
+        transform: translate(var(--side2side-right), 0);
     }
 
     100% {
-        transform: translate(0, 0)
+        transform: translate(0, 0);
     }
 }
 
@@ -26,7 +26,7 @@
     --color-hamburger: #c7c7c7;
     --color-bg: #f8f8f8;
     --color-purple: #6c63ff;
-    --font: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    --font: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
     --side2side-left: 100%;
     --side2side-right: -100%;
     --side2side-time: 10s;
@@ -40,7 +40,7 @@
 
 body {
     margin: 0;
-    font-family:var(--font)
+    font-family: var(--font);
 }
 
 h1,

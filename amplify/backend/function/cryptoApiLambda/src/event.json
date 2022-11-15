@@ -1,6 +1,6 @@
 {
   "httpMethod": "GET",
-  "path": "/crypto/getGlobalStats",
+  "path": "/example2",
   "queryStringParameters": {
     "limit": "10",
     "coin": "Cryptocurrency"

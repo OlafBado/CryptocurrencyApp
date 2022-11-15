@@ -18,13 +18,13 @@ export const fetchCoinNews = createAsyncThunk(
 )
 
 interface InitialState {
-    status: string,
+    coinNewsStatus: string,
     error: string,
     news: SingleNewsData[],
 }
 
 const initialState: InitialState = {
-    status: '',
+    coinNewsStatus: '',
     error: '',
     news: [],
 }
@@ -36,14 +36,14 @@ export const coinNewsSlice = createSlice({
     extraReducers(builder) {
         builder
             .addCase(fetchCoinNews.pending, (state) => {
-                state.status = 'loading'
+                state.coinNewsStatus = 'loading'
             })
             .addCase(fetchCoinNews.fulfilled, (state, action) => {
-                state.status = 'succeeded'
+                state.coinNewsStatus = 'succeeded'
                 state.news = action.payload
             })
             .addCase(fetchCoinNews.rejected, (state, action) => {
-                state.status = 'failed'
+                state.coinNewsStatus = 'failed'
                 state.error = action.error.message!
             })
     }

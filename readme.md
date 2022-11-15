@@ -1,7 +1,7 @@
 TODO
 - [/] better logo
 - [/] closing navbar
-- [] api s3 
+- [-] api s3 
 - [] use redux as state management
 - [] fix spinners
 - [] unit tests

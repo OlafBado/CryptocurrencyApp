@@ -48,16 +48,14 @@ const options = [
 
 const CoinDetails: React.FC<CoinDetailsProps> = ({ timePeriod, handleGetCoinHistory, coinDetails, coinHistory, handleGetCoinDetails}) => {
 
-    
     const dispatch = useAppDispatch()
     const coinId = useParams()
     
     const { news } = useAppSelector(state => state.coinNews)
-    console.log(news)
+
     useEffect(() => {
-        console.log('fetch news coin details')
         handleGetCoinDetails(coinId.id!, coinDetails.name)
-        dispatch(fetchCoinNews(coinDetails.name))
+        // dispatch(fetchCoinNews(coinDetails.name))
     }, [])
     
     const handleChangeHistoryPeriod = (period: string) => {

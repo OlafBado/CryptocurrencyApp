@@ -4,9 +4,9 @@ const awsServerlessExpressMiddleware = require('aws-serverless-express/middlewar
 const AWS = require('aws-sdk')
 const secretsManager = new AWS.SecretsManager()
 const axios = require('axios')
-const multer = require('multer')
+require('dotenv').config()
 
-const s3 = new AWS.S3()
+
 const app = express()
 app.use(bodyParser.json())
 app.use(awsServerlessExpressMiddleware.eventContext())
@@ -33,23 +33,51 @@ app.get('/crypto/getNews', function(req, res) {
     getData()
 });
 
-app.get('/example', (req, res) => {
-  // (async () => {
-  //   await s3.putObject({
-  //     Body: 'hello world',
-  //     Bucket: 'niebiel-news',
-  //     Key: 'Example.txt'
-  //   }).promise()
-  // })()
-  const getData = async () => {
-    try {
-      const res = await axios.get('https://jsonplaceholder.typicode.com/posts?limit=10')
-      res.json(res)
-    } catch {
+app.get('/crypto/getGlobalStats', async (req, res) => {
 
+  const secret = await secretsManager.getSecretValue({ SecretId: 'COINS_API_KEY' }).promise()
+  const key = JSON.parse(secret.SecretString)
+
+  const options = {
+    headers: {
+      'X-RapidAPI-Key': key['COINS_API_KEY'],
+      'X-RapidAPI-Host': 'coinranking1.p.rapidapi.com'
     }
   }
-  getData()
+
+  try {
+    const response = await axios.get('https://coinranking1.p.rapidapi.com/stats?referenceCurrencyUuid=yhjMzLPhuIDl', options)
+    res.json(response.data)
+  } catch (err) {
+    res.send(err)
+  }
+
+})
+
+app.get('/example', async (req, res) => {
+
+  const bucket = async (data) => {
+    const s3 = new AWS.S3()
+    const param = {
+      Bucket: process.env.AWS_BUCKET_NAME,
+      Key: 'example.json',
+      Body: JSON.stringify(data)
+    }
+    await s3.upload(param).promise()
+  }
+  
+  const getData = async () => {
+    try {
+      const result = await axios.get('https://jsonplaceholder.typicode.com/posts')
+      return result.data
+    } catch (err) {
+      res.send(err)
+    }
+  }
+  
+  const result = await getData()
+  await bucket(result)
+  res.json(result)
 })
 
 app.listen(3000, function() {

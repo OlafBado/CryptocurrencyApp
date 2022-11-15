@@ -171,16 +171,21 @@ const App = () => {
 
     // function for fetching coins, redefined by debounced input result value
 
+    const getJson = async() => {
+        try {
+            const result = await API.get('cryptoApi', '/crypto/getGlobalStats', {})
+            console.log(result.data)
+        } catch(e) {
+            console.log(e)
+
+        }
+    }
+
     useEffect(() => {
         console.log('fetch news app')
-        dispatch(fetchCryptocurrencyNews())
-        x()
+        // dispatch(fetchCryptocurrencyNews())
+        getJson()
     }, [])
-    
-    const x = async() => {
-        let res = await API.get('cryptoApi', '/example')
-        console.log (res)
-    }
 
     const handleFetchCoinDetails = useCallback(async () => {
         try {
@@ -324,7 +329,6 @@ const App = () => {
                 break
         }
     }
-    console.log(news)
     return (
         <>
             <Navbar handleDefaultCoinsState={handleDefaultCoinsState}/>

@@ -4,8 +4,6 @@ const awsServerlessExpressMiddleware = require('aws-serverless-express/middlewar
 const AWS = require('aws-sdk')
 const secretsManager = new AWS.SecretsManager()
 const axios = require('axios')
-require('dotenv').config()
-
 
 const app = express()
 app.use(bodyParser.json())
@@ -56,15 +54,15 @@ app.get('/crypto/getGlobalStats', async (req, res) => {
 
 app.get('/example', async (req, res) => {
 
-  const bucket = async (data) => {
-    const s3 = new AWS.S3()
-    const param = {
-      Bucket: process.env.AWS_BUCKET_NAME,
-      Key: 'example.json',
-      Body: JSON.stringify(data)
-    }
-    await s3.upload(param).promise()
-  }
+  // const bucket = async (data) => {
+  //   const s3 = new AWS.S3()
+  //   const param = {
+  //     Bucket: process.env.AWS_BUCKET_NAME,
+  //     Key: 'example.json',
+  //     Body: JSON.stringify(data)
+  //   }
+  //   await s3.upload(param).promise()
+  // }
   
   const getData = async () => {
     try {

@@ -2,8 +2,6 @@ import React, { useCallback, useEffect, useReducer, useState } from "react";
 import "./style.css";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
 import { fetchCryptocurrencyNews } from "../../services/slices/cryptocurrencyNewsSlice";
-import { fetchGlobalStats } from "../../services/slices/globalStats";
-import { fetchTop10Coins } from "../../services/slices/top10coinsSlice";
 import axios from "axios";
 import {
     CoinsReducerState,
@@ -28,7 +26,7 @@ import CoinDetails from "../CoinDetails";
 import Marquee from "react-fast-marquee";
 import NewsItem from "../NewsItem";
 import { API } from "aws-amplify";
-//
+
 const coinDetailsHistoryOptions = {
     headers: {
         "X-RapidAPI-Key": "2081c14c4dmshd151c93e0f27c2cp140d7bjsn9c3017090a59",
@@ -166,11 +164,6 @@ const coinDetailsReducer = (
 const App = () => {
     const dispatch = useAppDispatch();
     const { news } = useAppSelector((state) => state.cryptoNews);
-    const { top10coins } = useAppSelector((state) => state.top10coins);
-
-    const { globalStatsStatus } = useAppSelector((state) => state.globalStats);
-    const { cryptoNewsStatus } = useAppSelector((state) => state.cryptoNews);
-    const { coinNewsStatus } = useAppSelector((state) => state.coinNews);
 
     const [inputResult, setInputResult] = useState<string>("");
 
@@ -199,24 +192,18 @@ const App = () => {
 
     const debouncedValue = useDebounce(coinsUrl[0], 300);
 
-    const getJson = async () => {
-        try {
-            // const result = await API.get('cryptoApi', '/example')
-            const result = await axios.get(
-                "https://nwbgellxcb.execute-api.us-east-1.amazonaws.com/dev/example2"
-            );
-            console.log(result);
-        } catch (e) {
-            console.log(e);
-        }
-    };
+    // function for fetching coins, redefined by debounced input result value
 
     useEffect(() => {
-        // dispatch(fetchCryptocurrencyNews())
-        dispatch(fetchGlobalStats());
-        dispatch(fetchTop10Coins());
-        // getJson()
+        console.log("fetch news app");
+        dispatch(fetchCryptocurrencyNews());
+        x();
     }, []);
+
+    const x = async () => {
+        let res = await API.get("cryptoApi", "/example");
+        console.log(res);
+    };
 
     const handleFetchCoinDetails = useCallback(async () => {
         try {
@@ -396,6 +383,7 @@ const App = () => {
                 break;
         }
     };
+    console.log(news);
     return (
         <>
             <Navbar handleDefaultCoinsState={handleDefaultCoinsState} />
@@ -405,38 +393,30 @@ const App = () => {
                     element={
                         <>
                             <Hero />
-                            {globalStatsStatus === "loading" ||
-                            coinNewsStatus === "loading" ||
-                            cryptoNewsStatus === "loading" ? (
+                            <GlobalStats />
+                            {coins.isLoading ? (
                                 <Spinner />
-                            ) : globalStatsStatus === "failed" ||
-                              coinNewsStatus === "failed" ||
-                              cryptoNewsStatus === "failed" ? (
-                                <div>Something went wrong...</div>
                             ) : (
-                                <>
-                                    <GlobalStats />
-                                    <Top10Coins coins={top10coins} />
-                                    <Marquee
-                                        style={{
-                                            height: "auto",
-                                            display: "grid",
-                                            overflow: "hidden",
-                                            alignItems: "none",
-                                            margin: "0.25rem 0",
-                                        }}
-                                        speed={5}
-                                        pauseOnHover={true}
-                                        loop={0}
-                                        className="marquee-main-news"
-                                        gradientWidth={50}
-                                    >
-                                        {news?.map((n) => (
-                                            <NewsItem key={n.url} news={n} />
-                                        ))}
-                                    </Marquee>
-                                </>
+                                <Top10Coins coins={coins.data.slice(0, 10)} />
                             )}
+                            <Marquee
+                                style={{
+                                    height: "auto",
+                                    display: "grid",
+                                    overflow: "hidden",
+                                    alignItems: "none",
+                                    margin: "0.25rem 0",
+                                }}
+                                speed={5}
+                                pauseOnHover={true}
+                                loop={0}
+                                className="marquee-main-news"
+                                gradientWidth={50}
+                            >
+                                {news?.map((n) => (
+                                    <NewsItem key={n.url} news={n} />
+                                ))}
+                            </Marquee>
                         </>
                     }
                 />

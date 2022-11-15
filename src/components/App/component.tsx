@@ -28,7 +28,7 @@ import CoinDetails from "../CoinDetails";
 import Marquee from "react-fast-marquee";
 import NewsItem from "../NewsItem";
 import { API } from "aws-amplify";
-
+//
 const coinDetailsHistoryOptions = {
     headers: {
         "X-RapidAPI-Key": "2081c14c4dmshd151c93e0f27c2cp140d7bjsn9c3017090a59",

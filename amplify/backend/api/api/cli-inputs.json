@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "paths": {
+    "/globalStats": {
+      "name": "/globalStats",
+      "lambdaFunction": "apiLambda",
+      "permissions": {
+        "setting": "open"
+      }
+    },
+    "/cryptoNews": {
+      "name": "/cryptoNews",
+      "lambdaFunction": "apiLambda",
+      "permissions": {
+        "setting": "open"
+      }
+    }
+  }
+}

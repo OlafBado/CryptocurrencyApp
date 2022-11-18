@@ -5,7 +5,6 @@ import { useAppSelector } from "../../app/hooks";
 
 const GlobalStats = () => {
     const { globalStats } = useAppSelector((state) => state.globalStats);
-
     return (
         <section className="global-stats__section">
             <div className="container">

@@ -201,11 +201,8 @@ const App = () => {
 
     const getJson = async () => {
         try {
-            // const result = await API.get('cryptoApi', '/example')
-            const result = await axios.get(
-                "https://nwbgellxcb.execute-api.us-east-1.amazonaws.com/dev/example2"
-            );
-            console.log(result);
+            // const result = await API.get("api", "/globalStats", {});
+            // console.log(result);
         } catch (e) {
             console.log(e);
         }
@@ -215,7 +212,7 @@ const App = () => {
         // dispatch(fetchCryptocurrencyNews())
         dispatch(fetchGlobalStats());
         dispatch(fetchTop10Coins());
-        // getJson()
+        getJson();
     }, []);
 
     const handleFetchCoinDetails = useCallback(async () => {

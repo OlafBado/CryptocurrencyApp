@@ -2,23 +2,14 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { Coin } from "../../components/GlobalStats/types";
 import axios from "axios";
 import { AxiosError } from "axios";
+import { API } from "aws-amplify";
 
 export const fetchGlobalStats = createAsyncThunk(
     "globalStatsSlice/globalStats",
     async () => {
-        const options = {
-            method: "GET",
-            url: "https://coinranking1.p.rapidapi.com/stats",
-            params: { referenceCurrencyUuid: "yhjMzLPhuIDl" },
-            headers: {
-                "X-RapidAPI-Key":
-                    "2081c14c4dmshd151c93e0f27c2cp140d7bjsn9c3017090a59",
-                "X-RapidAPI-Host": "coinranking1.p.rapidapi.com",
-            },
-        };
         try {
-            const result = await axios.request(options);
-            return result.data;
+            const result = await API.get("api", "/globalStats", {});
+            return result.body.data;
         } catch (err) {
             const error = err as AxiosError;
             return error.message;
@@ -63,7 +54,7 @@ export const globalStatsSlice = createSlice({
             })
             .addCase(fetchGlobalStats.fulfilled, (state, action) => {
                 state.globalStatsStatus = "succeeded";
-                state.globalStats = action.payload.data;
+                state.globalStats = action.payload;
             })
             .addCase(fetchGlobalStats.rejected, (state, action) => {
                 state.globalStatsStatus = "failed";

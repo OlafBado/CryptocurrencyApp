@@ -8,7 +8,7 @@ TODO
 -   [] unit tests
 -   [] integration tests
 -   [] e2e tests
--   []
+-   [] webpack prod config
 -   []
 -   []
 -   []

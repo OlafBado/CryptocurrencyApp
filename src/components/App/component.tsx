@@ -201,8 +201,8 @@ const App = () => {
 
     const getJson = async () => {
         try {
-            // const result = await API.get("api", "/globalStats", {});
-            // console.log(result);
+            const result = await API.get("api", "/top10", {});
+            console.log(result);
         } catch (e) {
             console.log(e);
         }
@@ -212,7 +212,7 @@ const App = () => {
         // dispatch(fetchCryptocurrencyNews())
         dispatch(fetchGlobalStats());
         dispatch(fetchTop10Coins());
-        getJson();
+        // getJson();
     }, []);
 
     const handleFetchCoinDetails = useCallback(async () => {

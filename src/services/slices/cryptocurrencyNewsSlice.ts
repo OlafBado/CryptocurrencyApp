@@ -1,59 +1,62 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { API } from 'aws-amplify'
-import { SingleNewsData } from '../../components/App/types'
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { API } from "aws-amplify";
+import { SingleNewsData } from "../../components/App/types";
 
 export const fetchCryptocurrencyNews = createAsyncThunk(
-    'cryptocurrencyNewsSlice/cryptocurrencyNews',
+    "cryptocurrencyNewsSlice/cryptocurrencyNews",
     async () => {
         const params = {
-            'queryStringParameters': {
-                coin: 'Cryptocurrency'
-            }
-        }
+            queryStringParameters: {
+                coin: "Cryptocurrency",
+            },
+        };
         try {
-            const result = await API.get('cryptoApi', '/crypto/getNews', params)
-            console.log(result)
-            return result.articles
+            const result = await API.get(
+                "cryptoApi",
+                "/crypto/getNews",
+                params
+            );
+            return result.articles;
         } catch (err) {
-            return err
+            return err;
         }
     }
-)
+);
 
 interface InitialState {
-    cryptoNewsStatus: string,
-    error: string,
-    news: SingleNewsData[],
+    cryptoNewsStatus: string;
+    error: string;
+    news: SingleNewsData[];
 }
 
 const initialState: InitialState = {
-    cryptoNewsStatus: '',
-    error: '',
+    cryptoNewsStatus: "",
+    error: "",
     news: [],
-}
+};
 
 export const cryptocurrencyNewsSlice = createSlice({
-    name: 'cryptocurrencyNews',
+    name: "cryptocurrencyNews",
     initialState,
     reducers: {
         setCryptocurrencyNews: (state, action) => {
-            state.news = action.payload
+            state.news = action.payload;
         },
     },
     extraReducers(builder) {
         builder
             .addCase(fetchCryptocurrencyNews.pending, (state) => {
-                state.cryptoNewsStatus = 'loading'
+                state.cryptoNewsStatus = "loading";
             })
             .addCase(fetchCryptocurrencyNews.fulfilled, (state, action) => {
-                state.cryptoNewsStatus = 'succeeded'
-                state.news = action.payload
+                state.cryptoNewsStatus = "succeeded";
+                state.news = action.payload;
             })
             .addCase(fetchCryptocurrencyNews.rejected, (state, action) => {
-                state.cryptoNewsStatus = 'failed'
-                state.error = action.error.message!
-            })
-    }
-})
+                state.cryptoNewsStatus = "failed";
+                state.error = action.error.message!;
+            });
+    },
+});
 
-export const { setCryptocurrencyNews } = cryptocurrencyNewsSlice.actions
+export const { setCryptocurrencyNews } = cryptocurrencyNewsSlice.actions;

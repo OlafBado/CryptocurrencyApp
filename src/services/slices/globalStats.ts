@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { Coin } from "../../components/GlobalStats/types";
-import axios from "axios";
 import { AxiosError } from "axios";
 import { API } from "aws-amplify";
 

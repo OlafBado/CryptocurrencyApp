@@ -49,6 +49,30 @@ app.get("/globalStats", async function (req, res) {
     }
 });
 
+app.get("/top10", async (req, res) => {
+    const key = await getSecretValue("COINS_API_KEY");
+
+    const coinsOptions = {
+        headers: {
+            "X-RapidAPI-Key": key,
+            "X-RapidAPI-Host": "coinranking1.p.rapidapi.com",
+        },
+    };
+    try {
+        const response = await axios.get(
+            "https://coinranking1.p.rapidapi.com/coins?referenceCurrencyUuid=yhjMzLPhuIDl&timePeriod=24h&tiers%5B0%5D=1&orderBy=marketCap&orderDirection=desc&limit=10&offset=0",
+            coinsOptions
+        );
+        res.json({
+            success: "get call succeed!",
+            url: req.url,
+            body: response.data,
+        });
+    } catch (err) {
+        res.send(err);
+    }
+});
+
 app.listen(3000, function () {
     console.log("App started");
 });

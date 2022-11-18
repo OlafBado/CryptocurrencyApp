@@ -2,8 +2,10 @@ import React from "react";
 import "./style.css";
 import Coin from "../Coin";
 import { Top10coinsProps } from "./types";
+import { useAppSelector } from "../../app/hooks";
 
 const Top10Coins: React.FC<Top10coinsProps> = ({ coins }) => {
+    const { top10coins } = useAppSelector((state) => state.top10coins);
     return (
         <main>
             <div className="container">
@@ -11,7 +13,7 @@ const Top10Coins: React.FC<Top10coinsProps> = ({ coins }) => {
                     Top 10 <span>crypto</span> by marketcap
                 </h2>
                 <div className="coins__wrapper">
-                    {coins?.map((coin) => (
+                    {top10coins?.map((coin) => (
                         <Coin key={coin.uuid} coin={coin} />
                     ))}
                 </div>

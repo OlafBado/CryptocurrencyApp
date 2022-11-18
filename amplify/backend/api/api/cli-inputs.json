@@ -14,6 +14,13 @@
       "permissions": {
         "setting": "open"
       }
+    },
+    "/top10": {
+      "name": "/top10",
+      "lambdaFunction": "apiLambda",
+      "permissions": {
+        "setting": "open"
+      }
     }
   }
 }

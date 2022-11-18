@@ -1,6 +1,6 @@
 {
     "httpMethod": "GET",
-    "path": "/globalStats",
+    "path": "/top10",
     "queryStringParameters": {
         "limit": "10"
     },

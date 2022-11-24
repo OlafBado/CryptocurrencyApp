@@ -50,14 +50,6 @@ const coinsOptions = {
     },
 };
 
-const newsOptions = {
-    headers: {
-        "X-Api-Key": "6c4cecd8f42848339d8f5ec708760227",
-    },
-};
-
-// reducer function to handle coins data
-
 const coinsReducer = (state: CoinsReducerState, action: CoinsAction) => {
     switch (action.type) {
         case "COINS_FETCH_INIT":

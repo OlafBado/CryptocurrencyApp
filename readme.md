@@ -1,10 +1,17 @@
-TODO
+# TODO
 
 -   [/] better logo
 -   [/] closing navbar
--   [-] api s3
 -   [/] fix spinners
 -   [] use redux as state management
+    -   [/] top 10 coins
+    -   [/] global stats
+    -   [] crypto news
+    -   [] cryptocurrencies search
+    -   [] cryptocurrency details:
+        -   [] chart data
+        -   [] coin statistics
+        -   [] coin news
 -   [] unit tests
 -   [] integration tests
 -   [] e2e tests

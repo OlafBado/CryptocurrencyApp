@@ -1,9 +1,10 @@
-import { PriceHistory } from '../App/types'
+import { PriceHistory } from "../App/types";
+import { EmptyObject } from "../GlobalStats/types";
 
 interface LineChartProps {
-    coinHistory: PriceHistory[],
-    currentPrice: string,
-    coinName: string
+    coinHistory: PriceHistory[] | EmptyObject;
+    currentPrice: string;
+    coinName: string;
 }
 
-export default LineChartProps
+export default LineChartProps;

@@ -8,6 +8,8 @@ interface Options {
 interface ChangeButtonsProps {
     options: Options[];
     label: string;
+    handler: (e: React.MouseEvent<HTMLElement>) => void;
+    state: string;
 }
 
 export { ChangeButtonsProps };

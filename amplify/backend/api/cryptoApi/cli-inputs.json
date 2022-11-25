@@ -1,0 +1,40 @@
+{
+  "version": 1,
+  "paths": {
+    "/globalStats": {
+      "name": "/globalStats",
+      "lambdaFunction": "cryptoApiLambda",
+      "permissions": {
+        "setting": "open"
+      }
+    },
+    "/top10": {
+      "name": "/top10",
+      "lambdaFunction": "cryptoApiLambda",
+      "permissions": {
+        "setting": "open"
+      }
+    },
+    "/coins": {
+      "name": "/coins",
+      "lambdaFunction": "cryptoApiLambda",
+      "permissions": {
+        "setting": "open"
+      }
+    },
+    "/coinDetails": {
+      "name": "/coinDetails",
+      "lambdaFunction": "cryptoApiLambda",
+      "permissions": {
+        "setting": "open"
+      }
+    },
+    "/coinHistory": {
+      "name": "/coinHistory",
+      "lambdaFunction": "cryptoApiLambda",
+      "permissions": {
+        "setting": "open"
+      }
+    }
+  }
+}

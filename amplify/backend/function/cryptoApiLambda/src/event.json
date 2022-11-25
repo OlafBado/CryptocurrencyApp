@@ -1,11 +1,9 @@
 {
     "httpMethod": "GET",
-    "path": "/coins",
+    "path": "/coinHistory",
     "queryStringParameters": {
-        "sortBy": "marketCap",
-        "direction": "desc",
-        "offset": 0,
-        "input": "TWT"
+        "id": "Qwsogvtv82FCd",
+        "timePeriod": "3y"
     },
     "headers": {
         "Content-Type": "application/json"

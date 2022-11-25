@@ -1,7 +1,7 @@
-import React from 'react'
-import './style.css'
-import { Line } from 'react-chartjs-2'
-import LineChartProps from './types'
+import React from "react";
+import "./style.css";
+import { Line } from "react-chartjs-2";
+import LineChartProps from "./types";
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -12,7 +12,7 @@ import {
     Tooltip,
     Legend,
     Filler,
-} from 'chart.js'
+} from "chart.js";
 ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -21,53 +21,59 @@ ChartJS.register(
     Title,
     Tooltip,
     Legend,
-    Filler,
-)
+    Filler
+);
+import { PriceHistory } from "../App/types";
 
-const LineChart: React.FC<LineChartProps> = ({coinHistory, coinName, currentPrice}) => {
+const LineChart: React.FC<LineChartProps> = ({
+    coinHistory,
+    coinName,
+    currentPrice,
+}) => {
+    const coinPrice: string[] = [];
+    const coinTimestamp: string[] = [];
 
-    const coinPrice = []
-    const coinTimestamp = []
-
-    for (let i = coinHistory.length - 1; i >= 0; i--) {
-        coinPrice?.push(coinHistory[i].price)
-        coinTimestamp?.push(new Date(coinHistory[i].timestamp * 1000).toLocaleDateString())
+    if (Object.keys(coinHistory).length !== 0) {
+        coinHistory!.map((arr) => {
+            coinPrice?.push(arr.price);
+            coinTimestamp?.push(
+                new Date(arr.timestamp * 1000).toLocaleDateString()
+            );
+        });
     }
-
 
     const data = {
         labels: coinTimestamp,
         datasets: [
             {
-                label: 'Price in USD',
+                label: "Price in USD",
                 data: coinPrice,
                 pointRadius: 0,
                 borderWidth: 1,
                 fill: false,
-                backgroundColor: '#6c63ff',
-                borderColor: '#6c63ff',
-            }
-        ]
-    }
+                backgroundColor: "#6c63ff",
+                borderColor: "#6c63ff",
+            },
+        ],
+    };
 
     const options: any = {
-            responsive: true,
-            maintainAspectRatio: false,
-            scales: {
-                y: 
-                    {
-                        ticks: {
-                            beginAtZero: true,
-                        }
-                    }
-            }
-    }
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+            y: {
+                ticks: {
+                    beginAtZero: true,
+                },
+            },
+        },
+    };
 
     return (
         <>
-            <Line data={data} options={options}/>
+            <Line data={data} options={options} />
         </>
-    )
-}
+    );
+};
 
-export default LineChart
+export default LineChart;

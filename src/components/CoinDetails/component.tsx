@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import "./style.css";
-import { CoinDetailsProps } from "./types";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { useParams } from "react-router-dom";
 import LineChart from "../LineChart";
@@ -8,64 +7,37 @@ import millify from "millify";
 import HTMLparser from "html-react-parser";
 import ChangeButtons from "../ChangeButtons";
 import NewsItem from "../NewsItem";
+import Spinner from "../Spinner";
 import { fetchCoinNews } from "../../services/slices/coinNewsSlice";
-
-const options = [
-    {
-        option: "5Y",
-        value: "5y",
-    },
-    {
-        option: "3Y",
-        value: "3y",
-    },
-    {
-        option: "1Y",
-        value: "1y",
-    },
-    {
-        option: "30D",
-        value: "30d",
-    },
-    {
-        option: "7D",
-        value: "7d",
-    },
-    {
-        option: "24H",
-        value: "24h",
-    },
-    {
-        option: "3H",
-        value: "3h",
-    },
-    {
-        option: "3M",
-        value: "3m",
-    },
-];
-
-const CoinDetails: React.FC<CoinDetailsProps> = ({
-    timePeriod,
-    handleGetCoinHistory,
-    coinDetails,
-    coinHistory,
-    handleGetCoinDetails,
-}) => {
+import { chartOptions, FETCH_STATE } from "../../services/constants";
+import { fetchCoinDetails } from "../../services/slices/coinDetailsSlice";
+import { fetchCoinHistory } from "../../services/slices/coinHistorySlice";
+import { setTimePeriod } from "../../services/slices/coinHistorySlice";
+const CoinDetails = () => {
     const dispatch = useAppDispatch();
-    const coinId = useParams();
 
-    const { news } = useAppSelector((state) => state.coinNews);
+    const { id } = useParams();
+    const { coinDetails, coinDetailsStatus } = useAppSelector(
+        ({ coinDetails }) => coinDetails
+    );
+    const { timePeriod, coinHistory, coinHistoryStatus } = useAppSelector(
+        ({ coinHistory }) => coinHistory
+    );
+    const { news } = useAppSelector(({ coinNews }) => coinNews);
 
     useEffect(() => {
-        handleGetCoinDetails(coinId.id!, coinDetails.name);
         // dispatch(fetchCoinNews(coinDetails.name))
+        dispatch(fetchCoinDetails(id!));
     }, []);
 
-    const handleChangeHistoryPeriod = (period: string) => {
-        handleGetCoinHistory(coinId.id!, period);
-    };
+    useEffect(() => {
+        dispatch(fetchCoinHistory(id!));
+    }, [timePeriod]);
 
+    const handleSetTimePeriod = (e: React.MouseEvent<HTMLElement>) =>
+        dispatch(setTimePeriod((e.target as any).value));
+
+    if (coinDetailsStatus === FETCH_STATE.loading) return <Spinner />;
     return (
         <>
             <div className="container">
@@ -78,13 +50,13 @@ const CoinDetails: React.FC<CoinDetailsProps> = ({
                     price, staticstics and supply.
                 </p>
                 <ChangeButtons
-                    handler={handleChangeHistoryPeriod}
-                    options={options}
+                    handler={handleSetTimePeriod}
+                    options={chartOptions}
                     state={timePeriod}
                     label="Select time period"
                 />
                 <LineChart
-                    coinHistory={coinHistory.history}
+                    coinHistory={coinHistory}
                     currentPrice={millify(coinDetails.price)}
                     coinName={coinDetails.name}
                 />

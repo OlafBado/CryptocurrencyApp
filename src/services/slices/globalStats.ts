@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { Coin } from "../../components/GlobalStats/types";
-// import { AxiosError } from "axios";
 import { API } from "aws-amplify";
 import { FETCH_STATE } from "../constants";
 
@@ -8,10 +7,9 @@ export const fetchGlobalStats = createAsyncThunk(
     "globalStatsSlice/globalStats",
     async () => {
         try {
-            const result = await API.get("api", "/globalStats", {});
+            const result = await API.get("cryptoApi", "/globalStats", {});
             return result.body.data;
         } catch (err) {
-            // const error = err as AxiosError;
             return err;
         }
     }

@@ -12,10 +12,12 @@
         -   [/] sort by
         -   [/] direction
         -   [/] load more
+        -   [/] create paths for cryptocurrencies
     -   [] cryptocurrency details:
-        -   [] chart data
-        -   [] coin statistics
+        -   [/] chart data
+        -   [/] coin details
         -   [] coin news
+        -   [/] create paths for coin details
 -   [] unit tests
 -   [] integration tests
 -   [] e2e tests

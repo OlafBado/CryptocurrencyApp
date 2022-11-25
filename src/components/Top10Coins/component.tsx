@@ -5,7 +5,7 @@ import { Top10coinsProps } from "./types";
 import { useAppSelector } from "../../app/hooks";
 
 const Top10Coins: React.FC<Top10coinsProps> = ({ coins }) => {
-    const { top10coins } = useAppSelector((state) => state.top10coins);
+    const { top10coins } = useAppSelector(({ top10coins }) => top10coins);
     return (
         <main>
             <div className="container">

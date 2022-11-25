@@ -1,6 +1,6 @@
 export type AmplifyDependentResourcesAttributes = {
     "function": {
-        "apiLambda": {
+        "cryptoApiLambda": {
             "Name": "string",
             "Arn": "string",
             "Region": "string",
@@ -8,7 +8,7 @@ export type AmplifyDependentResourcesAttributes = {
         }
     },
     "api": {
-        "api": {
+        "cryptoApi": {
             "RootUrl": "string",
             "ApiName": "string",
             "ApiId": "string"

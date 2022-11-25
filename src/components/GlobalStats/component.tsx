@@ -4,24 +4,27 @@ import formatter from "../../services/Format/Price/service";
 import { useAppSelector } from "../../app/hooks";
 
 const GlobalStats = () => {
-    const { globalStats } = useAppSelector((state) => state.globalStats);
+    const { globalStats } = useAppSelector(({ globalStats }) => globalStats);
+
     return (
         <section className="global-stats__section">
             <div className="container">
                 <h2 className="global-stats__title">Global Crypto stats</h2>
                 <h3 className="best-coins__title">Best performing coins</h3>
                 <div className="global-stats-coins__wrapper">
-                    {globalStats?.bestCoins?.map((coin) => {
-                        return (
-                            <a href={coin.coinrankingUrl} key={coin.uuid}>
-                                <img
-                                    src={coin.iconUrl}
-                                    alt={coin.name}
-                                    className="best coin"
-                                />
-                            </a>
-                        );
-                    })}
+                    {globalStats?.bestCoins?.map(
+                        ({ coinrankingUrl, uuid, iconUrl, name }) => {
+                            return (
+                                <a href={coinrankingUrl} key={uuid}>
+                                    <img
+                                        src={iconUrl}
+                                        alt={name}
+                                        className="best coin"
+                                    />
+                                </a>
+                            );
+                        }
+                    )}
                 </div>
                 <article className="global-stats__article">
                     <div>
@@ -67,17 +70,19 @@ const GlobalStats = () => {
                 </article>
                 <h3 className="newest-coins__title">Newest coins</h3>
                 <div className="global-stats-coins__wrapper">
-                    {globalStats?.newestCoins?.map((coin) => {
-                        return (
-                            <a href={coin.coinrankingUrl} key={coin.uuid}>
-                                <img
-                                    src={coin.iconUrl}
-                                    alt={coin.name}
-                                    className="best coin"
-                                />
-                            </a>
-                        );
-                    })}
+                    {globalStats?.newestCoins?.map(
+                        ({ coinrankingUrl, uuid, iconUrl, name }) => {
+                            return (
+                                <a href={coinrankingUrl} key={uuid}>
+                                    <img
+                                        src={iconUrl}
+                                        alt={name}
+                                        className="best coin"
+                                    />
+                                </a>
+                            );
+                        }
+                    )}
                 </div>
             </div>
         </section>

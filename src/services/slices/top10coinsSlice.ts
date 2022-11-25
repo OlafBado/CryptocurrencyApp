@@ -7,7 +7,7 @@ export const fetchTop10Coins = createAsyncThunk(
     "top10coinsSlice/top10coins",
     async () => {
         try {
-            const response = await API.get("api", "/top10", {});
+            const response = await API.get("cryptoApi", "/top10", {});
             return response.body.data.coins;
         } catch (err) {
             return err;

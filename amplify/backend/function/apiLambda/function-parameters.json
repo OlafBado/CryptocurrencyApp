@@ -1,7 +1,0 @@
-{
-  "lambdaLayers": [],
-  "secretNames": [
-    "NEWS_API_KEY",
-    "COINS_API_KEY"
-  ]
-}

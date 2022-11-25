@@ -7,19 +7,11 @@ import { SingleCoinData } from "../../components/App/types";
 import { FETCH_STATE } from "../constants";
 import { API } from "aws-amplify";
 
-const coinsOptions = {
-    headers: {
-        "X-RapidAPI-Key": "2081c14c4dmshd151c93e0f27c2cp140d7bjsn9c3017090a59",
-        "X-RapidAPI-Host": "coinranking1.p.rapidapi.com",
-    },
-};
-
 export const fetchCryptocurrencies = createAsyncThunk(
     "fetchCryptocurrencies",
     async (_, thunkAPI) => {
         const state = thunkAPI.getState() as RootState;
         const { direction, sortBy, offset, input } = state.cryptocurrencies;
-        const url = getNewCoinsUrl(sortBy, direction, 10, offset, input);
         const params = {
             queryStringParameters: {
                 sortBy,
@@ -29,10 +21,7 @@ export const fetchCryptocurrencies = createAsyncThunk(
             },
         };
         try {
-            // const response = await axios.get(url, coinsOptions);
-            // return response.data.data;
             const response = await API.get("cryptoApi", "/coins", params);
-            console.log(response.body);
             return response.body.data;
         } catch (err) {
             return err;

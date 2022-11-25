@@ -17,7 +17,6 @@ const ChangeButtons: React.FC<ChangeButtonsProps> = ({
     const sortBy = useAppSelector(
         ({ cryptocurrencies }) => cryptocurrencies.sortBy
     );
-    console.log(direction, sortBy);
     return (
         <div className="select__wrapper">
             <h3 className="select__label">{label}</h3>

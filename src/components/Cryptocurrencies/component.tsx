@@ -5,34 +5,41 @@ import SearchForm from "../SearchForm";
 import Coin from "../Coin";
 import Spinner from "../Spinner";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { fetchCryptocurrencies } from "../../services/slices/coinsSlice";
+import {
+    fetchCryptocurrencies,
+    getMore,
+} from "../../services/slices/coinsSlice";
+import useDebounce from "../../hooks/useDebounce";
+import { FETCH_STATE } from "../../services/constants";
 
 const Cryptocurrencies: React.FC<CryptocurrenciesProps> = ({
     handleSortBy,
-    sortBy,
-    direction,
+    // sortBy,
+    // direction,
     coinUrl,
-    total,
+    // total,
     handleFetchMore,
     isLoading,
-    coins,
+    // coins,
     handleSearch,
     inputResult,
 }) => {
     const dispatch = useAppDispatch();
-    const COINS = useAppSelector(
-        ({ cryptocurrencies }) => cryptocurrencies.coins
-    );
-    const SORTBY = useAppSelector(
-        ({ cryptocurrencies }) => cryptocurrencies.sortBy
-    );
-    const DIRECTION = useAppSelector(
-        ({ cryptocurrencies }) => cryptocurrencies.direction
-    );
-    console.log("data", COINS);
+    const {
+        coins,
+        coinsStatus,
+        direction,
+        error,
+        input,
+        offset,
+        sortBy,
+        total,
+    } = useAppSelector(({ cryptocurrencies }) => cryptocurrencies);
+
+    const debouncedInputValue = useDebounce(input, 400);
     useEffect(() => {
         dispatch(fetchCryptocurrencies());
-    }, [SORTBY, DIRECTION]);
+    }, [sortBy, direction, debouncedInputValue, offset]);
     return (
         <main>
             <div className="container">
@@ -53,19 +60,19 @@ const Cryptocurrencies: React.FC<CryptocurrenciesProps> = ({
                             This coin does not exist...
                         </h3>
                     ) : (
-                        COINS?.map((coin) => (
+                        coins?.map((coin) => (
                             <Coin key={coin.uuid} coin={coin} />
                         ))
                     )}
                 </div>
                 <div className="coins__load-more__wrapper">
-                    {isLoading ? (
+                    {coinsStatus === FETCH_STATE.loading ? (
                         <Spinner />
                     ) : (
                         <button
                             disabled={total === coins.length ? true : false}
                             className="btn coins__load-more"
-                            onClick={handleFetchMore}
+                            onClick={() => dispatch(getMore())}
                             style={{
                                 background:
                                     total === coins.length

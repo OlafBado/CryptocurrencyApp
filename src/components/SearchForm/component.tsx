@@ -48,10 +48,9 @@ const SearchForm: React.FC<SearchFormProps> = ({
     inputResult,
 }) => {
     const dispatch = useAppDispatch();
-    const value = useAppSelector(
+    const inputValue = useAppSelector(
         ({ cryptocurrencies }) => cryptocurrencies.input
     );
-    console.log("input", value);
     const handleInput = (e: React.ChangeEvent<HTMLInputElement>) =>
         dispatch(setInput(e.currentTarget.value));
     return (
@@ -61,7 +60,7 @@ const SearchForm: React.FC<SearchFormProps> = ({
                     autoFocus
                     placeholder="Search by name or symbol..."
                     className="search-form__input"
-                    value={inputResult}
+                    value={inputValue}
                     type="text"
                     onChange={handleInput}
                     id="crypto-input"

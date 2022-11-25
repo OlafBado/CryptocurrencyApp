@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { SingleCoinData } from "../../components/App/types";
-import { AxiosError } from "axios";
 import { API } from "aws-amplify";
 
 export const fetchTop10Coins = createAsyncThunk(
@@ -10,8 +9,7 @@ export const fetchTop10Coins = createAsyncThunk(
             const response = await API.get("api", "/top10", {});
             return response.body.data.coins;
         } catch (err) {
-            const error = err as AxiosError;
-            return error.message;
+            return err;
         }
     }
 );
@@ -42,6 +40,7 @@ export const top10coinsSlice = createSlice({
                 state.top10coins = action.payload;
             })
             .addCase(fetchTop10Coins.rejected, (state, action) => {
+                state.top10status = "failed";
                 state.error = action.error.message!;
             });
     },

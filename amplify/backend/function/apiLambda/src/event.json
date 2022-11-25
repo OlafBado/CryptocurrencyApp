@@ -1,8 +1,11 @@
 {
     "httpMethod": "GET",
-    "path": "/top10",
+    "path": "/coins",
     "queryStringParameters": {
-        "limit": "10"
+        "sortBy": "marketCap",
+        "direction": "desc",
+        "offset": 0,
+        "input": "TWT"
     },
     "headers": {
         "Content-Type": "application/json"

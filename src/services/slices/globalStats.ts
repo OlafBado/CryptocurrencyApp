@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { Coin } from "../../components/GlobalStats/types";
 // import { AxiosError } from "axios";
 import { API } from "aws-amplify";
+import { FETCH_STATE } from "../constants";
 
 export const fetchGlobalStats = createAsyncThunk(
     "globalStatsSlice/globalStats",
@@ -49,14 +50,14 @@ export const globalStatsSlice = createSlice({
     extraReducers(builder) {
         builder
             .addCase(fetchGlobalStats.pending, (state) => {
-                state.globalStatsStatus = "loading";
+                state.globalStatsStatus = FETCH_STATE.loading;
             })
             .addCase(fetchGlobalStats.fulfilled, (state, action) => {
-                state.globalStatsStatus = "succeeded";
+                state.globalStatsStatus = FETCH_STATE.fulfilled;
                 state.globalStats = action.payload;
             })
             .addCase(fetchGlobalStats.rejected, (state, action) => {
-                state.globalStatsStatus = "failed";
+                state.globalStatsStatus = FETCH_STATE.failed;
                 state.error = action.error.message!;
             });
     },

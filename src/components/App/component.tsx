@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useReducer, useState } from "react";
 import "./style.css";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
-import { fetchCryptocurrencyNews } from "../../services/slices/cryptocurrencyNewsSlice";
 import { fetchGlobalStats } from "../../services/slices/globalStats";
 import { fetchTop10Coins } from "../../services/slices/top10coinsSlice";
 import axios from "axios";
@@ -28,6 +27,7 @@ import CoinDetails from "../CoinDetails";
 import Marquee from "react-fast-marquee";
 import NewsItem from "../NewsItem";
 import { API } from "aws-amplify";
+import { FETCH_STATE } from "../../services/constants";
 
 const coinDetailsHistoryOptions = {
     headers: {
@@ -288,34 +288,34 @@ const App = () => {
         handleFetchCoins();
     }, [handleFetchCoins]);
 
-    const handleSearch = useCallback(
-        (e: React.ChangeEvent<HTMLInputElement>) => {
-            setInputResult(e.target.value);
-            dispatchCoins({
-                type: "COINS_RESET_OFFSET",
-            });
-            setCoinsUrl([
-                getNewCoinsUrl("marketCap", "desc", 10, 0, e.target.value),
-            ]);
-        },
-        [inputResult]
-    );
+    // const handleSearch = useCallback(
+    //     (e: React.ChangeEvent<HTMLInputElement>) => {
+    //         setInputResult(e.target.value);
+    //         dispatchCoins({
+    //             type: "COINS_RESET_OFFSET",
+    //         });
+    //         setCoinsUrl([
+    //             getNewCoinsUrl("marketCap", "desc", 10, 0, e.target.value),
+    //         ]);
+    //     },
+    //     [inputResult]
+    // );
 
-    const handleFetchMore = () => {
-        const offset = parseInt(getSubstring(coinsUrl[0], "offset=", "&"));
-        setCoinsUrl([
-            getNewCoinsUrl(
-                coins.sortBy,
-                coins.direction,
-                10,
-                offset + 10,
-                inputResult
-            ),
-        ]);
-        dispatchCoins({
-            type: "COINS_FETCH_MORE",
-        });
-    };
+    // const handleFetchMore = () => {
+    //     const offset = parseInt(getSubstring(coinsUrl[0], "offset=", "&"));
+    //     setCoinsUrl([
+    //         getNewCoinsUrl(
+    //             coins.sortBy,
+    //             coins.direction,
+    //             10,
+    //             offset + 10,
+    //             inputResult
+    //         ),
+    //     ]);
+    //     dispatchCoins({
+    //         type: "COINS_FETCH_MORE",
+    //     });
+    // };
 
     const handleDefaultCoinsState = () => {
         dispatchCoins({
@@ -340,51 +340,51 @@ const App = () => {
         setCoinDetailsHistoryUrl(getCoinDetailsHistoryUrl(id, period));
     };
 
-    const handleSortBy = (value: string) => {
-        switch (value) {
-            case "desc":
-            case "asc":
-                dispatchCoins({
-                    type: "COINS_CHANGE_DIRECTION",
-                    payload: {
-                        direction: value,
-                    },
-                });
-                dispatchCoins({
-                    type: "COINS_RESET_OFFSET",
-                });
-                setCoinsUrl([
-                    getNewCoinsUrl(
-                        coins.sortBy,
-                        value,
-                        10,
-                        coins.offset,
-                        inputResult
-                    ),
-                ]);
-                break;
-            default:
-                dispatchCoins({
-                    type: "COINS_CHANGE_SORT_BY",
-                    payload: {
-                        sortBy: value,
-                    },
-                });
-                dispatchCoins({
-                    type: "COINS_RESET_OFFSET",
-                });
-                setCoinsUrl([
-                    getNewCoinsUrl(
-                        value,
-                        coins.direction,
-                        10,
-                        coins.offset,
-                        inputResult
-                    ),
-                ]);
-                break;
-        }
-    };
+    // const handleSortBy = (value: string) => {
+    //     switch (value) {
+    //         case "desc":
+    //         case "asc":
+    //             dispatchCoins({
+    //                 type: "COINS_CHANGE_DIRECTION",
+    //                 payload: {
+    //                     direction: value,
+    //                 },
+    //             });
+    //             dispatchCoins({
+    //                 type: "COINS_RESET_OFFSET",
+    //             });
+    //             setCoinsUrl([
+    //                 getNewCoinsUrl(
+    //                     coins.sortBy,
+    //                     value,
+    //                     10,
+    //                     coins.offset,
+    //                     inputResult
+    //                 ),
+    //             ]);
+    //             break;
+    //         default:
+    //             dispatchCoins({
+    //                 type: "COINS_CHANGE_SORT_BY",
+    //                 payload: {
+    //                     sortBy: value,
+    //                 },
+    //             });
+    //             dispatchCoins({
+    //                 type: "COINS_RESET_OFFSET",
+    //             });
+    //             setCoinsUrl([
+    //                 getNewCoinsUrl(
+    //                     value,
+    //                     coins.direction,
+    //                     10,
+    //                     coins.offset,
+    //                     inputResult
+    //                 ),
+    //             ]);
+    //             break;
+    //     }
+    // };
     return (
         <>
             <Navbar handleDefaultCoinsState={handleDefaultCoinsState} />
@@ -394,13 +394,13 @@ const App = () => {
                     element={
                         <>
                             <Hero />
-                            {globalStatsStatus === "loading" ||
-                            coinNewsStatus === "loading" ||
-                            cryptoNewsStatus === "loading" ? (
+                            {globalStatsStatus === FETCH_STATE.loading ||
+                            coinNewsStatus === FETCH_STATE.loading ||
+                            cryptoNewsStatus === FETCH_STATE.loading ? (
                                 <Spinner />
-                            ) : globalStatsStatus === "failed" ||
-                              coinNewsStatus === "failed" ||
-                              cryptoNewsStatus === "failed" ? (
+                            ) : globalStatsStatus === FETCH_STATE.failed ||
+                              coinNewsStatus === FETCH_STATE.failed ||
+                              cryptoNewsStatus === FETCH_STATE.failed ? (
                                 <div>Something went wrong...</div>
                             ) : (
                                 <>
@@ -431,20 +431,7 @@ const App = () => {
                 />
                 <Route
                     path="/cryptocurrencies"
-                    element={
-                        <Cryptocurrencies
-                            coins={coins.data}
-                            handleSearch={handleSearch}
-                            inputResult={inputResult}
-                            isLoading={coins.isLoading}
-                            handleFetchMore={handleFetchMore}
-                            total={coins.total}
-                            coinUrl={coinsUrl}
-                            sortBy={coins.sortBy}
-                            direction={coins.direction}
-                            handleSortBy={handleSortBy}
-                        />
-                    }
+                    element={<Cryptocurrencies />}
                 />
                 <Route
                     path="/cryptocurrencies/:id"

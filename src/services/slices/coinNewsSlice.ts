@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { API } from "aws-amplify";
 import { SingleNewsData } from "../../components/App/types";
+import { FETCH_STATE } from "../constants";
 
 export const fetchCoinNews = createAsyncThunk(
     "coinNewsSlice/coinNews",
@@ -40,14 +41,14 @@ export const coinNewsSlice = createSlice({
     extraReducers(builder) {
         builder
             .addCase(fetchCoinNews.pending, (state) => {
-                state.coinNewsStatus = "loading";
+                state.coinNewsStatus = FETCH_STATE.loading;
             })
             .addCase(fetchCoinNews.fulfilled, (state, action) => {
-                state.coinNewsStatus = "succeeded";
+                state.coinNewsStatus = FETCH_STATE.fulfilled;
                 state.news = action.payload;
             })
             .addCase(fetchCoinNews.rejected, (state, action) => {
-                state.coinNewsStatus = "failed";
+                state.coinNewsStatus = FETCH_STATE.failed;
                 state.error = action.error.message!;
             });
     },

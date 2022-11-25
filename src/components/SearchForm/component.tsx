@@ -1,60 +1,20 @@
 import React, { ReactEventHandler } from "react";
 import "./style.css";
-import { SearchFormProps } from "./types";
 import ChangeButtons from "../ChangeButtons";
 import { setInput } from "../../services/slices/coinsSlice";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { SORT_BY_OPTIONS, DIRECTION_OPTIONS } from "../../services/constants";
 
-const options1 = [
-    {
-        option: "Market cap",
-        value: "marketCap",
-    },
-    {
-        option: "Price",
-        value: "price",
-    },
-    {
-        option: "24h Volume",
-        value: "24hVolume",
-    },
-    {
-        option: "Change",
-        value: "change",
-    },
-    {
-        option: "Listed at",
-        value: "listedAt",
-    },
-];
-
-const options2 = [
-    {
-        option: "Descending",
-        value: "desc",
-    },
-    {
-        option: "Ascending",
-        value: "asc",
-    },
-];
-
-const SearchForm: React.FC<SearchFormProps> = ({
-    handleSortBy,
-    sortBy,
-    direction,
-    coinUrl,
-    handleSearch,
-    inputResult,
-}) => {
+const SearchForm = () => {
     const dispatch = useAppDispatch();
     const inputValue = useAppSelector(
         ({ cryptocurrencies }) => cryptocurrencies.input
     );
     const handleInput = (e: React.ChangeEvent<HTMLInputElement>) =>
         dispatch(setInput(e.currentTarget.value));
+    const handleSubmit = (e: React.FormEvent) => e.preventDefault();
     return (
-        <form onSubmit={(e) => e.preventDefault()} className="search-form">
+        <form onSubmit={handleSubmit} className="search-form">
             <fieldset className="search-form__fieldset">
                 <input
                     autoFocus
@@ -66,17 +26,10 @@ const SearchForm: React.FC<SearchFormProps> = ({
                     id="crypto-input"
                 />
                 <div className="search-form__dropdowns-wrapper">
+                    <ChangeButtons label="Sort By" options={SORT_BY_OPTIONS} />
                     <ChangeButtons
-                        handler={handleSortBy}
-                        state={sortBy}
-                        label="Sort By"
-                        options={options1}
-                    />
-                    <ChangeButtons
-                        handler={handleSortBy}
-                        state={direction}
                         label="Direction"
-                        options={options2}
+                        options={DIRECTION_OPTIONS}
                     />
                 </div>
             </fieldset>

@@ -1,3 +1,7 @@
+.coins__sub-title {
+    text-align: center;
+}
+
 .btn {
     background-color: var(--color-purple);
     border: none;
@@ -13,6 +17,9 @@
     width: 80%;
     max-width: 250px;
     margin: 0 auto;
+}
+.btn.coins__load-more.coins__load-more--disabled {
+    background-color: var(--color-hamburger);
 }
 
 .coins__load-more__wrapper {

@@ -7,7 +7,7 @@
     -   [/] top 10 coins
     -   [/] global stats
     -   [] crypto news
-    -   [] cryptocurrencies
+    -   [/] cryptocurrencies
         -   [/] search bar
         -   [/] sort by
         -   [/] direction

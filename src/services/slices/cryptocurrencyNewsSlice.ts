@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { API } from "aws-amplify";
 import { SingleNewsData } from "../../components/App/types";
+import { FETCH_STATE } from "../constants";
 
 export const fetchCryptocurrencyNews = createAsyncThunk(
     "cryptocurrencyNewsSlice/cryptocurrencyNews",
@@ -46,14 +47,14 @@ export const cryptocurrencyNewsSlice = createSlice({
     extraReducers(builder) {
         builder
             .addCase(fetchCryptocurrencyNews.pending, (state) => {
-                state.cryptoNewsStatus = "loading";
+                state.cryptoNewsStatus = FETCH_STATE.loading;
             })
             .addCase(fetchCryptocurrencyNews.fulfilled, (state, action) => {
-                state.cryptoNewsStatus = "succeeded";
+                state.cryptoNewsStatus = FETCH_STATE.fulfilled;
                 state.news = action.payload;
             })
             .addCase(fetchCryptocurrencyNews.rejected, (state, action) => {
-                state.cryptoNewsStatus = "failed";
+                state.cryptoNewsStatus = FETCH_STATE.failed;
                 state.error = action.error.message!;
             });
     },

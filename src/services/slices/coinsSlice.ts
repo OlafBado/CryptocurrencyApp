@@ -5,6 +5,7 @@ import { RootState } from "../../app/store";
 import getNewCoinsUrl from "../CreateUrl/CoinsUrl/service";
 import { SingleCoinData } from "../../components/App/types";
 import { FETCH_STATE } from "../constants";
+import { API } from "aws-amplify";
 
 const coinsOptions = {
     headers: {
@@ -19,9 +20,20 @@ export const fetchCryptocurrencies = createAsyncThunk(
         const state = thunkAPI.getState() as RootState;
         const { direction, sortBy, offset, input } = state.cryptocurrencies;
         const url = getNewCoinsUrl(sortBy, direction, 10, offset, input);
+        const params = {
+            queryStringParameters: {
+                sortBy,
+                direction,
+                offset,
+                input,
+            },
+        };
         try {
-            const response = await axios.get(url, coinsOptions);
-            return response.data.data;
+            // const response = await axios.get(url, coinsOptions);
+            // return response.data.data;
+            const response = await API.get("cryptoApi", "/coins", params);
+            console.log(response.body);
+            return response.body.data;
         } catch (err) {
             return err;
         }

@@ -4,19 +4,15 @@ import { ChangeButtonsProps } from "./types";
 import { setSortBy, setDirection } from "../../services/slices/coinsSlice";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
 
-const ChangeButtons: React.FC<ChangeButtonsProps> = ({
-    handler,
-    options,
-    state,
-    label,
-}) => {
+const ChangeButtons: React.FC<ChangeButtonsProps> = ({ options, label }) => {
     const dispatch = useAppDispatch();
-    const direction = useAppSelector(
-        ({ cryptocurrencies }) => cryptocurrencies.direction
+    const { direction, sortBy } = useAppSelector(
+        ({ cryptocurrencies }) => cryptocurrencies
     );
-    const sortBy = useAppSelector(
-        ({ cryptocurrencies }) => cryptocurrencies.sortBy
-    );
+    const handleSetSortBy = (e: React.MouseEvent<HTMLElement>) =>
+        dispatch(setSortBy((e.target as any).value));
+    const handleSetDirection = (e: React.MouseEvent<HTMLElement>) =>
+        dispatch(setDirection((e.target as any).value));
     return (
         <div className="select__wrapper">
             <h3 className="select__label">{label}</h3>
@@ -31,11 +27,10 @@ const ChangeButtons: React.FC<ChangeButtonsProps> = ({
                         }
                         type="button"
                         value={value}
-                        // onClick={(e) => handler(e.currentTarget.value)}
-                        onClick={(e) =>
+                        onClick={
                             label === "Direction"
-                                ? dispatch(setDirection(e.currentTarget.value))
-                                : dispatch(setSortBy(e.currentTarget.value))
+                                ? handleSetDirection
+                                : handleSetSortBy
                         }
                     >
                         {option}

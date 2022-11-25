@@ -21,6 +21,13 @@
       "permissions": {
         "setting": "open"
       }
+    },
+    "/coins": {
+      "name": "/coins",
+      "lambdaFunction": "apiLambda",
+      "permissions": {
+        "setting": "open"
+      }
     }
   }
 }

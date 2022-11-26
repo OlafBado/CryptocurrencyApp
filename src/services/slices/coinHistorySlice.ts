@@ -10,6 +10,7 @@ export const fetchCoinHistory = createAsyncThunk(
         try {
             const state = thunkAPI.getState() as RootState;
             const { timePeriod } = state.coinHistory;
+            console.log(id);
             const params = {
                 queryStringParameters: {
                     id,

@@ -30,14 +30,14 @@ const LineChart: React.FC<LineChartProps> = ({
     coinName,
     currentPrice,
 }) => {
-    const coinPrice: string[] = [];
-    const coinTimestamp: string[] = [];
+    let coinPrice: string[] = [];
+    let coinTimestamp: string[] = [];
 
     if (Object.keys(coinHistory).length !== 0) {
-        coinHistory!.map((arr) => {
-            coinPrice?.push(arr.price);
-            coinTimestamp?.push(
-                new Date(arr.timestamp * 1000).toLocaleDateString()
+        coinHistory.map(({ price, timestamp }) => {
+            coinPrice.unshift(price);
+            coinTimestamp.unshift(
+                new Date(timestamp * 1000).toLocaleDateString()
             );
         });
     }

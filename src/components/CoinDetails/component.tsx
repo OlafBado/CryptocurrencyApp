@@ -37,7 +37,11 @@ const CoinDetails = () => {
     const handleSetTimePeriod = (e: React.MouseEvent<HTMLElement>) =>
         dispatch(setTimePeriod((e.target as any).value));
 
-    if (coinDetailsStatus === FETCH_STATE.loading) return <Spinner />;
+    if (
+        coinDetailsStatus === FETCH_STATE.loading ||
+        Object.keys(coinDetails).length === 0
+    )
+        return <Spinner />;
     return (
         <>
             <div className="container">
@@ -57,7 +61,7 @@ const CoinDetails = () => {
                 />
                 <LineChart
                     coinHistory={coinHistory}
-                    currentPrice={millify(coinDetails.price)}
+                    currentPrice={millify(parseInt(coinDetails.price))}
                     coinName={coinDetails.name}
                 />
             </div>
@@ -75,7 +79,7 @@ const CoinDetails = () => {
                                 Price to USD
                             </h4>
                             <p className="coin-details__value-stats__sub-description">
-                                {millify(coinDetails.price)}
+                                {millify(parseInt(coinDetails.price))}
                             </p>
                         </div>
                         <div className="row">
@@ -199,14 +203,14 @@ const CoinDetails = () => {
                         <h2 className="coin-details__links__title">
                             {coinDetails.name} useful links
                         </h2>
-                        {coinDetails?.links?.map((link) => (
-                            <div className="row" key={link.url}>
+                        {coinDetails?.links?.map(({ url, type, name }) => (
+                            <div className="row" key={url}>
                                 <h4 className="coin-details__links__sub-title">
-                                    {link.type}
+                                    {type}
                                 </h4>
-                                <a href={link.url} target="__blank">
+                                <a href={url} target="__blank">
                                     <p className="coin-details__links__sub-description">
-                                        {link.name}
+                                        {name}
                                     </p>
                                 </a>
                             </div>

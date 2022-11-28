@@ -1,10 +1,9 @@
 import React from "react";
 import "./style.css";
 import Coin from "../Coin";
-import { Top10coinsProps } from "./types";
 import { useAppSelector } from "../../app/hooks";
 
-const Top10Coins: React.FC<Top10coinsProps> = ({ coins }) => {
+const Top10Coins = () => {
     const { top10coins } = useAppSelector(({ top10coins }) => top10coins);
     return (
         <main>

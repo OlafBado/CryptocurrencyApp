@@ -1,5 +1,6 @@
 import { PriceHistory } from "../App/types";
-import { EmptyObject } from "../GlobalStats/types";
+
+type EmptyObject = Record<any, never>;
 
 interface LineChartProps {
     coinHistory: PriceHistory[] | EmptyObject;

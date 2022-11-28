@@ -25,7 +25,11 @@ const Coins: React.FC<CoinsProps> = React.memo(({ coin }) => {
                     <div className="coin__description">
                         <div className="row">
                             <h4>Price</h4>
-                            <p>{millify(coin.price, { precision: 3 })}</p>
+                            <p>
+                                {millify(parseInt(coin.price), {
+                                    precision: 3,
+                                })}
+                            </p>
                         </div>
                         <div className="row">
                             <h4>Daily change</h4>

@@ -23,7 +23,6 @@ ChartJS.register(
     Legend,
     Filler
 );
-import { PriceHistory } from "../App/types";
 
 const LineChart: React.FC<LineChartProps> = ({
     coinHistory,

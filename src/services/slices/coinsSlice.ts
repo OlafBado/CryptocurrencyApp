@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { status } from "aws-sdk/clients/iotfleetwise";
-import axios from "axios";
 import { RootState } from "../../app/store";
 import getNewCoinsUrl from "../CreateUrl/CoinsUrl/service";
 import { SingleCoinData } from "../../components/App/types";

@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from "react";
 import "./style.css";
 import logo from "../../assets/logo3.png";
 import { NavLink, Link } from "react-router-dom";
-import { NavbarProps } from "./types";
 import { WidthContext } from "../../services/Context/WidthContex";
 import useOutsideClick from "../../hooks/useOutsideClick";
 

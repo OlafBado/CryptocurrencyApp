@@ -52,7 +52,7 @@ const App = () => {
                             ) : (
                                 <>
                                     <GlobalStats />
-                                    <Top10Coins coins={top10coins} />
+                                    <Top10Coins />
                                     <Marquee
                                         style={{
                                             height: "auto",

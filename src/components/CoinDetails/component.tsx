@@ -13,6 +13,8 @@ import { chartOptions, FETCH_STATE } from "../../services/constants";
 import { fetchCoinDetails } from "../../services/slices/coinDetailsSlice";
 import { fetchCoinHistory } from "../../services/slices/coinHistorySlice";
 import { setTimePeriod } from "../../services/slices/coinHistorySlice";
+import StringLength from "../../services/Format/StringLength";
+
 const CoinDetails = () => {
     const dispatch = useAppDispatch();
 
@@ -210,7 +212,7 @@ const CoinDetails = () => {
                                 </h4>
                                 <a href={url} target="__blank">
                                     <p className="coin-details__links__sub-description">
-                                        {name}
+                                        {StringLength(name)}
                                     </p>
                                 </a>
                             </div>

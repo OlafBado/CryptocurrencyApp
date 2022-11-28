@@ -65,6 +65,9 @@ export const cryptocurrenciesSlice = createSlice({
             state.offset = 0;
             state.input = action.payload;
         },
+        setOffset: (state) => {
+            state.offset = 0;
+        },
         getMore: (state) => {
             state.offset += 10;
         },
@@ -88,5 +91,5 @@ export const cryptocurrenciesSlice = createSlice({
     },
 });
 
-export const { setSortBy, setDirection, setInput, getMore } =
+export const { setSortBy, setDirection, setInput, getMore, setOffset } =
     cryptocurrenciesSlice.actions;

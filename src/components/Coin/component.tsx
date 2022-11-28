@@ -14,7 +14,7 @@ const Coins: React.FC<CoinsProps> = React.memo(({ coin }) => {
                 <article key={coin.uuid} className="coin__wrapper">
                     <div className="coin__upper-section row">
                         <h3 className="coin__name">
-                            {coin.rank}.{coin.name}
+                            {coin.rank}. {coin.name}
                         </h3>
                         <img
                             src={coin.iconUrl}

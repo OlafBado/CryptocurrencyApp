@@ -7,6 +7,7 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import {
     fetchCryptocurrencies,
     getMore,
+    setOffset,
 } from "../../services/slices/coinsSlice";
 import useDebounce from "../../hooks/useDebounce";
 import { FETCH_STATE } from "../../services/constants";
@@ -17,6 +18,10 @@ const Cryptocurrencies = () => {
         useAppSelector(({ cryptocurrencies }) => cryptocurrencies);
 
     const debouncedInputValue = useDebounce(input, 400);
+
+    useEffect(() => {
+        dispatch(setOffset());
+    }, []);
 
     useEffect(() => {
         dispatch(fetchCryptocurrencies());

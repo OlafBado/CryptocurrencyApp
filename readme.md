@@ -2,6 +2,8 @@
 
 The application provides the latest informations from the world of cryptocurrencies and individual cryptocurrencies.
 
+//
+
 ## Installation steps
 
 Clone the repository:

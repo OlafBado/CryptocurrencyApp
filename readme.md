@@ -2,6 +2,8 @@
 
 The application provides the latest informations from the world of cryptocurrencies and individual cryptocurrencies.
 
+Check it here! https://main.d3pa3t6j2zu5x6.amplifyapp.com/
+
 ## Installation steps
 
 Clone the repository:
@@ -26,3 +28,4 @@ Open app in development mode:
 -   [] integration tests
 -   [] e2e tests
 -   [] webpack prod config
+

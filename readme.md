@@ -2,7 +2,7 @@
 
 The application provides the latest informations from the world of cryptocurrencies and individual cryptocurrencies.
 
-//
+Check it here! https://main.d16m34lt1vw9u0.amplifyapp.com/
 
 ## Installation steps
 

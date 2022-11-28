@@ -14,14 +14,14 @@ Amplify.configure(awsExports);
 const root = document.getElementById("root");
 if (root) {
     createRoot(root).render(
-        <React.StrictMode>
-            <BrowserRouter>
-                <Provider store={store}>
-                    <WidthContextProvider>
-                        <App />
-                    </WidthContextProvider>
-                </Provider>
-            </BrowserRouter>
-        </React.StrictMode>
+        // <React.StrictMode>
+        <BrowserRouter>
+            <Provider store={store}>
+                <WidthContextProvider>
+                    <App />
+                </WidthContextProvider>
+            </Provider>
+        </BrowserRouter>
+        // </React.StrictMode>
     );
 }

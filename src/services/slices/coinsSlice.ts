@@ -65,11 +65,12 @@ export const cryptocurrenciesSlice = createSlice({
             state.offset = 0;
             state.input = action.payload;
         },
-        setOffset: (state) => {
-            state.offset = 0;
-        },
+        reset: () => initialState,
         getMore: (state) => {
             state.offset += 10;
+        },
+        setCoins: (state, action) => {
+            state.coins = action.payload;
         },
     },
     extraReducers(builder) {
@@ -91,5 +92,5 @@ export const cryptocurrenciesSlice = createSlice({
     },
 });
 
-export const { setSortBy, setDirection, setInput, getMore, setOffset } =
+export const { setSortBy, setDirection, setInput, getMore, reset, setCoins } =
     cryptocurrenciesSlice.actions;

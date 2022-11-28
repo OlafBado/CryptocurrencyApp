@@ -73,6 +73,7 @@
         "nodemon": "^2.0.20",
         "react-fast-marquee": "^1.3.5",
         "react-redux": "^8.0.5",
-        "react-router-dom": "^6.4.3"
+        "react-router-dom": "^6.4.3",
+        "use-debounce": "^8.0.4"
     }
 }

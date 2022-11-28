@@ -5,9 +5,11 @@ import {
     setInput,
     setSortBy,
     setDirection,
+    fetchCryptocurrencies,
 } from "../../services/slices/coinsSlice";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { SORT_BY_OPTIONS, DIRECTION_OPTIONS } from "../../services/constants";
+import { useDebouncedCallback } from "use-debounce";
 
 const SearchForm = () => {
     const dispatch = useAppDispatch();
@@ -15,16 +17,31 @@ const SearchForm = () => {
     const { input, sortBy, direction } = useAppSelector(
         ({ cryptocurrencies }) => cryptocurrencies
     );
-    const handleInput = (e: React.ChangeEvent<HTMLInputElement>) =>
-        dispatch(setInput(e.currentTarget.value));
+    const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value;
+        dispatch(setInput(value));
+        handleDebounceInput();
+    };
+
+    const handleDebounceInput = useDebouncedCallback(() => {
+        dispatch(fetchCryptocurrencies());
+    }, 300);
 
     const handleSubmit = (e: React.FormEvent) => e.preventDefault();
 
-    const handleSetSortBy = (e: React.MouseEvent<HTMLElement>) =>
-        dispatch(setSortBy((e.target as any).value));
+    const handleSetSortBy = (e: React.MouseEvent<HTMLElement>) => {
+        const value = (e.target as any).value;
+        if (value === sortBy) return;
+        dispatch(setSortBy(value));
+        dispatch(fetchCryptocurrencies());
+    };
 
-    const handleSetDirection = (e: React.MouseEvent<HTMLElement>) =>
-        dispatch(setDirection((e.target as any).value));
+    const handleSetDirection = (e: React.MouseEvent<HTMLElement>) => {
+        const value = (e.target as any).value;
+        if (value === direction) return;
+        dispatch(setDirection(value));
+        dispatch(fetchCryptocurrencies());
+    };
 
     return (
         <form onSubmit={handleSubmit} className="search-form">

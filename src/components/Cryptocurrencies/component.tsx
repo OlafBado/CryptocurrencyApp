@@ -7,10 +7,13 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import {
     fetchCryptocurrencies,
     getMore,
-    setOffset,
+    reset,
+    setCoins,
 } from "../../services/slices/coinsSlice";
 import useDebounce from "../../hooks/useDebounce";
 import { FETCH_STATE } from "../../services/constants";
+
+const coinsFromLocalStorage = localStorage.getItem("coins") || "[]";
 
 const Cryptocurrencies = () => {
     const dispatch = useAppDispatch();
@@ -20,14 +23,24 @@ const Cryptocurrencies = () => {
     const debouncedInputValue = useDebounce(input, 400);
 
     useEffect(() => {
-        dispatch(setOffset());
+        if (coins.length === 0) {
+            dispatch(fetchCryptocurrencies());
+        }
     }, []);
 
-    useEffect(() => {
-        dispatch(fetchCryptocurrencies());
-    }, [sortBy, direction, debouncedInputValue, offset]);
+    // useEffect(() => {
+    //     localStorage.setItem("coins", JSON.stringify(coins));
+    // }, [coins]);
 
-    const handleFetchMore = () => dispatch(getMore());
+    // useEffect(() => {
+    //     console.log("normal", coins);
+    //     dispatch(fetchCryptocurrencies());
+    // }, [sortBy, direction, debouncedInputValue, offset]);
+
+    const handleFetchMore = () => {
+        dispatch(getMore());
+        dispatch(fetchCryptocurrencies());
+    };
 
     return (
         <main>

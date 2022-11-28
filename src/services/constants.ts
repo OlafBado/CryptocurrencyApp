@@ -72,3 +72,6 @@ export const chartOptions = [
         value: "3m",
     },
 ];
+
+export const DEFAULT_IMG =
+    "https://cdn-icons-png.flaticon.com/512/1213/1213797.png";

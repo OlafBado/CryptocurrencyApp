@@ -2,8 +2,7 @@ import React from "react";
 import "./style.css";
 import { NewsItemProps } from "./types";
 import dateMoment from "../../services/Format/DateMoment/service";
-
-const defaultImg = "https://cdn-icons-png.flaticon.com/512/1213/1213797.png";
+import { DEFAULT_IMG } from "../../services/constants";
 
 const NewsItem: React.FC<NewsItemProps> = ({ news }) => {
     const { publishedAt, description, url, urlToImage, title, source } = news;
@@ -15,7 +14,7 @@ const NewsItem: React.FC<NewsItemProps> = ({ news }) => {
                     <h3 className="news-item__upper-section__title">{title}</h3>
                     <img
                         className="news-item__upper-section__img"
-                        src={urlToImage ? urlToImage : defaultImg}
+                        src={urlToImage ? urlToImage : DEFAULT_IMG}
                         alt="Photo relating to the news"
                     />
                 </div>

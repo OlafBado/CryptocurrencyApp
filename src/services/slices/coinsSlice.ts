@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { status } from "aws-sdk/clients/iotfleetwise";
 import { RootState } from "../../app/store";
-import getNewCoinsUrl from "../CreateUrl/CoinsUrl/service";
 import { SingleCoinData } from "../../components/App/types";
 import { FETCH_STATE } from "../constants";
 import { API } from "aws-amplify";

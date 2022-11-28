@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { Coin } from "../../components/GlobalStats/types";
+import { Coin } from "../../components/App/types";
 import { API } from "aws-amplify";
 import { FETCH_STATE } from "../constants";
 

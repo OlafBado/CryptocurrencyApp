@@ -18,22 +18,27 @@ const Navbar = () => {
         width < 700 ? setIsNavOpen((prev) => !prev) : null;
     };
 
+    const handleCloseNavbar = () => {
+        width < 700 ? setIsNavOpen(false) : null;
+    };
+
     return (
         <header ref={isNavOpen && width < 700 ? ref : null}>
             <div className="container navbar__wrapper">
                 <Link to="/">
                     <img
-                        onClick={() =>
-                            width < 700 ? setIsNavOpen(false) : null
-                        }
+                        onClick={handleCloseNavbar}
                         src={logo}
                         alt="navigation logo"
                         className="logo"
                     />
                 </Link>
                 <nav
-                    className="navbar"
-                    style={{ display: isNavOpen ? "block" : "none" }}
+                    className={
+                        isNavOpen
+                            ? "navbar navbar--open"
+                            : "navbar navbar--closed"
+                    }
                 >
                     <ul className="navbar__list">
                         <NavLink
@@ -68,20 +73,20 @@ const Navbar = () => {
                         </NavLink>
                     </ul>
                 </nav>
-                <button
-                    className="nav__toggle"
-                    onClick={() => setIsNavOpen((prev) => !prev)}
-                >
+                <button className="nav__toggle" onClick={handleNavbar}>
                     <span
-                        className="hamburger"
-                        style={{
-                            rotate: isNavOpen ? "45deg" : "none",
-                            transform: isNavOpen ? "none" : "translateY(-3px)",
-                        }}
+                        className={
+                            isNavOpen
+                                ? "hamburger hamburger--upper"
+                                : "hamburger hamburger--upper--closed"
+                        }
                     ></span>
                     <span
-                        className="hamburger"
-                        style={{ rotate: isNavOpen ? "-45deg" : "none" }}
+                        className={
+                            isNavOpen
+                                ? "hamburger hamburger--lower"
+                                : "hamburger"
+                        }
                     ></span>
                 </button>
             </div>

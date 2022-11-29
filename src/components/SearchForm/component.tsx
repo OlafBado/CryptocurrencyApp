@@ -17,15 +17,16 @@ const SearchForm = () => {
     const { input, sortBy, direction } = useAppSelector(
         ({ cryptocurrencies }) => cryptocurrencies
     );
+
+    const handleDebounceInput = useDebouncedCallback(() => {
+        dispatch(fetchCryptocurrencies());
+    }, 300);
+
     const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
         dispatch(setInput(value));
         handleDebounceInput();
     };
-
-    const handleDebounceInput = useDebouncedCallback(() => {
-        dispatch(fetchCryptocurrencies());
-    }, 300);
 
     const handleSubmit = (e: React.FormEvent) => e.preventDefault();
 

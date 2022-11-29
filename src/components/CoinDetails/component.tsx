@@ -81,7 +81,7 @@ const CoinDetails = () => {
                                 Price to USD
                             </h4>
                             <p className="coin-details__value-stats__sub-description">
-                                {millify(parseInt(coinDetails.price))}
+                                {millify(parseInt(coinDetails?.price))}
                             </p>
                         </div>
                         <div className="row">
@@ -97,7 +97,7 @@ const CoinDetails = () => {
                                 Market Cap
                             </h4>
                             <p className="coin-details__value-stats__sub-description">
-                                {millify(parseInt(coinDetails.marketCap))}
+                                {millify(parseInt(coinDetails?.marketCap))}
                             </p>
                         </div>
                         <div className="row">
@@ -198,7 +198,7 @@ const CoinDetails = () => {
                             What is {coinDetails.name}
                         </h2>
                         {coinDetails?.description
-                            ? HTMLparser(coinDetails.description)
+                            ? HTMLparser(coinDetails?.description)
                             : null}
                     </section>
                     <section className="coin-details__links">

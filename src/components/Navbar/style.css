@@ -44,6 +44,28 @@ header {
     transition: 300ms;
 }
 
+.hamburger--upper {
+    rotate: 45deg;
+    transform: none;
+}
+
+.hamburger--upper--closed {
+    transform: translateY(-3px);
+    rotate: none;
+}
+
+.hamburger--lower {
+    rotate: -45deg;
+}
+
 .navbar__list__link--active {
     color: var(--color-purple);
+}
+
+.navbar--open {
+    display: block;
+}
+
+.navbar--closed {
+    display: none;
 }

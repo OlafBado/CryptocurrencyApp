@@ -15,19 +15,18 @@ import CoinDetails from "../CoinDetails";
 import Marquee from "react-fast-marquee";
 import NewsItem from "../NewsItem";
 import { FETCH_STATE } from "../../services/constants";
+import { fetchCryptocurrencyNews } from "../../services/slices/cryptocurrencyNewsSlice";
 
 const App = () => {
     const dispatch = useAppDispatch();
     const { news } = useAppSelector(({ cryptoNews }) => cryptoNews);
-    const { top10coins } = useAppSelector(({ top10coins }) => top10coins);
     const { globalStatsStatus } = useAppSelector(
         ({ globalStats }) => globalStats
     );
     const { cryptoNewsStatus } = useAppSelector(({ cryptoNews }) => cryptoNews);
-    const { coinNewsStatus } = useAppSelector(({ coinNews }) => coinNews);
 
     useEffect(() => {
-        // dispatch(fetchCryptocurrencyNews())
+        dispatch(fetchCryptocurrencyNews());
         dispatch(fetchGlobalStats());
         dispatch(fetchTop10Coins());
     }, []);
@@ -42,11 +41,9 @@ const App = () => {
                         <>
                             <Hero />
                             {globalStatsStatus === FETCH_STATE.loading ||
-                            coinNewsStatus === FETCH_STATE.loading ||
                             cryptoNewsStatus === FETCH_STATE.loading ? (
                                 <Spinner />
                             ) : globalStatsStatus === FETCH_STATE.failed ||
-                              coinNewsStatus === FETCH_STATE.failed ||
                               cryptoNewsStatus === FETCH_STATE.failed ? (
                                 <div>Something went wrong...</div>
                             ) : (

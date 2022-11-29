@@ -4,13 +4,20 @@ import { CoinsProps } from "./types";
 import formatter from "../../services/Format/Price";
 import { Link } from "react-router-dom";
 import millify from "millify";
+import { useAppDispatch } from "../../app/hooks";
+import { fetchCoinNews } from "../../services/slices/coinNewsSlice";
 
 const Coins: React.FC<CoinsProps> = React.memo(({ coin }) => {
     const change = parseFloat(coin.change);
+    const dispatch = useAppDispatch();
 
+    const handleFetchCoinNews = (coin: string) => dispatch(fetchCoinNews(coin));
     return (
         <>
-            <Link to={`/cryptocurrencies/${coin.uuid}`}>
+            <Link
+                to={`/cryptocurrencies/${coin.uuid}`}
+                onClick={() => handleFetchCoinNews(coin.name)}
+            >
                 <article key={coin.uuid} className="coin__wrapper">
                     <div className="coin__upper-section row">
                         <h3 className="coin__name">

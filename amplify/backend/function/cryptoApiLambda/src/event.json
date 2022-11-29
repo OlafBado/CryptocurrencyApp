@@ -1,12 +1,12 @@
 {
     "httpMethod": "GET",
-    "path": "/coinHistory",
+    "path": "/getNews",
     "queryStringParameters": {
-        "id": "Qwsogvtv82FCd",
-        "timePeriod": "3y"
+        "coin": "bitcoin"
     },
     "headers": {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "Accept-Encoding": "null"
     },
     "body": "{\"msg\":\"Hello from the event.json body\"}"
 }

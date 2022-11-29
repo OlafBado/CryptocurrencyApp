@@ -8,7 +8,6 @@ import HTMLparser from "html-react-parser";
 import ChangeButtons from "../ChangeButtons";
 import NewsItem from "../NewsItem";
 import Spinner from "../Spinner";
-import { fetchCoinNews } from "../../services/slices/coinNewsSlice";
 import { chartOptions, FETCH_STATE } from "../../services/constants";
 import { fetchCoinDetails } from "../../services/slices/coinDetailsSlice";
 import { fetchCoinHistory } from "../../services/slices/coinHistorySlice";
@@ -28,7 +27,6 @@ const CoinDetails = () => {
     const { news } = useAppSelector(({ coinNews }) => coinNews);
 
     useEffect(() => {
-        // dispatch(fetchCoinNews(coinDetails.name))
         dispatch(fetchCoinDetails(id!));
     }, []);
 

@@ -9,7 +9,6 @@ footer {
     color: var(--color-purple);
 }
 
-.footer__content__links span:hover,
 .footer__content__icons svg:hover {
     color: var(--color-hamburger);
     cursor: pointer;
@@ -27,7 +26,7 @@ footer {
 }
 
 .footer__content__icons a {
-    color: inherit
+    color: inherit;
 }
 
 .footer__content__icons svg {

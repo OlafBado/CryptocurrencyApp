@@ -6,16 +6,13 @@ import { FETCH_STATE } from "../constants";
 export const fetchCoinNews = createAsyncThunk(
     "coinNewsSlice/coinNews",
     async (coin: string) => {
+        console.log(coin);
         const params = {
-            queryStringParameters: { coin: `Crypto ${coin}` },
+            queryStringParameters: { coin: `Crypto ${coin}`, pageSize: "20" },
         };
         try {
-            const result = await API.get(
-                "cryptoApi",
-                "/crypto/getNews",
-                params
-            );
-            return result.articles;
+            const result = await API.get("cryptoApi", "/getNews", params);
+            return result.body.articles;
         } catch (err) {
             return err;
         }

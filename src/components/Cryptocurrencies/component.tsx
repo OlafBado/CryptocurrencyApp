@@ -31,7 +31,7 @@ const Cryptocurrencies = () => {
         <main>
             <div className="container">
                 <h2 className="coins__title">
-                    Find you <span>crypto</span>currency
+                    Find your <span>crypto</span>currency
                 </h2>
                 <SearchForm />
                 {coins.length === 0 && coinsStatus !== FETCH_STATE.loading ? (

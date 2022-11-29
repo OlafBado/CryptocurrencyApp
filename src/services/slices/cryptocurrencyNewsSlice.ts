@@ -9,15 +9,12 @@ export const fetchCryptocurrencyNews = createAsyncThunk(
         const params = {
             queryStringParameters: {
                 coin: "Cryptocurrency",
+                pageSize: "100",
             },
         };
         try {
-            const result = await API.get(
-                "cryptoApi",
-                "/crypto/getNews",
-                params
-            );
-            return result.articles;
+            const result = await API.get("cryptoApi", "/getNews", params);
+            return result.body.articles;
         } catch (err) {
             return err;
         }
@@ -39,11 +36,7 @@ const initialState: InitialState = {
 export const cryptocurrencyNewsSlice = createSlice({
     name: "cryptocurrencyNews",
     initialState,
-    reducers: {
-        setCryptocurrencyNews: (state, action) => {
-            state.news = action.payload;
-        },
-    },
+    reducers: {},
     extraReducers(builder) {
         builder
             .addCase(fetchCryptocurrencyNews.pending, (state) => {
@@ -59,5 +52,3 @@ export const cryptocurrencyNewsSlice = createSlice({
             });
     },
 });
-
-export const { setCryptocurrencyNews } = cryptocurrencyNewsSlice.actions;

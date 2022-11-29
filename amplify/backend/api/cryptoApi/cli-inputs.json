@@ -35,6 +35,13 @@
       "permissions": {
         "setting": "open"
       }
+    },
+    "/getNews": {
+      "name": "/getNews",
+      "lambdaFunction": "cryptoApiLambda",
+      "permissions": {
+        "setting": "open"
+      }
     }
   }
 }

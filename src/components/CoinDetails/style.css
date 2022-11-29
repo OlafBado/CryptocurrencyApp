@@ -21,10 +21,6 @@
     margin: 1rem 0;
 }
 
-.coin-details__supply-stats {
-    margin-top: 2rem;
-}
-
 .coin-details__value-stats__title,
 .coin-details__supply-stats__title {
     margin: 0.5rem 0;
@@ -62,11 +58,19 @@
     border-radius: 0.5rem;
 }
 
-.coin-details__links {
-    margin-bottom: 1rem;
-}
-
 .coin-details__links__sub-description {
     color: var(--color-purple);
     text-decoration: underline;
+}
+
+.coin-details-upper-section__wrapper h2 {
+    margin: 0;
+}
+
+.coin-details-upper-section__wrapper section {
+    margin-bottom: 2rem;
+}
+
+.coin-details__value-stats {
+    margin-top: 2rem;
 }

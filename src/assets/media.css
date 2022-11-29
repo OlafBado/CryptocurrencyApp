@@ -50,9 +50,13 @@
     .coin-details__title span {
         display: inline-block;
     }
-    
-    .coin-details__supply-stats {
-        margin: 0;
+
+    .coin-details-upper-section__wrapper section {
+        margin: 0rem;
+    }
+
+    .coin-details-upper-section__wrapper {
+        margin: 2rem 0;
     }
 
     .hero__section {
@@ -99,12 +103,12 @@
         margin: 0;
         transition: 200ms;
     }
-    
+
     .navbar__list__link {
         padding: 0.5rem 0.5rem;
         border-radius: 1rem;
     }
-    
+
     .navbar__list__link--active {
         padding: 0.5rem 0.5rem;
         border-radius: 1rem;
@@ -117,7 +121,6 @@
         transition: 200ms;
         scale: 1.1;
     }
-
 }
 
 @media (min-width: 1000px) {

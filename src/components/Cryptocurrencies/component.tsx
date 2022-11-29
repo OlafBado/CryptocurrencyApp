@@ -26,7 +26,6 @@ const Cryptocurrencies = () => {
         dispatch(getMore());
         dispatch(fetchCryptocurrencies());
     };
-
     return (
         <main>
             <div className="container">

@@ -13,6 +13,7 @@ import { fetchCoinDetails } from "../../services/slices/coinDetailsSlice";
 import { fetchCoinHistory } from "../../services/slices/coinHistorySlice";
 import { setTimePeriod } from "../../services/slices/coinHistorySlice";
 import StringLength from "../../services/Format/StringLength";
+import formatter from "../../services/Format/Price/service";
 
 const CoinDetails = () => {
     const dispatch = useAppDispatch();
@@ -79,7 +80,7 @@ const CoinDetails = () => {
                                 Price to USD
                             </h4>
                             <p className="coin-details__value-stats__sub-description">
-                                {millify(parseInt(coinDetails?.price))}
+                                {formatter(coinDetails?.price)}
                             </p>
                         </div>
                         <div className="row">
@@ -121,9 +122,7 @@ const CoinDetails = () => {
                                 All-time-high (price)
                             </h4>
                             <p className="coin-details__value-stats__sub-description">
-                                {millify(
-                                    parseInt(coinDetails?.allTimeHigh?.price)
-                                )}
+                                {formatter(coinDetails?.allTimeHigh?.price)}
                             </p>
                         </div>
                         <div className="row">
@@ -191,31 +190,33 @@ const CoinDetails = () => {
                             </p>
                         </div>
                     </section>
-                    <section className="coin-details__what-is">
-                        <h2 className="coin-details__what-is__title">
-                            What is {coinDetails.name}
-                        </h2>
-                        {coinDetails?.description
-                            ? HTMLparser(coinDetails?.description)
-                            : null}
-                    </section>
-                    <section className="coin-details__links">
-                        <h2 className="coin-details__links__title">
-                            {coinDetails.name} useful links
-                        </h2>
-                        {coinDetails?.links?.map(({ url, type, name }) => (
-                            <div className="row" key={url}>
-                                <h4 className="coin-details__links__sub-title">
-                                    {type}
-                                </h4>
-                                <a href={url} target="__blank">
-                                    <p className="coin-details__links__sub-description">
-                                        {StringLength(name)}
-                                    </p>
-                                </a>
-                            </div>
-                        ))}
-                    </section>
+                    {coinDetails?.description ? (
+                        <section className="coin-details__what-is">
+                            <h2 className="coin-details__what-is__title">
+                                What is {coinDetails.name}
+                            </h2>
+                            {HTMLparser(coinDetails?.description)}
+                        </section>
+                    ) : null}
+                    {coinDetails.links ? (
+                        <section className="coin-details__links">
+                            <h2 className="coin-details__links__title">
+                                {coinDetails.name} useful links
+                            </h2>
+                            {coinDetails?.links?.map(({ url, type, name }) => (
+                                <div className="row" key={url}>
+                                    <h4 className="coin-details__links__sub-title">
+                                        {type}
+                                    </h4>
+                                    <a href={url} target="__blank">
+                                        <p className="coin-details__links__sub-description">
+                                            {StringLength(name)}
+                                        </p>
+                                    </a>
+                                </div>
+                            ))}
+                        </section>
+                    ) : null}
                 </div>
                 {news?.length > 0 ? (
                     <section className="coin-details__news">

@@ -3,7 +3,6 @@ import "./style.css";
 import { CoinsProps } from "./types";
 import formatter from "../../services/Format/Price";
 import { Link } from "react-router-dom";
-import millify from "millify";
 import { useAppDispatch } from "../../app/hooks";
 import { fetchCoinNews } from "../../services/slices/coinNewsSlice";
 
@@ -32,11 +31,7 @@ const Coins: React.FC<CoinsProps> = React.memo(({ coin }) => {
                     <div className="coin__description">
                         <div className="row">
                             <h4>Price</h4>
-                            <p>
-                                {millify(parseInt(coin.price), {
-                                    precision: 3,
-                                })}
-                            </p>
+                            <p>{formatter(coin.price)}</p>
                         </div>
                         <div className="row">
                             <h4>Daily change</h4>

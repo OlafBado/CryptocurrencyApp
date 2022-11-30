@@ -18,18 +18,7 @@ import { FETCH_STATE } from "../../services/constants";
 import { fetchCryptocurrencyNews } from "../../services/slices/cryptocurrencyNewsSlice";
 
 const App = () => {
-    const dispatch = useAppDispatch();
-    const { news } = useAppSelector(({ cryptoNews }) => cryptoNews);
-    const { globalStatsStatus } = useAppSelector(
-        ({ globalStats }) => globalStats
-    );
-    const { cryptoNewsStatus } = useAppSelector(({ cryptoNews }) => cryptoNews);
-
-    useEffect(() => {
-        dispatch(fetchCryptocurrencyNews());
-        dispatch(fetchGlobalStats());
-        dispatch(fetchTop10Coins());
-    }, []);
+    const { dispatch, news, globalStatsStatus, cryptoNewsStatus } = useApp();
 
     return (
         <>
@@ -82,6 +71,27 @@ const App = () => {
             <Footer />
         </>
     );
+};
+
+const useApp = () => {
+    const dispatch = useAppDispatch();
+    const { news } = useAppSelector(({ cryptoNews }) => cryptoNews);
+    const { globalStatsStatus } = useAppSelector(
+        ({ globalStats }) => globalStats
+    );
+    const { cryptoNewsStatus } = useAppSelector(({ cryptoNews }) => cryptoNews);
+
+    useEffect(() => {
+        dispatch(fetchCryptocurrencyNews());
+        dispatch(fetchGlobalStats());
+        dispatch(fetchTop10Coins());
+    }, []);
+    return {
+        dispatch,
+        news,
+        globalStatsStatus,
+        cryptoNewsStatus,
+    };
 };
 
 export default App;

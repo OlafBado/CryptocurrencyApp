@@ -12,35 +12,28 @@ import { chartOptions, FETCH_STATE } from "../../services/constants";
 import { fetchCoinDetails } from "../../services/slices/coinDetailsSlice";
 import { fetchCoinHistory } from "../../services/slices/coinHistorySlice";
 import { setTimePeriod } from "../../services/slices/coinHistorySlice";
-import StringLength from "../../services/Format/StringLength";
-import formatter from "../../services/Format/Price/service";
+import stringLength from "../../services/Format/StringLength";
+import checkNumbers from "../../services/Format/CheckNumbers/service";
 
 const CoinDetails = () => {
-    const dispatch = useAppDispatch();
+    const {
+        coinDetails,
+        coinDetailsStatus,
+        timePeriod,
+        coinHistory,
+        news,
+        dispatch,
+        id,
+    } = useCoinDetails();
 
-    const { id } = useParams();
-    const { coinDetails, coinDetailsStatus } = useAppSelector(
-        ({ coinDetails }) => coinDetails
-    );
-    const { timePeriod, coinHistory, coinHistoryStatus } = useAppSelector(
-        ({ coinHistory }) => coinHistory
-    );
-    const { news } = useAppSelector(({ coinNews }) => coinNews);
-
-    useEffect(() => {
-        dispatch(fetchCoinDetails(id!));
-    }, []);
-
-    useEffect(() => {
-        dispatch(fetchCoinHistory(id!));
-    }, [timePeriod]);
-
-    const handleSetTimePeriod = (e: React.MouseEvent<HTMLElement>) =>
+    const handleSetTimePeriod = (e: React.MouseEvent<HTMLElement>) => {
         dispatch(setTimePeriod((e.target as any).value));
+        dispatch(fetchCoinHistory(id!));
+    };
 
     if (
         coinDetailsStatus === FETCH_STATE.loading ||
-        Object.keys(coinDetails).length === 0
+        !Object.keys(coinDetails).length
     )
         return <Spinner />;
     return (
@@ -60,11 +53,7 @@ const CoinDetails = () => {
                     state={timePeriod}
                     label="Select time period"
                 />
-                <LineChart
-                    coinHistory={coinHistory}
-                    currentPrice={millify(parseInt(coinDetails.price))}
-                    coinName={coinDetails.name}
-                />
+                <LineChart coinHistory={coinHistory} />
             </div>
             <div className="container">
                 <div className="coin-details-upper-section__wrapper">
@@ -80,7 +69,7 @@ const CoinDetails = () => {
                                 Price to USD
                             </h4>
                             <p className="coin-details__value-stats__sub-description">
-                                {formatter(coinDetails?.price)}
+                                {checkNumbers(coinDetails?.price)}
                             </p>
                         </div>
                         <div className="row">
@@ -88,7 +77,7 @@ const CoinDetails = () => {
                                 24h Volume
                             </h4>
                             <p className="coin-details__value-stats__sub-description">
-                                {millify(parseInt(coinDetails["24hVolume"]))}
+                                {checkNumbers(coinDetails["24hVolume"])}
                             </p>
                         </div>
                         <div className="row">
@@ -96,7 +85,7 @@ const CoinDetails = () => {
                                 Market Cap
                             </h4>
                             <p className="coin-details__value-stats__sub-description">
-                                {millify(parseInt(coinDetails?.marketCap))}
+                                {checkNumbers(coinDetails?.marketCap)}
                             </p>
                         </div>
                         <div className="row">
@@ -122,7 +111,7 @@ const CoinDetails = () => {
                                 All-time-high (price)
                             </h4>
                             <p className="coin-details__value-stats__sub-description">
-                                {formatter(coinDetails?.allTimeHigh?.price)}
+                                {checkNumbers(coinDetails?.allTimeHigh?.price)}
                             </p>
                         </div>
                         <div className="row">
@@ -156,11 +145,7 @@ const CoinDetails = () => {
                                 Total Supply
                             </h4>
                             <p className="coin-details__supply-stats__sub-description">
-                                {coinDetails?.supply?.total
-                                    ? millify(
-                                          parseInt(coinDetails?.supply?.total)
-                                      )
-                                    : "--"}
+                                {checkNumbers(coinDetails?.supply?.total)}
                             </p>
                         </div>
                         <div className="row">
@@ -168,13 +153,7 @@ const CoinDetails = () => {
                                 Circulating Supply
                             </h4>
                             <p className="coin-details__supply-stats__sub-description">
-                                {coinDetails?.supply?.circulating
-                                    ? millify(
-                                          parseInt(
-                                              coinDetails?.supply?.circulating
-                                          )
-                                      )
-                                    : "--"}
+                                {checkNumbers(coinDetails?.supply?.circulating)}
                             </p>
                         </div>
                         <div className="row">
@@ -182,11 +161,7 @@ const CoinDetails = () => {
                                 Supply Limit
                             </h4>
                             <p className="coin-details__supply-stats__sub-description">
-                                {coinDetails?.supply?.max
-                                    ? millify(
-                                          parseInt(coinDetails?.supply?.max)
-                                      )
-                                    : "--"}
+                                {checkNumbers(coinDetails?.supply?.max)}
                             </p>
                         </div>
                     </section>
@@ -210,7 +185,7 @@ const CoinDetails = () => {
                                     </h4>
                                     <a href={url} target="__blank">
                                         <p className="coin-details__links__sub-description">
-                                            {StringLength(name)}
+                                            {stringLength(name)}
                                         </p>
                                     </a>
                                 </div>
@@ -238,6 +213,33 @@ const CoinDetails = () => {
             </div>
         </>
     );
+};
+
+const useCoinDetails = () => {
+    const dispatch = useAppDispatch();
+    const { id } = useParams();
+    const { coinDetails, coinDetailsStatus } = useAppSelector(
+        ({ coinDetails }) => coinDetails
+    );
+    const { timePeriod, coinHistory, coinHistoryStatus } = useAppSelector(
+        ({ coinHistory }) => coinHistory
+    );
+    const { news } = useAppSelector(({ coinNews }) => coinNews);
+
+    useEffect(() => {
+        dispatch(fetchCoinDetails(id!));
+        dispatch(fetchCoinHistory(id!));
+    }, []);
+
+    return {
+        coinDetails,
+        coinDetailsStatus,
+        timePeriod,
+        coinHistory,
+        news,
+        dispatch,
+        id,
+    };
 };
 
 export default CoinDetails;

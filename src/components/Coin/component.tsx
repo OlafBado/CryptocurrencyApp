@@ -1,12 +1,12 @@
 import React from "react";
 import "./style.css";
 import { CoinsProps } from "./types";
-import formatter from "../../services/Format/Price";
 import { Link } from "react-router-dom";
 import { useAppDispatch } from "../../app/hooks";
 import { fetchCoinNews } from "../../services/slices/coinNewsSlice";
+import checkNumbers from "../../services/Format/CheckNumbers/service";
 
-const Coins: React.FC<CoinsProps> = React.memo(({ coin }) => {
+const Coins: React.FC<CoinsProps> = ({ coin }) => {
     const change = parseFloat(coin.change);
     const dispatch = useAppDispatch();
 
@@ -31,7 +31,7 @@ const Coins: React.FC<CoinsProps> = React.memo(({ coin }) => {
                     <div className="coin__description">
                         <div className="row">
                             <h4>Price</h4>
-                            <p>{formatter(coin.price)}</p>
+                            <p>{checkNumbers(coin.price)}</p>
                         </div>
                         <div className="row">
                             <h4>Daily change</h4>
@@ -49,17 +49,13 @@ const Coins: React.FC<CoinsProps> = React.memo(({ coin }) => {
                         </div>
                         <div className="row">
                             <h4>Market cap</h4>
-                            <p>
-                                {coin.marketCap
-                                    ? formatter(coin.marketCap)
-                                    : "---"}
-                            </p>
+                            <p>{checkNumbers(coin.marketCap)}</p>
                         </div>
                     </div>
                 </article>
             </Link>
         </>
     );
-});
+};
 
 export default Coins;

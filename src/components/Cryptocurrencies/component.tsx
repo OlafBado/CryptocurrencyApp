@@ -11,21 +11,13 @@ import {
 import { FETCH_STATE } from "../../services/constants";
 
 const Cryptocurrencies = () => {
-    const dispatch = useAppDispatch();
-    const { coins, coinsStatus, total } = useAppSelector(
-        ({ cryptocurrencies }) => cryptocurrencies
-    );
-
-    useEffect(() => {
-        if (!coins.length) {
-            dispatch(fetchCryptocurrencies());
-        }
-    }, []);
+    const { dispatch, coins, coinsStatus, total } = useCryptocurrencies();
 
     const handleFetchMore = () => {
         dispatch(getMore());
         dispatch(fetchCryptocurrencies());
     };
+
     return (
         <main>
             <div className="container">
@@ -66,6 +58,25 @@ const Cryptocurrencies = () => {
             </div>
         </main>
     );
+};
+
+const useCryptocurrencies = () => {
+    const dispatch = useAppDispatch();
+    const { coins, coinsStatus, total } = useAppSelector(
+        ({ cryptocurrencies }) => cryptocurrencies
+    );
+
+    useEffect(() => {
+        if (!coins.length) {
+            dispatch(fetchCryptocurrencies());
+        }
+    }, []);
+    return {
+        dispatch,
+        coins,
+        coinsStatus,
+        total,
+    };
 };
 
 export default Cryptocurrencies;

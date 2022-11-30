@@ -24,15 +24,11 @@ ChartJS.register(
     Filler
 );
 
-const LineChart: React.FC<LineChartProps> = ({
-    coinHistory,
-    coinName,
-    currentPrice,
-}) => {
+const LineChart: React.FC<LineChartProps> = ({ coinHistory }) => {
     let coinPrice: string[] = [];
     let coinTimestamp: string[] = [];
 
-    if (Object.keys(coinHistory).length !== 0) {
+    if (coinHistory.length > 0 && Array.isArray(coinHistory)) {
         coinHistory.map(({ price, timestamp }) => {
             coinPrice.unshift(price);
             coinTimestamp.unshift(
@@ -70,7 +66,7 @@ const LineChart: React.FC<LineChartProps> = ({
 
     return (
         <>
-            <Line data={data} options={options} />
+            <Line data-testid="chart" data={data} options={options} />
         </>
     );
 };

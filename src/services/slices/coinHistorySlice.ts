@@ -24,11 +24,9 @@ export const fetchCoinHistory = createAsyncThunk(
     }
 );
 
-type EmptyObject = Record<any, never>;
-
 interface InitialState {
     timePeriod: string;
-    coinHistory: PriceHistory[] | EmptyObject;
+    coinHistory: PriceHistory[];
     coinHistoryStatus: string;
     error: string;
 }
@@ -37,7 +35,7 @@ const initialState: InitialState = {
     coinHistoryStatus: "",
     error: "",
     timePeriod: "5y",
-    coinHistory: {},
+    coinHistory: [],
 };
 
 export const coinHistorySlice = createSlice({

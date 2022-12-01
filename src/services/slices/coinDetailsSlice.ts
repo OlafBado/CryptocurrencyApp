@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { SingleCoinDetailsData } from "../../components/App/types";
 import { FETCH_STATE } from "../constants";
 import { API } from "aws-amplify";
+import { EmptyObject } from "../../components/App/types";
 
 export const fetchCoinDetails = createAsyncThunk(
     "coinDetailsSlice/coinDetails",
@@ -19,8 +20,6 @@ export const fetchCoinDetails = createAsyncThunk(
         }
     }
 );
-
-type EmptyObject = Record<any, never>;
 
 interface InitialState {
     coinDetails: SingleCoinDetailsData | EmptyObject;

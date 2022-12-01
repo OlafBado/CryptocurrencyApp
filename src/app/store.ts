@@ -7,6 +7,7 @@ import { cryptocurrenciesSlice } from "../services/slices/coinsSlice";
 import { coinDetailsSlice } from "../services/slices/coinDetailsSlice";
 import { coinHistorySlice } from "../services/slices/coinHistorySlice";
 import type { PreloadedState } from "@reduxjs/toolkit";
+import { EmptyObject } from "../components/App/types";
 
 export const store = configureStore({
     reducer: {
@@ -20,7 +21,9 @@ export const store = configureStore({
     },
 });
 
-export const setupStore = (preloadedState?: PreloadedState<RootState>) => {
+export const setupStore = (
+    preloadedState?: PreloadedState<RootState> | EmptyObject
+) => {
     return configureStore({
         reducer: {
             cryptoNews: cryptocurrencyNewsSlice.reducer,

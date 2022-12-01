@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1669925717107" clover="3.2.0">
+  <project timestamp="1669925717108" name="All files">
+    <metrics statements="35" coveredstatements="21" conditionals="2" coveredconditionals="0" methods="10" coveredmethods="5" elements="47" coveredelements="26" complexity="0" loc="35" ncloc="35" packages="2" files="2" classes="2"/>
+    <package name="services">
+      <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <file name="constants.ts" path="D:\PROJECTS\PLURALSIGHT\cryptoproject\src\services\constants.ts">
+        <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="30" count="1" type="stmt"/>
+        <line num="41" count="1" type="stmt"/>
+        <line num="76" count="1" type="stmt"/>
+        <line num="79" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="services.slices">
+      <metrics statements="29" coveredstatements="15" conditionals="2" coveredconditionals="0" methods="10" coveredmethods="5"/>
+      <file name="coinsSlice.ts" path="D:\PROJECTS\PLURALSIGHT\cryptoproject\src\services\slices\coinsSlice.ts">
+        <metrics statements="29" coveredstatements="15" conditionals="2" coveredconditionals="0" methods="10" coveredmethods="5"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="10" count="0" type="stmt"/>
+        <line num="11" count="0" type="stmt"/>
+        <line num="12" count="0" type="stmt"/>
+        <line num="13" count="0" type="stmt"/>
+        <line num="21" count="0" type="stmt"/>
+        <line num="22" count="0" type="stmt"/>
+        <line num="23" count="0" type="stmt"/>
+        <line num="25" count="0" type="stmt"/>
+        <line num="41" count="1" type="stmt"/>
+        <line num="52" count="1" type="stmt"/>
+        <line num="57" count="1" type="stmt"/>
+        <line num="58" count="1" type="stmt"/>
+        <line num="61" count="1" type="stmt"/>
+        <line num="62" count="1" type="stmt"/>
+        <line num="65" count="1" type="stmt"/>
+        <line num="66" count="1" type="stmt"/>
+        <line num="69" count="1" type="stmt"/>
+        <line num="73" count="1" type="stmt"/>
+        <line num="75" count="0" type="stmt"/>
+        <line num="78" count="0" type="stmt"/>
+        <line num="79" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="82" count="0" type="stmt"/>
+        <line num="85" count="0" type="stmt"/>
+        <line num="86" count="0" type="stmt"/>
+        <line num="91" count="1" type="stmt"/>
+      </file>
+    </package>
+  </project>
+</coverage>

@@ -79,6 +79,8 @@ interface SingleNewsDataSource {
     id: string;
 }
 
+type EmptyObject = Record<any, never>;
+
 export {
     CoinsReducerState,
     SingleCoinData,
@@ -87,4 +89,5 @@ export {
     PriceHistory,
     SingleCoinDetailsData,
     ChartData,
+    EmptyObject,
 };

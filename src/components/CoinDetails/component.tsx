@@ -215,7 +215,7 @@ const CoinDetails = () => {
     );
 };
 
-const useCoinDetails = () => {
+export const useCoinDetails = () => {
     const dispatch = useAppDispatch();
     const { id } = useParams();
     const { coinDetails, coinDetailsStatus } = useAppSelector(

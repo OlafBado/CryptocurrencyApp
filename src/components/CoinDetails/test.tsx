@@ -9,8 +9,8 @@ global.ResizeObserver = require("resize-observer-polyfill");
 describe("coin details", () => {
     test("render properly", async () => {
         renderWithProviders(<CoinDetails />);
-        const spinner = screen.getByTestId("spinner");
         let label = screen.queryByText("Price to USD");
+        const spinner = screen.getByTestId("spinner");
         expect(spinner).toBeTruthy();
         expect(label).toBe(null);
         await screen.findByText("5Y");
@@ -29,6 +29,5 @@ describe("coin details", () => {
         fireEvent.click(button2);
         expect(button1.className).toBe("select__button");
         expect(button2.className).toBe("select__button btn");
-        screen.debug();
     });
 });

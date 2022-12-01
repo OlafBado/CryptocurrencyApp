@@ -1,8 +1,8 @@
 {
     "httpMethod": "GET",
-    "path": "/getNews",
+    "path": "/coinDetails",
     "queryStringParameters": {
-        "coin": "bitcoin"
+        "id": "razxDUgYGNAdQ"
     },
     "headers": {
         "Content-Type": "application/json",

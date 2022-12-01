@@ -34,11 +34,11 @@ interface InitialState {
     direction: string;
     coinsStatus: string;
     error: status;
-    offset: 0;
-    total: 0;
+    offset: number;
+    total: number;
 }
 
-const initialState: InitialState = {
+export const initialState: InitialState = {
     coins: [],
     input: "",
     sortBy: "marketCap",

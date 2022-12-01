@@ -31,7 +31,7 @@ interface InitialState {
     error: string;
 }
 
-const initialState: InitialState = {
+export const initialState: InitialState = {
     coinHistoryStatus: "",
     error: "",
     timePeriod: "5y",

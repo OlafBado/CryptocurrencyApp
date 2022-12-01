@@ -12,30 +12,37 @@ describe("coin reducers", () => {
     test("should return the initial state when passed an empty action", () => {
         const mockedInitialState = undefined;
         const action = { type: "" };
-        const result = cryptocurrenciesSlice.reducer(
-            mockedInitialState,
-            action
-        );
-        expect(result).toEqual(initialState);
+        const state = cryptocurrenciesSlice.reducer(mockedInitialState, action);
+        expect(state).toEqual(initialState);
     });
     test("setSortBy should change the state with received value", () => {
         const action = setSortBy("price");
-        const result = cryptocurrenciesSlice.reducer(initialState, action);
-        expect(result.sortBy).toEqual("price");
+        const state = cryptocurrenciesSlice.reducer(initialState, action);
+        expect(state.sortBy).toEqual("price");
     });
     test("setDirection should change the state with received value", () => {
         const action = setDirection("asc");
-        const result = cryptocurrenciesSlice.reducer(initialState, action);
-        expect(result.direction).toEqual("asc");
+        const state = cryptocurrenciesSlice.reducer(initialState, action);
+        expect(state.direction).toEqual("asc");
     });
     test("setInput should change the state with received value", () => {
-        const action = setInput("bitcoin");
-        const result = cryptocurrenciesSlice.reducer(initialState, action);
-        expect(result.input).toEqual("bitcoin");
+        let action = setInput("bitcoin");
+        let state = cryptocurrenciesSlice.reducer(initialState, action);
+        expect(state.input).toEqual("bitcoin");
+        action = setInput("eth");
+        state = cryptocurrenciesSlice.reducer(state, action);
+        expect(state.input).toEqual("eth");
+        action = setInput("e");
+        state = cryptocurrenciesSlice.reducer(state, action);
+        expect(state.input).toEqual("e");
     });
-    test("getMore should update the state by 10", () => {
-        const action = getMore();
-        const result = cryptocurrenciesSlice.reducer(initialState, action);
-        expect(result.offset).toEqual(10);
+    test("getMore should increment the state", () => {
+        let action = getMore();
+        let state = cryptocurrenciesSlice.reducer(initialState, action);
+        expect(state.offset).toEqual(10);
+        state = cryptocurrenciesSlice.reducer(state, action);
+        state = cryptocurrenciesSlice.reducer(state, action);
+        state = cryptocurrenciesSlice.reducer(state, action);
+        expect(state.offset).toEqual(40);
     });
 });

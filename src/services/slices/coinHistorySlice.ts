@@ -7,15 +7,15 @@ import { API } from "aws-amplify";
 export const fetchCoinHistory = createAsyncThunk(
     "coinHistorySlice/coinHistory",
     async (id: string, thunkAPI) => {
+        const state = thunkAPI.getState() as RootState;
+        const { timePeriod } = state.coinHistory;
+        const params = {
+            queryStringParameters: {
+                id,
+                timePeriod,
+            },
+        };
         try {
-            const state = thunkAPI.getState() as RootState;
-            const { timePeriod } = state.coinHistory;
-            const params = {
-                queryStringParameters: {
-                    id,
-                    timePeriod,
-                },
-            };
             const response = await API.get("cryptoApi", "/coinHistory", params);
             return response.body.data.history;
         } catch (err) {

@@ -21,7 +21,7 @@ interface InitialState {
     error: string;
 }
 
-const initialState: InitialState = {
+export const initialState: InitialState = {
     top10coins: [],
     top10status: "",
     error: "",

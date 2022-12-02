@@ -9,7 +9,8 @@ export const fetchCryptocurrencies = createAsyncThunk(
     "fetchCryptocurrencies",
     async (_, thunkAPI) => {
         const state = thunkAPI.getState() as RootState;
-        const { direction, sortBy, offset, input } = state.cryptocurrencies;
+        const { direction, sortBy, offset, input } =
+            state.cryptocurrencies || {};
         const params = {
             queryStringParameters: {
                 sortBy,

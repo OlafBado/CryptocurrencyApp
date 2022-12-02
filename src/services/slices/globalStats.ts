@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { Coin } from "../../components/App/types";
 import { API } from "aws-amplify";
 import { FETCH_STATE } from "../constants";
+import { EmptyObject } from "../../components/App/types";
 
 export const fetchGlobalStats = createAsyncThunk(
     "globalStatsSlice/globalStats",
@@ -27,15 +28,13 @@ interface GlobalStats {
     totalMarkets: number;
 }
 
-type EmptyObject = Record<any, never>;
-
 interface InitialState {
     globalStatsStatus: string;
     error: string;
     globalStats: GlobalStats | EmptyObject;
 }
 
-const initialState: InitialState = {
+export const initialState: InitialState = {
     globalStatsStatus: "",
     error: "",
     globalStats: {},

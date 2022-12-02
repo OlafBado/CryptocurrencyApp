@@ -24,7 +24,7 @@ interface InitialState {
     news: SingleNewsData[];
 }
 
-const initialState: InitialState = {
+export const initialState: InitialState = {
     coinNewsStatus: "",
     error: "",
     news: [],

@@ -7,12 +7,12 @@ import { EmptyObject } from "../../components/App/types";
 export const fetchCoinDetails = createAsyncThunk(
     "coinDetailsSlice/coinDetails",
     async (id: string) => {
+        const params = {
+            queryStringParameters: {
+                id,
+            },
+        };
         try {
-            const params = {
-                queryStringParameters: {
-                    id,
-                },
-            };
             const response = await API.get("cryptoApi", "/coinDetails", params);
             return response.body.data.coin;
         } catch (err) {
@@ -27,7 +27,7 @@ interface InitialState {
     error: string;
 }
 
-const initialState: InitialState = {
+export const initialState: InitialState = {
     coinDetailsStatus: "",
     error: "",
     coinDetails: {},
